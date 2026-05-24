@@ -27,8 +27,29 @@ Example: `client/components/hero-particles.ts` powers the home hero (Three.js We
 
 ## Deploy (Fly.io)
 
+### GitHub Actions (recomendado)
+
+El repo ya incluye `.github/workflows/ci.yml` y `.github/workflows/fly.yml`.  
+**CI** corre en cada push/PR; **Fly Deploy** solo corre cuando CI en `main` termina en verde.
+
+1. Desde la raíz de este repo (app `resuma-docs` en `fly.toml`):
+
+```bash
+fly tokens create deploy -x 999999h
+```
+
+Copia **todo** el token de la salida, incluyendo el prefijo `FlyV1` y el espacio.
+
+2. En GitHub → [resuma-docs](https://github.com/GolfredoPerezFernandez/resuma-docs) → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**
+   - Name: `FLY_API_TOKEN`
+   - Value: el token del paso 1
+
+3. Haz push a `main`. En **Actions** verás primero **CI** y, si pasa, **Fly Deploy**.
+
+Token alternativo (más permisos, varias apps): `fly auth token`
+
+### Deploy manual
+
 ```bash
 fly deploy
 ```
-
-GitHub Actions: `CI` on push/PR, `Fly Deploy` after green CI on `main` (requires `FLY_API_TOKEN` secret).
