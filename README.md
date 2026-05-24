@@ -1,7 +1,9 @@
-# Resuma documentation site
+# Resuma documentation site (`site-docs`)
 
 Official docs and landing page for [Resuma](https://github.com/GolfredoPerezFernandez/resuma).
 
+**Path:** sibling to the framework monorepo — `apps/site-docs` (i.e. `../site-docs` from `apps/Resuma`).  
+**GitHub:** [resuma-docs](https://github.com/GolfredoPerezFernandez/resuma-docs)  
 **Live:** https://resuma-docs.fly.dev
 
 ## Local dev
