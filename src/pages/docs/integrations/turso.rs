@@ -123,9 +123,9 @@ turso db tokens create my-app
 
 # Fly secrets
 fly secrets set \
-  TURSO_DATABASE_URL="libsql://my-app-....turso.io" \
-  TURSO_AUTH_TOKEN="eyJ..." \
-  --app my-app"#)}
+    TURSO_DATABASE_URL="libsql://my-app-....turso.io" \
+    TURSO_AUTH_TOKEN="eyJ..." \
+    --app my-app"#)}
 
             <h2>"Deploy on Fly.io"</h2>
             <p>

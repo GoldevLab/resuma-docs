@@ -28,7 +28,7 @@ async fn cart(req: &FlowRequest) -> Cart {
 
             <h2>"set_load_cache (runtime)"</h2>
             {code_block(r#"// After successful mutation in #[server] or enhanced submit client path:
-set_load_cache("product_list", "public, max-age=0");"#)}
+    set_load_cache("product_list", "public, max-age=0");"#)}
 
             <h2>"FlowExtensions for DB"</h2>
             <p>

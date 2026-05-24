@@ -19,7 +19,7 @@ FlowApp::new().with_stylesheet("/assets/site.css")"#)}
 
             <h2>"Content paths"</h2>
             {code_block(r#"// tailwind.config.js
-content: ["./src/**/*.rs"]  // scan view! class strings at build time"#)}
+    content: ["./src/**/*.rs"]  // scan view! class strings at build time"#)}
         </>
     }
 }

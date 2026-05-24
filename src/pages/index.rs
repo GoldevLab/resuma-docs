@@ -1,6 +1,9 @@
 use resuma::prelude::*;
 
-use crate::site::{bench_row_full, code_block, compare_column, feature_card, hero_particles_mount, metric_item, pillar_card, pipeline_step};
+use crate::site::{
+    bench_row_full, code_block, compare_column, feature_card, hero_particles_mount, metric_item,
+    pillar_card, pipeline_step,
+};
 
 pub fn page(_req: FlowRequest) -> View {
     let dash = "—";

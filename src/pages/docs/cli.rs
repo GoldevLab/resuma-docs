@@ -50,7 +50,7 @@ resuma dev --skip-runtime"#)}
 
             <h2>"resuma routes"</h2>
             {code_block(r#"resuma routes --path src/pages
-resuma routes --generate --path src/pages"#)}
+    resuma routes --generate --path src/pages"#)}
         </>
     }
 }

@@ -8,10 +8,10 @@ mod seo;
 mod sidebar;
 
 pub use css::SITE_CSS;
-pub use pwa::config as pwa_config;
 pub use docs_search::search;
-pub use seo::{json_ld, site_description, site_title, site_url};
 pub use hero_bg::hero_particles_mount;
+pub use pwa::config as pwa_config;
+pub use seo::{json_ld, site_description, site_title, site_url};
 pub use sidebar::doc_sidebar;
 
 use resuma::prelude::*;
@@ -97,11 +97,7 @@ pub fn bench_row_full(
     } else {
         "bench-row"
     };
-    let static_class = if statik == "0 B" {
-        "yes"
-    } else {
-        ""
-    };
+    let static_class = if statik == "0 B" { "yes" } else { "" };
     view! {
         <tr class={class}>
             <td><strong>{framework.to_string()}</strong></td>

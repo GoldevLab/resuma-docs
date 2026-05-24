@@ -63,7 +63,7 @@ view! {
             <p>"Text and attributes in " <code>"view!"</code> " are escaped. "
                 <code>"View::raw()"</code> " skips escaping — static/trusted markup only, never user input."</p>
             {code_block(r##"View::raw("<div class=\"banner\">Trusted</div>")  // OK
-// View::raw(user_input)  // NEVER — XSS"##)}
+    // View::raw(user_input)  // NEVER — XSS"##)}
         </>
     }
 }
