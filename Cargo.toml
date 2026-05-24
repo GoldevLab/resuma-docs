@@ -1,0 +1,13 @@
+[package]
+name = "example-website"
+version = "0.3.2"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "website"
+path = "src/main.rs"
+
+[dependencies]
+resuma = "0.3.2"
+tokio = { version = "1", features = ["full"] }

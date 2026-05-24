@@ -1,0 +1,5 @@
+# Optional: use sibling Resuma checkout instead of crates.io (local dev only).
+# Copy to .cargo/config.toml — do not commit if paths differ per machine.
+#
+# [patch.crates-io]
+# resuma = { path = "../Resuma/crates/resuma" }
