@@ -83,7 +83,7 @@ async fn main() -> std::io::Result<()> {
             include_bytes!("../static/client/hero-particles.js"),
         )
         .streaming(false)
-        .not_found(|| not_found_page())
+        .not_found(not_found_page)
         .auto_pages(pages_root, PagesRegistry)
         .serve(FlowServeOptions::default())
         .await
