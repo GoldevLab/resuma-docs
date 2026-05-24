@@ -13,6 +13,10 @@ pub fn page(_req: FlowRequest) -> View {
                     <h3>"view!"</h3>
                     <p>"JSX-like templates, attributes, dynamic bindings."</p>
                 </a>
+                <a href="/docs/components/control_flow" class="card" style="text-decoration: none;">
+                    <h3>"Control flow"</h3>
+                    <p>"Show, if/match/map in view!."</p>
+                </a>
                 <a href="/docs/components/signals" class="card" style="text-decoration: none;">
                     <h3>"Signals"</h3>
                     <p>"use_signal, ReadSignal, WriteSignal — fine-grained reactivity."</p>
@@ -60,6 +64,14 @@ pub fn page(_req: FlowRequest) -> View {
                 <a href="/docs/components/context" class="card" style="text-decoration: none;">
                     <h3>"Context"</h3>
                     <p>"provide_context and use_context for descendants."</p>
+                </a>
+                <a href="/docs/components/error_boundary" class="card" style="text-decoration: none;">
+                    <h3>"Error boundaries"</h3>
+                    <p>"load_boundary and error_boundary for failed data."</p>
+                </a>
+                <a href="/docs/components/testing" class="card" style="text-decoration: none;">
+                    <h3>"Testing"</h3>
+                    <p>"Integration tests, render snapshots, E2E."</p>
                 </a>
                 <a href="/docs/components/tasks" class="card" style="text-decoration: none;">
                     <h3>"Tasks"</h3>

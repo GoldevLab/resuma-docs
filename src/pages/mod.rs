@@ -8,7 +8,9 @@ pub mod docs {
     pub mod components {
         pub mod client;
         pub mod context;
+        pub mod control_flow;
         pub mod effects;
+        pub mod error_boundary;
         pub mod form;
         pub mod handlers;
         pub mod index;
@@ -20,6 +22,7 @@ pub mod docs {
         pub mod slots;
         pub mod store;
         pub mod tasks;
+        pub mod testing;
         pub mod view;
     }
     pub mod cookbook {
@@ -45,6 +48,7 @@ pub mod docs {
         pub mod middleware;
         pub mod pages;
         pub mod prefetch;
+        pub mod query_params;
         pub mod routing;
         pub mod streaming;
         pub mod submits;
@@ -65,6 +69,7 @@ pub mod docs {
     }
     pub mod package;
     pub mod project_structure;
+    pub mod reactivity;
     pub mod search;
     pub mod security {
         pub mod authorization;

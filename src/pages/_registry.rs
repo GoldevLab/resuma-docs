@@ -16,7 +16,13 @@ impl FlowPageRegistry for PagesRegistry {
             "docs::components" => Some(super::docs::components::index::page(req)),
             "docs::components::client" => Some(super::docs::components::client::page(req)),
             "docs::components::context" => Some(super::docs::components::context::page(req)),
+            "docs::components::control_flow" => {
+                Some(super::docs::components::control_flow::page(req))
+            }
             "docs::components::effects" => Some(super::docs::components::effects::page(req)),
+            "docs::components::error_boundary" => {
+                Some(super::docs::components::error_boundary::page(req))
+            }
             "docs::components::form" => Some(super::docs::components::form::page(req)),
             "docs::components::handlers" => Some(super::docs::components::handlers::page(req)),
             "docs::components::islands" => Some(super::docs::components::islands::page(req)),
@@ -27,6 +33,7 @@ impl FlowPageRegistry for PagesRegistry {
             "docs::components::slots" => Some(super::docs::components::slots::page(req)),
             "docs::components::store" => Some(super::docs::components::store::page(req)),
             "docs::components::tasks" => Some(super::docs::components::tasks::page(req)),
+            "docs::components::testing" => Some(super::docs::components::testing::page(req)),
             "docs::components::view" => Some(super::docs::components::view::page(req)),
             "docs::cookbook" => Some(super::docs::cookbook::index::page(req)),
             "docs::cookbook::debouncer" => Some(super::docs::cookbook::debouncer::page(req)),
@@ -54,6 +61,7 @@ impl FlowPageRegistry for PagesRegistry {
             "docs::flow::middleware" => Some(super::docs::flow::middleware::page(req)),
             "docs::flow::pages" => Some(super::docs::flow::pages::page(req)),
             "docs::flow::prefetch" => Some(super::docs::flow::prefetch::page(req)),
+            "docs::flow::query_params" => Some(super::docs::flow::query_params::page(req)),
             "docs::flow::routing" => Some(super::docs::flow::routing::page(req)),
             "docs::flow::streaming" => Some(super::docs::flow::streaming::page(req)),
             "docs::flow::submits" => Some(super::docs::flow::submits::page(req)),
@@ -72,6 +80,7 @@ impl FlowPageRegistry for PagesRegistry {
             }
             "docs::package" => Some(super::docs::package::page(req)),
             "docs::project_structure" => Some(super::docs::project_structure::page(req)),
+            "docs::reactivity" => Some(super::docs::reactivity::page(req)),
             "docs::search" => Some(super::docs::search::page(req)),
             "docs::security" => Some(super::docs::security::index::page(req)),
             "docs::security::authorization" => {

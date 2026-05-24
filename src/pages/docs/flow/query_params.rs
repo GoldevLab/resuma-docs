@@ -1,0 +1,67 @@
+use crate::site::code_block;
+use resuma::prelude::*;
+
+pub fn page(_req: FlowRequest) -> View {
+    view! {
+        <>
+            <h1>"Query parameters"</h1>
+            <p class="lead">"Read URL search params from " <code>"FlowRequest"</code> " in pages, loaders, and submits."</p>
+
+            <h2>"Single parameter"</h2>
+            {code_block(r#"pub fn page(req: FlowRequest) -> View {
+    let q = req.query_param("q").unwrap_or("");
+    view! {
+        <>
+            <h1>"Search"</h1>
+            <p>"Query: " {q.to_string()}</p>
+        </>
+    }
+}"#)}
+
+            <h2>"In loaders"</h2>
+            {code_block(r#"#[load]
+async fn search_results(req: &FlowRequest) -> Result<Vec<Item>, LoaderError> {
+    let q = req.query_param("q").unwrap_or("");
+    if q.is_empty() {
+        return Ok(vec![]);
+    }
+    db::search(q).await.map_err(|_| LoaderError::new(500, "search failed"))
+}"#)}
+
+            <h2>"Forms that preserve query state"</h2>
+            {code_block(r#"<form method="get" action="/docs/search">
+    <input type="search" name="q" placeholder="Search docs…" />
+</form>"#)}
+
+            <h2>"Flash after redirect"</h2>
+            <p>
+                "Combine " <a href="/docs/cookbook/prg">"PRG redirects"</a> " with a query flag:"
+            </p>
+            {code_block(r#"#[submit]
+async fn create(form: ItemForm, _req: &FlowRequest) -> Result<Redirect, SubmitError> {
+    db::insert(&form).await.map_err(|_| SubmitError::new("Failed"))?;
+    Ok(redirect("/items?created=1"))
+}
+
+pub fn page(req: FlowRequest) -> View {
+    let created = req.query_param("created") == Some("1");
+    view! {
+        <>
+            {if created {
+                view! { <p class="toast">"Item created!"</p> }
+            } else {
+                View::empty()
+            }}
+        </>
+    }
+}"#)}
+
+            <h2>"Parsing notes"</h2>
+            <ul>
+                <li>"Values are percent-decoded by the Flow request layer."</li>
+                <li>"Duplicate keys: last value wins (same as typical query parsers)."</li>
+                <li>"Use path params (" <code>"req.param(\"id\")"</code> ") for " <code>"/users/:id"</code> " segments."</li>
+            </ul>
+        </>
+    }
+}

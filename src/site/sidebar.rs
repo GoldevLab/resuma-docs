@@ -43,8 +43,10 @@ pub fn doc_sidebar(_active_path: &str) -> View {
             {nav!(
                 "/docs/components" => "Overview",
                 "/docs/components/view" => "view!",
+                "/docs/components/control_flow" => "Control flow",
                 "/docs/components/signals" => "Signals",
                 "/docs/components/effects" => "Effects",
+                "/docs/components/error_boundary" => "Error boundaries",
                 "/docs/components/handlers" => "Handlers",
                 "/docs/components/islands" => "Islands",
                 "/docs/components/client" => "Client (TypeScript)",
@@ -56,12 +58,14 @@ pub fn doc_sidebar(_active_path: &str) -> View {
                 "/docs/components/store" => "Store",
                 "/docs/components/context" => "Context",
                 "/docs/components/tasks" => "Tasks",
+                "/docs/components/testing" => "Testing",
             )}
 
             <h4>"Resuma Flow"</h4>
             {nav!(
                 "/docs/flow" => "Overview",
                 "/docs/flow/routing" => "Routing",
+                "/docs/flow/query_params" => "Query params",
                 "/docs/flow/pages" => "Pages",
                 "/docs/flow/layouts" => "Layouts",
                 "/docs/flow/loaders" => "Loaders",
@@ -104,6 +108,7 @@ pub fn doc_sidebar(_active_path: &str) -> View {
             <h4>"Reference"</h4>
             {nav!(
                 "/docs/architecture" => "Architecture",
+                "/docs/reactivity" => "Reactivity internals",
                 "/docs/package" => "Package",
                 "/docs/benchmark" => "Benchmark",
                 "/docs/cli" => "CLI",

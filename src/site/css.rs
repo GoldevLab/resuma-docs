@@ -571,4 +571,36 @@ pre.code code { background: none; border: 0; padding: 0; }
 }
 .template-pill strong { display: block; color: var(--text); margin-bottom: 0.2rem; }
 .template-pill span { color: var(--muted); font-size: 0.82rem; }
+
+.server-demo {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  max-width: 42rem;
+}
+.server-demo h3 { margin: 0 0 0.35rem; font-size: 1.15rem; color: var(--text); }
+.server-demo-lead { margin: 0 0 1rem; color: var(--muted); font-size: 0.95rem; }
+.server-demo-row {
+  display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end;
+}
+.server-demo-label {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  font-size: 0.85rem; color: var(--muted); flex: 1; min-width: 12rem;
+}
+.server-demo-label input {
+  font: inherit; padding: 0.45rem 0.6rem; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--bg-subtle);
+}
+.server-demo-ok, .server-demo-err {
+  margin: 0.85rem 0 0; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.92rem;
+  display: none;
+}
+.server-demo-ok {
+  background: #dafbe1; color: var(--success); border: 1px solid #aceebb;
+}
+.server-demo-err {
+  background: #ffebe9; color: var(--danger); border: 1px solid #ffcecb;
+}
+.server-demo-ok:not([hidden]), .server-demo-err:not([hidden]) { display: block; }
 </style>"#;

@@ -10,24 +10,35 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"Why"</h2>
             <p>"After a successful POST, redirect to a GET URL so refresh does not re-submit the form."</p>
 
-            <h2>"Submit returns redirect hint"</h2>
-            {code_block(r#"#[derive(Serialize)]
+            <h2>"Return a redirect"</h2>
+            {code_block(r#"#[submit]
+async fn create_item(form: ItemForm, _req: &FlowRequest) -> Result<Redirect, SubmitError> {
+    db::insert(&form).await.map_err(|_| SubmitError::new("Failed"))?;
+    Ok(redirect("/items"))
+}
+
+// Or any serializable struct with a `redirect` field:
+#[derive(Serialize)]
 struct CreateResult { redirect: String }
 
 #[submit]
-async fn create_item(form: ItemForm, _req: &FlowRequest) -> Result<CreateResult, SubmitError> {
-    db::insert(&form).await.map_err(|_| SubmitError::new("Failed"))?;
+async fn create_alt(form: ItemForm, _req: &FlowRequest) -> Result<CreateResult, SubmitError> {
     Ok(CreateResult { redirect: "/items".into() })
 }"#)}
 
-            <h2>"Client enhancement"</h2>
-            <p>
-                "When JavaScript is enabled, the runtime can follow " <code>"redirect"</code> " in the submit JSON response. "
-                "Without JS, use a server redirect response on " <code>"/_resuma/submit/:name"</code> " (303 See Other) — configure in custom submit handler if needed."
-            </p>
+            <h2>"Behavior"</h2>
+            <ul>
+                <li><strong>"With JavaScript"</strong> " — runtime reads " <code>"redirect"</code> " from the JSON response and navigates via SPA fetch (same-origin paths)."</li>
+                <li><strong>"Without JavaScript"</strong> " — server responds with " <strong>"303 See Other"</strong> " and " <code>"Location"</code> " header."</li>
+                <li><strong>"Security"</strong> " — only root-relative paths (" <code>"/items"</code> ") are allowed; open redirects are rejected."</li>
+            </ul>
 
             <h2>"Flash messages"</h2>
-            <p>"Store a one-time toast in session or query " <code>"?created=1"</code> " on the redirect target page."</p>
+            <p>
+                "Redirect with a query flag — see "
+                <a href="/docs/flow/query_params">"Query params"</a> " — e.g. "
+                <code>"redirect(\"/items?created=1\")"</code> "."
+            </p>
         </>
     }
 }

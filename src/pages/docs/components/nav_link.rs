@@ -5,7 +5,7 @@ pub fn page(_req: FlowRequest) -> View {
     view! {
         <>
             <h1>"NavLink"</h1>
-            <p class="lead">"NavLink renders an anchor that applies an active CSS class when the href matches the current path."</p>
+            <p class="lead">"NavLink renders an anchor with active-state styling and client-side navigation when the Resuma runtime is loaded."</p>
 
             <h2>"Basic usage"</h2>
             {code_block(r#"view! {
@@ -19,8 +19,13 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"How matching works"</h2>
             <p>"Exact match wins. Prefix match applies when the current path starts with href followed by a slash — so " <code>"/docs"</code> " is active on " <code>"/docs/getting_started"</code>"."</p>
 
-            <h2>"data-r-nav"</h2>
-            <p>"NavLink sets " <code>"data-r-nav=\"true\""</code> " so the client runtime can enhance navigation without full page reloads when the runtime is loaded."</p>
+            <h2>"Client navigation"</h2>
+            <p>
+                "NavLink sets " <code>"data-r-nav"</code> ". When JavaScript is enabled, clicks fetch the next page's SSR HTML, "
+                "swap " <code>"#resuma-root"</code> " + the resumability payload, and update the URL with "
+                <code>"history.pushState"</code> " — no full document reload."
+            </p>
+            <p>"Modifier clicks (Ctrl/Cmd, middle button) and " <code>"target=\"_blank\""</code> " fall back to normal browser navigation."</p>
 
             <h2>"In layouts"</h2>
             {code_block(r#"#[layout("/docs")]

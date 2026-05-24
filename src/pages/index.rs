@@ -2,7 +2,7 @@ use resuma::prelude::*;
 
 use crate::site::{
     bench_row_full, code_block, compare_column, feature_card, hero_particles_mount, metric_item,
-    pillar_card, pipeline_step,
+    pillar_card, pipeline_step, server_function_demo,
 };
 
 pub fn page(_req: FlowRequest) -> View {
@@ -16,7 +16,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <div>
                         <span class="hero-badge">
                             <span class="hero-badge-dot"></span>
-                            "v0.3.1 · Rust · Resumability · Zero hydration"
+                            "v0.3.3 · Rust · Server functions · Zero hydration"
                         </span>
         <h1>
                             "Build "
@@ -25,13 +25,15 @@ pub fn page(_req: FlowRequest) -> View {
                         </h1>
                         <p class="hero-tagline">"Ship HTML. Resume interactivity — never rehydrate."</p>
                         <p class="hero-lead">
-                            "Components run once on the server. Resuma serialises signals and handler references into the page — the browser resumes only what users touch. 901 B loader, 4.2 KiB to full interactivity, zero JS on static pages."
+                            "Build your whole app in Rust — UI, server functions, and forms on web standards. "
+                            "Components run once on the server; signals drive targeted DOM updates without re-rendering the tree. "
+                            "901 B loader, progressive enhancement, no WASM hydration."
                         </p>
                         <div class="hero-actions">
                             <a href="/docs/getting_started" class="btn btn-primary">"Get Started"</a>
                             <a href="/docs" class="btn btn-ghost">"Read the Docs"</a>
                             <a href="/docs/benchmark" class="btn btn-ghost">"Benchmark"</a>
-                            <a href="https://docs.rs/resuma/0.3.1" class="btn btn-ghost" target="_blank">"docs.rs"</a>
+                            <a href="https://docs.rs/resuma/0.3.3" class="btn btn-ghost" target="_blank">"docs.rs"</a>
                         </div>
                         <p class="hero-note">
                             "Install: " <code>"cargo install resuma"</code> " · one crate for core + Flow + CLI"
@@ -72,6 +74,16 @@ fn Counter() -> View {
                     {metric_item("1", "cargo dependency")}
                 </div>
             </div>
+
+            <section class="section section-alt">
+                <p class="section-eyebrow">"Try it"</p>
+                <h2 class="section-title">"Server functions — no page reload"</h2>
+                <p class="section-sub">
+                    "Like Leptos server functions: Rust guaranteed to run on the server, callable from the browser. "
+                    "Errors surface in the UI without refreshing."
+                </p>
+                {server_function_demo()}
+            </section>
 
             <section class="section">
                 <p class="section-eyebrow">"Positioning"</p>
@@ -137,10 +149,10 @@ fn Counter() -> View {
                 <h2 class="section-title">"Interactive from the first click"</h2>
                 <p class="section-sub">"Resumability means the client never re-runs your component tree. State and handlers are already in the HTML — the tiny runtime wires them up lazily."</p>
                 <div class="pillars">
-                    {pillar_card("⚡", "Instant on interaction", "No hydration pass. Event delegation + resumed signals attach on first user input — not on page load.")}
-                    {pillar_card("🧩", "Resumable by default", "Every #[component] is a lazy boundary. Handlers externalise to /_resuma/handler/{Component}.js — no #[island] required.")}
-                    {pillar_card("📦", "Lazy handler chunks", "Viewport prefetch loads boundaries before the user clicks. Payload stays small — only tiny __page__ handlers stay inline.")}
-                    {pillar_card("🦀", "Rust end-to-end", "Business logic, #[server] actions, and #[submit] forms stay in Rust. rs2js compiles handler closures to small JS.")}
+                    {pillar_card("🦀", "Full Rust stack", "#[server] RPC, #[submit] forms, and #[load] data — axum-native, no adapter boilerplate.")}
+                    {pillar_card("📋", "Progressive enhancement", "<Form submit> works as plain HTML POST before JS loads; runtime enhances in place.")}
+                    {pillar_card("🎯", "Targeted updates", "Signals update bound DOM nodes only — no full component re-render on the client.")}
+                    {pillar_card("🧩", "Resumable by default", "Every #[component] is a lazy boundary. Handlers externalise to /_resuma/handler/{Component}.js.")}
                 </div>
             </section>
 
