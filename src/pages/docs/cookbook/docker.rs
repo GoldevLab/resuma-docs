@@ -8,24 +8,36 @@ pub fn page(_req: FlowRequest) -> View {
             <p class="lead">"Build a minimal production image for a Resuma Flow app."</p>
 
             <h2>"Dockerfile"</h2>
-            <p>"This repo includes a production Dockerfile at the workspace root for the docs site binary " <code>"website"</code> "."</p>
-            {code_block(r##"FROM rust:1-bookworm AS builder
+            <p>"This repo (" <code>"resuma-docs"</code> ") is standalone: " <code>"Dockerfile"</code> ", "
+                <code>"fly.toml"</code> ", and " <code>".dockerignore"</code> " live at the repo root. "
+                "Deploy from this directory — not a symlink/junction on Windows (remote builders cannot read through them)."</p>
+            <p>"The image builds the TypeScript client, compiles the " <code>"website"</code> " binary, and runs as non-root on Debian slim."</p>
+            {code_block(r##"FROM node:22-bookworm AS client
 WORKDIR /app
-COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
-COPY crates ./crates
-COPY apps ./apps
-COPY examples ./examples
-COPY runtime ./runtime
-RUN cargo build --release -p example-website
+COPY package.json package-lock.json tsconfig.json ./
+COPY client ./client
+RUN npm ci 2>/dev/null || npm install
+RUN npm run build:client
+
+FROM rust:1-bookworm AS builder
+WORKDIR /app
+COPY Cargo.toml rust-toolchain.toml ./
+COPY src ./src
+COPY --from=client /app/static/client ./static/client
+RUN cargo build --release
 
 FROM debian:bookworm-slim
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --system --uid 10001 --create-home resuma
 WORKDIR /app
 COPY --from=builder /app/target/release/website /app/website
-COPY --from=builder /app/apps/docs-site/src/pages /app/pages
-ENV HOST=0.0.0.0
-ENV PORT=3000
-ENV RESUMA_PAGES_ROOT=/app/pages
+COPY --from=builder /app/src/pages /app/pages
+RUN chown -R resuma:resuma /app
+USER resuma
+ENV HOST=0.0.0.0 PORT=3000 RESUMA_PAGES_ROOT=/app/pages
+ENV RESUMA_ENV=production RESUMA_TRUST_PROXY=1
 EXPOSE 3000
 CMD ["/app/website"]"##)}
 
@@ -49,10 +61,10 @@ fly open"##)}
 
             <h2>"Notes"</h2>
             <ul>
-                <li>"Replace " <code>"example-website"</code> " / " <code>"website"</code> " with your crate and binary names."</li>
-                <li>"Prebuilt JS runtime assets are embedded in the " <code>"resuma"</code> " crate — no Node.js in the runtime image."</li>
+                <li>"Node.js is only in the build stage (Resuma Client bundles); the runtime image is Rust + pages only."</li>
+                <li>"Resuma runtime JS is embedded in the " <code>"resuma"</code> " crate — no extra Node step for apps without client components."</li>
                 <li>"Set " <code>"RESUMA_ENV=production"</code> " and " <code>"RESUMA_TRUST_PROXY=1"</code> " — see " <a href="/docs/security/configure">"Configure security"</a>"."</li>
-                <li>"Health check hits " <code>"/"</code> "; " <code>"/robots.txt"</code> " and " <code>"/sitemap.xml"</code> " on Flow apps."</li>
+                <li>"Health check hits " <code>"/"</code> " (see " <code>"fly.toml"</code> "); Flow also serves " <code>"/robots.txt"</code> " and " <code>"/sitemap.xml"</code>"."</li>
             </ul>
         </>
     }

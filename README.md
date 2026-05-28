@@ -52,6 +52,11 @@ Token alternativo (más permisos, varias apps): `fly auth token`
 
 ### Deploy manual
 
+From the **real** repo folder (`apps/docs-site` on disk — not a Windows junction):
+
 ```bash
+docker build -t resuma-docs .   # optional local test
 fly deploy
 ```
+
+Root files: `Dockerfile`, `fly.toml`, `.dockerignore`.
