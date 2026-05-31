@@ -16,7 +16,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <div>
                         <span class="hero-badge">
                             <span class="hero-badge-dot"></span>
-                            "v0.4.1 · Rust · Server functions · Zero hydration"
+                            "v0.4.2 · Rust · Server functions · Zero hydration"
                         </span>
         <h1>
                             "Build "
@@ -33,7 +33,7 @@ pub fn page(_req: FlowRequest) -> View {
                             <a href="/docs/getting_started" class="btn btn-primary">"Get Started"</a>
                             <a href="/docs" class="btn btn-ghost">"Read the Docs"</a>
                             <a href="/docs/benchmark" class="btn btn-ghost">"Benchmark"</a>
-                            <a href="https://docs.rs/resuma/0.4.1" class="btn btn-ghost" target="_blank">"docs.rs"</a>
+                            <a href="https://docs.rs/resuma/0.4.2" class="btn btn-ghost" target="_blank">"docs.rs"</a>
                         </div>
                         <p class="hero-note">
                             "Install: " <code>"cargo install resuma"</code> " · one crate for core + Flow + CLI"
