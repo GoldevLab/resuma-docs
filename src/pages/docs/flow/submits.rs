@@ -8,7 +8,7 @@ pub fn page(_req: FlowRequest) -> View {
             <p class="lead">"#[submit] handlers process form POSTs with typed validation and field-level errors."</p>
 
             <h2>"Define a submit handler"</h2>
-            {code_block(r#"#[derive(Deserialize)]
+            {code_block(r#"#[data]
 struct ContactForm {
     email: String,
     message: String,

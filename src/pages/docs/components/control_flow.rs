@@ -13,7 +13,7 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"Conditional UI"</h2>
             <p>"Use Rust " <code>"if"</code> " / " <code>"match"</code> ", or the " <code>"&lt;Show&gt;"</code> " helper (Leptos-style):"</p>
-            {code_block(r#"let logged_in = use_signal(false);
+            {code_block(r#"let logged_in = signal(false);
 
 view! {
     <>
@@ -29,7 +29,7 @@ view! {
             <h2>"Match on enums"</h2>
             {code_block(r#"enum Tab { Docs, Examples }
 
-let tab = use_signal(Tab::Docs);
+let tab = signal(Tab::Docs);
 
 view! {
     <nav>
@@ -41,7 +41,7 @@ view! {
 }"#)}
 
             <h2>"Lists and iteration"</h2>
-            {code_block(r#"let items = use_signal(vec!["Rust", "Resuma", "Flow"]);
+            {code_block(r#"let items = signal(vec!["Rust", "Resuma", "Flow"]);
 
 view! {
     <ul>

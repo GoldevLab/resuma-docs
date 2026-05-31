@@ -9,9 +9,9 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"Search component"</h2>
             {code_block(r#"#[component]
-fn SearchBox() -> View {
-    let query = use_signal(String::new());
-    let results = use_signal(Vec::<String>::new());
+fn SearchBox() {
+    let query = signal(String::new());
+    let results = signal(Vec::<String>::new());
 
     use_debounce(&query, 300, move |q| {
         if q.len() >= 2 {

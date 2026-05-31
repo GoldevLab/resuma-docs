@@ -36,10 +36,10 @@ fn ThemedButton() -> View {
 }"#)}
 
             <h2>"Toggle mode"</h2>
-            {code_block(r#"let dark = use_signal(true);
+            {code_block(r#"let dark = signal(true);
 
 view! {
-    <button onClick={ move |_| dark.update(|d| *d = !*d) }>
+    <button onClick={dark.update(|d| *d = !*d)}>
         "Toggle theme"
     </button>
 }"#)}

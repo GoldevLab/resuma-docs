@@ -9,7 +9,7 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"use_task"</h2>
             <p>"Alias for use_effect — runs during SSR and re-runs when tracked signals change."</p>
-            {code_block(r#"let filter = use_signal("all".into());
+            {code_block(r#"let filter = signal("all".into());
 
 use_task(move || {
     let f = filter.get();
@@ -26,7 +26,7 @@ use_task(move || {
 
             <h2>"use_debounce"</h2>
             <p>"Debounce signal-driven callbacks — see the " <a href="/docs/cookbook/debouncer">"Debouncer cookbook"</a> " for a full search example."</p>
-            {code_block(r#"let query = use_signal(String::new());
+            {code_block(r#"let query = signal(String::new());
 
 use_debounce(&query, 300, move |q| {
     if !q.is_empty() {

@@ -8,10 +8,10 @@ pub fn page(_req: FlowRequest) -> View {
             <p class="lead">"Closures in onClick and other event attributes are translated to JavaScript at compile time (rs2js in resuma-macros) and lazy-loaded on first interaction."</p>
 
             <h2>"onClick"</h2>
-            {code_block(r#"let count = use_signal(0);
+            {code_block(r#"let count = signal(0);
 
 view! {
-    <button onClick={ move |_| count.update(|c| *c += 1) }>
+    <button onClick={count.update(|c| *c += 1)}>
         "+"
     </button>
 }"#)}
@@ -25,12 +25,12 @@ view! {
             </ol>
 
             <h2>"Calling server actions"</h2>
-            {code_block(r#"let results = use_signal(Vec::<String>::new());
+            {code_block(r#"let results = signal(Vec::<String>::new());
 
 view! {
-    <button onClick={ move |_| {
+    <button onClick={js! {
         // rs2js translates signal updates + action calls
-        results.set(vec!["from server".into()]);
+        state.results.set(["from server"]);
     }}>
         "Search"
     </button>

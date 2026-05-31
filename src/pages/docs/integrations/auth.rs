@@ -39,7 +39,7 @@ async fn dashboard(req: &FlowRequest) -> DashboardData {
 }"#)}
 
             <h2>"Login submit"</h2>
-            {code_block(r#"#[derive(Deserialize)]
+            {code_block(r#"#[data]
 struct LoginForm { email: String, password: String }
 
 #[submit]

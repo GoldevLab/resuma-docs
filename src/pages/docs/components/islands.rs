@@ -9,18 +9,18 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"Default: resumable components"</h2>
             {code_block(r#"#[component]
-fn Counter() -> View {
-    let n = use_signal(0);
+fn Counter() {
+    let n = signal(0);
     view! {
-        <button onClick={move |_| n.update(|v| *v += 1)}>"+"</button>
+        <button onClick={n.update(|v| *v += 1)}>"+"</button>
     }
 }
 // Handlers lazy-load from /_resuma/handler/Counter.js — no #[island] needed."#)}
 
             <h2>"#[island] — when you need more"</h2>
             {code_block(r#"#[island(load = "visible")]
-fn LiveChart() -> View {
-    let points = use_signal(vec![1, 4, 2, 8]);
+fn LiveChart() {
+    let points = signal(vec![1, 4, 2, 8]);
     view! { /* heavy widget */ }
 }"#)}
 

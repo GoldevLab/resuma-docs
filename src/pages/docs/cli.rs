@@ -32,7 +32,7 @@ resuma add turso  # src/turso.rs, .env.example"#)}
             {code_block(r#"resuma update              # align project deps with CLI version
 resuma update --check      # show versions, no changes
 resuma update --cli          # cargo install resuma --force
-resuma update --version 0.3.3  # pin a specific release"#)}
+resuma update --version 0.4.1  # pin a specific release"#)}
 
             <h2>"resuma doctor"</h2>
             <p>"Quick check for Rust toolchain, " <code>"cargo-watch"</code> ", CLI version, and project " <code>"Cargo.toml"</code> " setup."</p>

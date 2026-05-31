@@ -49,7 +49,8 @@ pub fn pool() -> &'static sqlx::PgPool {
 }"#)}
 
             <h2>"Listing users with " <code>"#[load]"</code></h2>
-            {code_block(r#"#[derive(Clone, Serialize, Deserialize, sqlx::FromRow)]
+            {code_block(r#"#[derive(sqlx::FromRow)]
+#[data]
 struct User {
     id: i64,
     name: String,
@@ -95,7 +96,7 @@ async fn user_detail(req: &FlowRequest) -> Option<User> {
 }"#)}
 
             <h2>"Adding a user with " <code>"#[submit]"</code></h2>
-            {code_block(r#"#[derive(Deserialize)]
+            {code_block(r#"#[data]
 struct CreateUserForm {
     name: String,
     email: String,

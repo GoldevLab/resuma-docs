@@ -8,7 +8,7 @@ pub fn page(_req: FlowRequest) -> View {
             <p class="lead">"Stores wrap structured reactive state — mutations go through update or set, and the whole object serializes as one payload blob."</p>
 
             <h2>"use_store"</h2>
-            {code_block(r#"#[derive(Clone, Serialize, Deserialize)]
+            {code_block(r#"#[data]
 struct User {
     name: String,
     email: String,
@@ -30,7 +30,7 @@ user.set(User { name: "New".into(), email: u.email.clone() });"#)}
 
             <h2>"NoSerialize"</h2>
             <p>"Mark fields that must not cross the resumability boundary — handles, callbacks, or non-serializable server state."</p>
-            {code_block(r#"#[derive(Clone, Serialize, Deserialize)]
+            {code_block(r#"#[data]
 struct AppState {
     pub count: u32,
     #[serde(skip)]
@@ -38,7 +38,7 @@ struct AppState {
 }"#)}
 
             <h2>"Store vs Signal"</h2>
-            <p>"Use " <code>"use_signal"</code> " for scalar values. Use " <code>"use_store"</code> " when you have structured objects with multiple fields that update together."</p>
+            <p>"Use " <code>"signal"</code> " for scalar values. Use " <code>"use_store"</code> " when you have structured objects with multiple fields that update together."</p>
         </>
     }
 }

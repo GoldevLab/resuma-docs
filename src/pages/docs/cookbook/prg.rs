@@ -18,7 +18,7 @@ async fn create_item(form: ItemForm, _req: &FlowRequest) -> Result<Redirect, Sub
 }
 
 // Or any serializable struct with a `redirect` field:
-#[derive(Serialize)]
+#[data]
 struct CreateResult { redirect: String }
 
 #[submit]

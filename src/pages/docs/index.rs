@@ -25,8 +25,8 @@ pub fn page(_req: FlowRequest) -> View {
             </header>
 
             <div class="docs-stat-strip">
-                {metric_item("901 B", "initial JS (gzip)")}
-                {metric_item("4.2 KiB", "first interaction")}
+                {metric_item("907 B", "initial JS (gzip)")}
+                {metric_item("5.08 KiB", "first interaction")}
                 {metric_item("0 B", "static pages")}
                 {metric_item("1 crate", "core + Flow + CLI")}
             </div>
@@ -140,7 +140,7 @@ pub fn page(_req: FlowRequest) -> View {
             <p>
                 "Components run once on the server. SSR embeds signals and handler references in HTML; "
                 "a "
-                <strong>"901 B"</strong>
+                <strong>"907 B"</strong>
                 " gzip loader resumes interactivity on first click — no hydration, no WASM bundle by default."
             </p>
             <p>

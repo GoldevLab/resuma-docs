@@ -112,12 +112,12 @@ cd my-app"#)}
             {code_block(r#"use resuma::prelude::*;
 
 #[component]
-fn Hello() -> View {
-    let excited = use_signal(false);
+fn Hello() {
+    let excited = signal(false);
     view! {
         <main>
             <h1>"Hello Resuma"</h1>
-            <button onClick={ move |_| excited.set(true) }>
+            <button onClick={excited.set(true)}>
                 "Click me"
             </button>
         </main>
@@ -127,7 +127,7 @@ fn Hello() -> View {
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
     ResumaApp::new()
-        .page("/", || Hello::render(HelloProps::default()))
+        .component("/", Hello)
         .serve(ServeOptions::default())
         .await
 }"#)}

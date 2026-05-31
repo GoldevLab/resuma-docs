@@ -13,7 +13,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"Submit with Validate trait"</h2>
             {code_block(r#"use validator::{Validate, ValidationError};
 
-#[derive(Deserialize, Validate)]
+#[derive(Validate)]
+#[data]
 struct SignupForm {
     #[validate(email)]
     email: String,

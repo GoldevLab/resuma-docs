@@ -8,7 +8,7 @@ pub fn page(_req: FlowRequest) -> View {
             <p class="lead">"Context passes serializable values down the component tree without prop drilling."</p>
 
             <h2>"Define a context"</h2>
-            {code_block(r#"#[derive(Clone, Serialize, Deserialize)]
+            {code_block(r#"#[data]
 struct Locale {
     lang: String,
 }
@@ -17,13 +17,13 @@ static LOCALE: ContextId<Locale> = ContextId::new();"#)}
 
             <h2>"Provide and consume"</h2>
             {code_block(r#"#[component]
-fn App() -> View {
+fn App() {
     provide_context(&LOCALE, Locale { lang: "en".into() });
     view! { <Page /> }
 }
 
 #[component]
-fn Page() -> View {
+fn Page() {
     let locale = use_context(&LOCALE);
     view! {
         <p>"Language: " {locale.lang.clone()}</p>

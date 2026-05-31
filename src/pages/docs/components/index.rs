@@ -19,7 +19,7 @@ pub fn page(_req: FlowRequest) -> View {
                 </a>
                 <a href="/docs/components/signals" class="card" style="text-decoration: none;">
                     <h3>"Signals"</h3>
-                    <p>"use_signal, ReadSignal, WriteSignal — fine-grained reactivity."</p>
+                    <p>"signal, ReadSignal, WriteSignal — fine-grained reactivity."</p>
                 </a>
                 <a href="/docs/components/effects" class="card" style="text-decoration: none;">
                     <h3>"Effects"</h3>
@@ -82,10 +82,10 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"Quick example"</h2>
             <p>"A minimal component with resumable state:"</p>
             {code_block(r#"#[component]
-fn Counter() -> View {
-    let count = use_signal(0);
+fn Counter() {
+    let count = signal(0);
     view! {
-        <button onClick={ move |_| count.update(|c| *c += 1) }>
+        <button onClick={count.update(|c| *c += 1)}>
             {count}
         </button>
     }

@@ -79,8 +79,8 @@ pub fn page(_req: FlowRequest) -> View {
 
     let dash = "—";
     let zero = "0 B";
-    let resuma_init = "901 B";
-    let resuma_first = "4.20 KiB";
+    let resuma_init = "907 B";
+    let resuma_first = "5.08 KiB";
     let qwik_init = "1.96 KiB";
     let qwik_first = "22.32 KiB";
     let htmx_init = "16.21 KiB";
@@ -115,7 +115,7 @@ pub fn page(_req: FlowRequest) -> View {
     let validation_body = "Independent published measurements agree with our numbers (same ranking, same order of magnitude). Qwik preloader ~2 KiB, HTMX ~16 KiB, Astro React client ~59 KiB, React 19 Vite ~59 KiB, SvelteKit ~32 KiB in the SendOT portfolio series - all line up with our counter benchmark.";
     let validation_link = "Full reference table with links in the repo README. Next.js 142 KiB reflects the default create-next-app scaffold; optimized App Router apps often land near 67-78 KiB first-load JS.";
 
-    let t1 = "Resuma: ~901 B gzip initial, ~4 KiB gzip to full interactivity - no WASM, lazy core on first click.";
+    let t1 = "Resuma: 907 B gzip initial, 5.08 KiB gzip to full interactivity - no WASM, lazy core on first click.";
     let t2 = "Qwik: smallest resumable JS preloader (~2 KiB gzip), core chunk adds ~20 KiB gzip on first click.";
     let t3 = "templ + HTMX: ~16 KiB gzip for HTMX alone; interactivity is a server round-trip, not client hydration.";
     let t4 = "SolidStart / SvelteKit: mid-tier hydration bundles (~17-28 KiB gzip) for a minimal counter.";
@@ -226,8 +226,8 @@ cargo run -p example-counter"#;
                     </tr>
                 </thead>
                 <tbody>
-                    {runtime_row(loader_js, "Interactive pages only", "1.82 KiB", resuma_init, "746 B", true)}
-                    {runtime_row(core_js, "First interaction", "8.68 KiB", "3.32 KiB", "2.93 KiB", true)}
+                    {runtime_row(loader_js, "Interactive pages only", "1.84 KiB", resuma_init, "749 B", true)}
+                    {runtime_row(core_js, "First interaction", "11.67 KiB", "4.20 KiB", "3.71 KiB", true)}
                     {runtime_row("Static docs page", "Never", zero, zero, zero, true)}
                 </tbody>
             </table>

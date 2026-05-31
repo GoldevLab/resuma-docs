@@ -58,7 +58,7 @@ TURSO_DATABASE_URL=file:local.db
 # No auth token needed for file: URLs"#)}
 
             <h2>"Listing todos - " <code>"#[load]"</code></h2>
-            {code_block(r#"#[derive(Clone, Serialize, Deserialize)]
+            {code_block(r#"#[data]
 struct Todo {
     id: i64,
     task: String,
@@ -67,11 +67,15 @@ struct Todo {
 
 #[load]
 async fn todos(_req: &FlowRequest) -> Vec<Todo> {
-    let conn = crate::turso::connect().await.ok()?;
-    let mut rows = conn
+    let Ok(conn) = crate::turso::connect().await else {
+        return Vec::new();
+    };
+    let Ok(mut rows) = conn
         .query("SELECT id, task, done FROM todo ORDER BY id", ())
         .await
-        .ok()?;
+    else {
+        return Vec::new();
+    };
 
     let mut out = Vec::new();
     while let Ok(Some(row)) = rows.next().await {
@@ -96,7 +100,7 @@ pub fn page(_req: FlowRequest) -> View {
 }"#)}
 
             <h2>"Adding a todo - " <code>"#[submit]"</code></h2>
-            {code_block(r#"#[derive(Deserialize)]
+            {code_block(r#"#[data]
 struct NewTodo {
     task: String,
 }

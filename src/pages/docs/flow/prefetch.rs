@@ -10,7 +10,7 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"Handler prefetch (automatic)"</h2>
             <p>
                 "Every " <code>"#[component]"</code> " registers " <code>"/_resuma/handler/{Name}.js"</code> ". "
-                "The ~884 B loader uses " <code>"IntersectionObserver"</code> " to prefetch handlers before the user clicks."
+                "The 907 B loader uses " <code>"IntersectionObserver"</code> " to prefetch handlers before the user clicks."
             </p>
 
             <h2>"Loader prefetch (app-level)"</h2>

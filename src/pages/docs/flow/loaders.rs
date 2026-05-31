@@ -8,7 +8,7 @@ pub fn page(_req: FlowRequest) -> View {
             <p class="lead">"#[load] handlers fetch server data before a page renders — the Flow equivalent of route loaders."</p>
 
             <h2>"Define a loader"</h2>
-            {code_block(r#"#[derive(Clone, Serialize, Deserialize)]
+            {code_block(r#"#[data]
 struct HomeData {
     title: String,
 }

@@ -16,7 +16,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <div>
                         <span class="hero-badge">
                             <span class="hero-badge-dot"></span>
-                            "v0.3.3 · Rust · Server functions · Zero hydration"
+                            "v0.4.1 · Rust · Server functions · Zero hydration"
                         </span>
         <h1>
                             "Build "
@@ -27,13 +27,13 @@ pub fn page(_req: FlowRequest) -> View {
                         <p class="hero-lead">
                             "Build your whole app in Rust — UI, server functions, and forms on web standards. "
                             "Components run once on the server; signals drive targeted DOM updates without re-rendering the tree. "
-                            "901 B loader, progressive enhancement, no WASM hydration."
+                            "907 B loader, progressive enhancement, no WASM hydration."
                         </p>
                         <div class="hero-actions">
                             <a href="/docs/getting_started" class="btn btn-primary">"Get Started"</a>
                             <a href="/docs" class="btn btn-ghost">"Read the Docs"</a>
                             <a href="/docs/benchmark" class="btn btn-ghost">"Benchmark"</a>
-                            <a href="https://docs.rs/resuma/0.3.3" class="btn btn-ghost" target="_blank">"docs.rs"</a>
+                            <a href="https://docs.rs/resuma/0.4.1" class="btn btn-ghost" target="_blank">"docs.rs"</a>
                         </div>
                         <p class="hero-note">
                             "Install: " <code>"cargo install resuma"</code> " · one crate for core + Flow + CLI"
@@ -48,12 +48,10 @@ pub fn page(_req: FlowRequest) -> View {
                         </div>
                         <div class="hero-panel-body">
                             {code_block(r#"#[component]
-fn Counter() -> View {
-    let count = use_signal(0);
+fn Counter() {
+    let count = signal(0);
     view! {
-        <button onClick={
-            move |_| count.update(|c| *c += 1)
-        }>
+        <button onClick={count.update(|c| *c += 1)}>
             "Count: " {count}
         </button>
     }
@@ -68,8 +66,8 @@ fn Counter() -> View {
                 </section>
 
                 <div class="metrics-bar">
-                    {metric_item("901 B", "initial JS (gzip)")}
-                    {metric_item("4.2 KiB", "first interaction")}
+                    {metric_item("907 B", "initial JS (gzip)")}
+                    {metric_item("5.08 KiB", "first interaction")}
                     {metric_item("0 B", "static pages")}
                     {metric_item("1", "cargo dependency")}
                 </div>
@@ -123,7 +121,7 @@ fn Counter() -> View {
                             </tr>
                         </thead>
                         <tbody>
-                            {bench_row_full("Resuma", "901 B", "4.20 KiB", "0 B", true)}
+                            {bench_row_full("Resuma", "907 B", "5.08 KiB", "0 B", true)}
                             {bench_row_full("Leptos", "79.02 KiB", "79.02 KiB", dash, false)}
                             {bench_row_full("Next.js", "142.43 KiB", "142.43 KiB", dash, false)}
                             {bench_row_full("React (Vite)", "57.99 KiB", "57.99 KiB", dash, false)}
@@ -163,7 +161,7 @@ fn Counter() -> View {
                 <div class="pipeline">
                     {pipeline_step("1", "SSR renders once", "Rust walks the View tree, emits HTML + data-r-on:* attributes, and serialises signals into <script type=\"resuma/state\">.")}
                     {pipeline_step("2", "Payload travels light", "Handler sources move to lazy chunks. computed! / effect! / debounce! replay on the client via rs2js.")}
-                    {pipeline_step("3", "Browser resumes", "Loader (901 B gzip) bootstraps signals. Core loads on first interaction. Handlers fetch on demand — or prefetch in viewport.")}
+                    {pipeline_step("3", "Browser resumes", "Loader (907 B gzip) bootstraps signals. Core loads on first interaction. Handlers fetch on demand — or prefetch in viewport.")}
                 </div>
             </section>
 
@@ -174,7 +172,7 @@ fn Counter() -> View {
                         <h3>"Write UI once — on the server"</h3>
                         <p>"Use view! with JSX-like syntax, fine-grained signals, and onClick handlers that compile to lazy JavaScript. No WASM bundle. No client-side component re-execution."</p>
                         <ul class="showcase-list">
-                            <li>"use_signal for reactive state"</li>
+                            <li>"signal for reactive state"</li>
                             <li>"computed! / effect! for client replay"</li>
                             <li>"#[component] props builder generated for you"</li>
                         </ul>
@@ -183,8 +181,8 @@ fn Counter() -> View {
                     <div class="showcase-code">
                         <div class="code-window">
                             {code_block(r#"#[component]
-fn SearchBar() -> View {
-    let q = use_signal(String::new());
+fn SearchBar() {
+    let q = signal(String::new());
     let len = computed!([q], move || q.get().len());
 
     view! {
@@ -222,8 +220,8 @@ async fn search(q: String) -> Vec<String> {
 }
 
 #[component]
-fn LiveSearch() -> View {
-    let query = use_signal(String::new());
+fn LiveSearch() {
+    let query = signal(String::new());
     view! {
         <input onInput={ js! {
             state.query.set(event.target.value);
@@ -262,7 +260,7 @@ fn LiveSearch() -> View {
                         <p class="tag">"RESUMA¹ — CORE"</p>
                         <h3>"Components & resumability"</h3>
                         <ul>
-                            <li>"view!, #[component], use_signal"</li>
+                            <li>"view!, #[component], signal"</li>
                             <li>"computed! / effect! / debounce!"</li>
                             <li>"#[server], ResumaApp, ~3KB runtime"</li>
                         </ul>

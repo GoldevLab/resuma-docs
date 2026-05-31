@@ -21,13 +21,13 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"Signal lifecycle"</h2>
             {code_block(r#"// Server: allocate id + initial value
-let n = use_signal(0);
+let n = signal(0);
 
-// Serialized: { id: "s1", value: 0 }
+// Serialized: { id: 1, value: 0 }
 // Client: SignalCell with .set/.update + subscribers on DOM nodes
 
 // Handler closure captures signal id — not the Rust Signal handle
-onClick={move |_| n.update(|v| *v += 1)}"#)}
+onClick={n.update(|v| *v += 1)}"#)}
 
             <h2>"Effects"</h2>
             <ul>

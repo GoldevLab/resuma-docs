@@ -6,14 +6,14 @@ pub fn site_title() -> &'static str {
 
 pub fn site_description() -> &'static str {
     "Resumable Rust SSR framework. Every component is interactive by default — \
-     901 B initial JS, 4.2 KiB to full interactivity, server actions, and Flow. Zero hydration."
+     907 B initial JS, 5.08 KiB to full interactivity, server actions, and Flow. Zero hydration."
 }
 
 pub fn json_ld(site_url: &str) -> String {
     let base = site_url.trim_end_matches('/');
     let description = site_description().replace('"', "\\\"");
     format!(
-        r#"{{"@context":"https://schema.org","@graph":[{{"@type":"Organization","@id":"{base}/#organization","name":"Resuma","url":"{base}/","logo":"{base}/og.svg","sameAs":["https://github.com/GolfredoPerezFernandez/resuma","https://crates.io/crates/resuma","https://docs.rs/resuma"]}},{{"@type":"WebSite","@id":"{base}/#website","url":"{base}/","name":"Resuma Documentation","description":"{description}","inLanguage":"en","publisher":{{"@id":"{base}/#organization"}}}},{{"@type":"SoftwareApplication","@id":"{base}/#software","name":"Resuma","applicationCategory":"DeveloperApplication","applicationSubCategory":"Web Framework","operatingSystem":"Cross-platform","programmingLanguage":"Rust","softwareVersion":"0.3.3","description":"{description}","url":"{base}/","downloadUrl":"https://crates.io/crates/resuma","documentation":"https://docs.rs/resuma","offers":{{"@type":"Offer","price":"0","priceCurrency":"USD"}},"author":{{"@id":"{base}/#organization"}}}}]}}"#
+        r#"{{"@context":"https://schema.org","@graph":[{{"@type":"Organization","@id":"{base}/#organization","name":"Resuma","url":"{base}/","logo":"{base}/og.svg","sameAs":["https://github.com/GolfredoPerezFernandez/resuma","https://crates.io/crates/resuma","https://docs.rs/resuma"]}},{{"@type":"WebSite","@id":"{base}/#website","url":"{base}/","name":"Resuma Documentation","description":"{description}","inLanguage":"en","publisher":{{"@id":"{base}/#organization"}}}},{{"@type":"SoftwareApplication","@id":"{base}/#software","name":"Resuma","applicationCategory":"DeveloperApplication","applicationSubCategory":"Web Framework","operatingSystem":"Cross-platform","programmingLanguage":"Rust","softwareVersion":"0.4.1","description":"{description}","url":"{base}/","downloadUrl":"https://crates.io/crates/resuma","documentation":"https://docs.rs/resuma","offers":{{"@type":"Offer","price":"0","priceCurrency":"USD"}},"author":{{"@id":"{base}/#organization"}}}}]}}"#
     )
 }
 

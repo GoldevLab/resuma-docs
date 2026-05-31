@@ -18,7 +18,7 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"Dynamic bindings"</h2>
             <p>"Wrap Rust expressions in curly braces. Signals, strings, and numbers interpolate directly."</p>
             {code_block(r#"let title = "Docs".to_string();
-let count = use_signal(0);
+let count = signal(0);
 
 view! {
     <h1>{title}</h1>

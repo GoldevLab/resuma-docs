@@ -8,7 +8,7 @@ pub fn page(_req: FlowRequest) -> View {
             <p class="lead">"The js! macro embeds raw JavaScript for cases where rs2js translation is insufficient."</p>
 
             <h2>"Basic usage"</h2>
-            {code_block(r#"let count = use_signal(0);
+            {code_block(r#"let count = signal(0);
 
 view! {
     <button onClick={ js! {

@@ -1,6 +1,6 @@
 [package]
 name = "example-website"
-version = "0.3.3"
+version = "0.4.1"
 edition = "2021"
 publish = false
 
@@ -9,5 +9,5 @@ name = "website"
 path = "src/main.rs"
 
 [dependencies]
-resuma = "0.4.0"
+resuma = "0.4.1"
 tokio = { version = "1", features = ["full"] }

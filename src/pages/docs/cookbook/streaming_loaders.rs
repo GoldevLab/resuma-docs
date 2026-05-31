@@ -15,7 +15,7 @@ pub fn page(_req: FlowRequest) -> View {
     .await"#)}
 
             <h2>"Deferred loader"</h2>
-            {code_block(r#"#[derive(Clone, Serialize, Deserialize)]
+            {code_block(r#"#[data]
 struct ProductData {
     name: String,
     price: u32,
