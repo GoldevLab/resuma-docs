@@ -19,6 +19,11 @@ pub const ENTRIES: &[DocEntry] = &[
         keywords: "install cli scaffold tutorial",
     },
     DocEntry {
+        title: "Examples",
+        href: "/docs/examples",
+        keywords: "runnable cli launchops smoke fullstack server action submit loader navlink",
+    },
+    DocEntry {
         title: "Integrations",
         href: "/docs/integrations",
         keywords: "database sql turso drizzle",
