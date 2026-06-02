@@ -5,8 +5,8 @@ use resuma::FlowPageRegistry;
 pub struct PagesRegistry;
 
 impl FlowPageRegistry for PagesRegistry {
-fn render(&self, module: &str, req: FlowRequest) -> Option<View> {
-match module {
+    fn render(&self, module: &str, req: FlowRequest) -> Option<View> {
+        match module {
             "index" => Some(super::index::page(req)),
             "docs" => Some(super::docs::index::page(req)),
             "docs::api" => Some(super::docs::api::page(req)),
@@ -16,9 +16,13 @@ match module {
             "docs::components" => Some(super::docs::components::index::page(req)),
             "docs::components::client" => Some(super::docs::components::client::page(req)),
             "docs::components::context" => Some(super::docs::components::context::page(req)),
-            "docs::components::control_flow" => Some(super::docs::components::control_flow::page(req)),
+            "docs::components::control_flow" => {
+                Some(super::docs::components::control_flow::page(req))
+            }
             "docs::components::effects" => Some(super::docs::components::effects::page(req)),
-            "docs::components::error_boundary" => Some(super::docs::components::error_boundary::page(req)),
+            "docs::components::error_boundary" => {
+                Some(super::docs::components::error_boundary::page(req))
+            }
             "docs::components::form" => Some(super::docs::components::form::page(req)),
             "docs::components::handlers" => Some(super::docs::components::handlers::page(req)),
             "docs::components::islands" => Some(super::docs::components::islands::page(req)),
@@ -34,12 +38,18 @@ match module {
             "docs::cookbook" => Some(super::docs::cookbook::index::page(req)),
             "docs::cookbook::debouncer" => Some(super::docs::cookbook::debouncer::page(req)),
             "docs::cookbook::docker" => Some(super::docs::cookbook::docker::page(req)),
-            "docs::cookbook::loader_invalidation" => Some(super::docs::cookbook::loader_invalidation::page(req)),
+            "docs::cookbook::loader_invalidation" => {
+                Some(super::docs::cookbook::loader_invalidation::page(req))
+            }
             "docs::cookbook::portals" => Some(super::docs::cookbook::portals::page(req)),
             "docs::cookbook::prg" => Some(super::docs::cookbook::prg::page(req)),
-            "docs::cookbook::streaming_loaders" => Some(super::docs::cookbook::streaming_loaders::page(req)),
+            "docs::cookbook::streaming_loaders" => {
+                Some(super::docs::cookbook::streaming_loaders::page(req))
+            }
             "docs::cookbook::theme" => Some(super::docs::cookbook::theme::page(req)),
-            "docs::cookbook::view_transitions" => Some(super::docs::cookbook::view_transitions::page(req)),
+            "docs::cookbook::view_transitions" => {
+                Some(super::docs::cookbook::view_transitions::page(req))
+            }
             "docs::examples" => Some(super::docs::examples::page(req)),
             "docs::faq" => Some(super::docs::faq::page(req)),
             "docs::flow" => Some(super::docs::flow::index::page(req)),
@@ -66,19 +76,27 @@ match module {
             "docs::integrations::supabase" => Some(super::docs::integrations::supabase::page(req)),
             "docs::integrations::tailwind" => Some(super::docs::integrations::tailwind::page(req)),
             "docs::integrations::turso" => Some(super::docs::integrations::turso::page(req)),
-            "docs::integrations::validator" => Some(super::docs::integrations::validator::page(req)),
+            "docs::integrations::validator" => {
+                Some(super::docs::integrations::validator::page(req))
+            }
             "docs::package" => Some(super::docs::package::page(req)),
             "docs::project_structure" => Some(super::docs::project_structure::page(req)),
             "docs::reactivity" => Some(super::docs::reactivity::page(req)),
             "docs::search" => Some(super::docs::search::page(req)),
             "docs::security" => Some(super::docs::security::index::page(req)),
-            "docs::security::authorization" => Some(super::docs::security::authorization::page(req)),
-            "docs::security::backend_patterns" => Some(super::docs::security::backend_patterns::page(req)),
+            "docs::security::authorization" => {
+                Some(super::docs::security::authorization::page(req))
+            }
+            "docs::security::backend_patterns" => {
+                Some(super::docs::security::backend_patterns::page(req))
+            }
             "docs::security::configure" => Some(super::docs::security::configure::page(req)),
             "docs::security::middleware" => Some(super::docs::security::middleware::page(req)),
-            "docs::security::server_actions" => Some(super::docs::security::server_actions::page(req)),
+            "docs::security::server_actions" => {
+                Some(super::docs::security::server_actions::page(req))
+            }
             "docs::security::todo" => Some(super::docs::security::todo::page(req)),
             _ => None,
-}
-}
+        }
+    }
 }
