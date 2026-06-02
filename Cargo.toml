@@ -9,5 +9,6 @@ name = "website"
 path = "src/main.rs"
 
 [dependencies]
-resuma = "0.4.6"
+# Pin to release tag until 0.4.6 is on crates.io; then switch to: resuma = "0.4.6"
+resuma = { git = "https://github.com/GolfredoPerezFernandez/resuma.git", tag = "v0.4.6" }
 tokio = { version = "1", features = ["full"] }
