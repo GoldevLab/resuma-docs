@@ -28,9 +28,21 @@ view! {
     </button>
 }"#)}
 
+            <h2>"SPA navigation"</h2>
+            {code_block(r#"on:change={js! {
+    const el = event.target;
+    if (!(el instanceof HTMLInputElement)) return;
+    await __resuma.navigate(__resuma.buildUrl("/book", { fecha: el.value }));
+}}"#)}
+            <p>
+                "Always read form values from " <code>"event.target"</code> " in "
+                <code>"js!"</code> " handlers — " <code>"event.currentTarget"</code> " is unreliable in async code."
+            </p>
+
             <h2>"When to use js!"</h2>
             <ul>
                 <li>"Async fetch patterns with " <code>"await __resuma.action(...)"</code></li>
+                <li>"Query-driven loader refresh via " <code>"__resuma.navigate"</code></li>
                 <li>"Browser APIs not expressible in Rust closures"</li>
                 <li>"Complex client-side orchestration"</li>
             </ul>

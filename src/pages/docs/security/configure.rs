@@ -44,14 +44,32 @@ RESUMA_BODY_LIMIT=1048576
 RESUMA_RATE_ACTIONS=120    # per IP / minute — in-memory
 RESUMA_RATE_SUBMITS=60     # per IP / minute — in-memory"#)}
 
-            <h2>"CSP and with_head()"</h2>
-            <p>"Each HTML response gets a unique CSP nonce. Inline " <code>"&lt;style&gt;"</code> " and "
-                <code>"&lt;script&gt;"</code> " tags inside " <code>"with_head()"</code> " receive the nonce automatically. "
-                "External scripts (e.g. " <code>"ClientComponent"</code> " bundles at " <code>"/static/client/*.js"</code>") are allowed via "
-                <code>"script-src 'self'"</code> "."</p>
+            <h2>"CSP (Qwik-style, stronger defaults)"</h2>
+            <p>
+                "Like Qwik City's " <code>"plugin@csp.ts"</code> ", Resuma sets CSP on every SSR response — but uses a "
+                <strong>"crypto nonce"</strong> " per request (not " <code>"Date.now()"</code> "), adds "
+                <code>"'strict-dynamic'"</code> " on scripts, and skips CSP in dev when " <code>"RESUMA_DEV=1"</code> " unless "
+                <code>"RESUMA_CSP_DEV=1"</code> "."
+            </p>
+            <p>
+                "Inline " <code>"&lt;style&gt;"</code> " / " <code>"&lt;script&gt;"</code> " in "
+                <code>"with_head()"</code> " get the nonce automatically. Host images on "
+                <code>"'self'"</code> " via " <code>"public/images/…"</code> " (see "
+                <a href="/docs/flow/pwa">"PWA & public/"</a>"), "
+                <code>"static_asset"</code> ", or extend " <code>"CspConfig::img_src"</code> "."
+            </p>
             {code_block(r##"FlowApp::new()
-    .with_head("<style>.hero { color: var(--accent); }</style>") // nonce at SSR
-    .client_asset("chart", include_bytes!("../static/client/chart.js"))"##)}
+    .with_head("<style>.hero { color: var(--accent); }</style>")
+    .serve(FlowServeOptions {
+        security: SecurityConfig {
+            csp: CspConfig::production(["https://images.pexels.com"]),
+            ..SecurityConfig::from_env()
+        },
+        ..FlowServeOptions::default()
+    })"##)}
+            <p>"Environment: " <code>"RESUMA_CSP=0"</code> ", " <code>"RESUMA_CSP_IMG_SRC=https://cdn.example.com"</code> ", "
+                <code>"RESUMA_CSP_REPORT_ONLY=1"</code> ". Validate at "
+                <a href="https://csp-evaluator.withgoogle.com/" target="_blank" rel="noopener">"csp-evaluator.withgoogle.com"</a>"."</p>
 
             <h2>"Flow apps"</h2>
             {code_block(r#"FlowApp::new()

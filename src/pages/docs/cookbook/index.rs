@@ -40,6 +40,10 @@ pub fn page(_req: FlowRequest) -> View {
                     <h3>"Loader invalidation"</h3>
                     <p>"Refresh stale #[load] data after mutations."</p>
                 </a>
+                <a href="/docs/flow/query_params" class="card" style="text-decoration: none;">
+                    <h3>"Query-driven loaders"</h3>
+                    <p>"Date pickers, filters, SPA navigate."</p>
+                </a>
             </div>
         </>
     }

@@ -2,4 +2,4 @@
 # Copy to .cargo/config.toml — do not commit if paths differ per machine.
 #
 # [patch.crates-io]
-# resuma = { path = "../Resuma/crates/resuma" }
+# resuma = { path = "../resuma/crates/resuma" }

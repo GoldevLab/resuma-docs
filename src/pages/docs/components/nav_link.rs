@@ -17,7 +17,24 @@ pub fn page(_req: FlowRequest) -> View {
 }"#)}
 
             <h2>"How matching works"</h2>
-            <p>"Exact match wins. Prefix match applies when the current path starts with href followed by a slash — so " <code>"/docs"</code> " is active on " <code>"/docs/getting_started"</code>"."</p>
+            <p>
+                "Exact match wins. Prefix match applies when the current path starts with href followed by a slash — "
+                <code>"/docs"</code> " is active on " <code>"/docs/getting_started"</code> "."
+            </p>
+            <p>
+                "If " <code>"href"</code> " has no query string, the link stays active when the URL adds query params — "
+                <code>"/reservar"</code> " stays active on " <code>"/reservar?fecha=…"</code> ". "
+                "Links built with " <code>"query_nav_link"</code> " require an exact query match."
+            </p>
+
+            <h2>"Query in the URL"</h2>
+            {code_block(r#"query_nav_link(
+    "/servicios",
+    &[("destacado", "1")],
+    "active",
+    "pill",
+    vec![/* link label */],
+)"#)}
 
             <h2>"Client navigation"</h2>
             <p>
@@ -26,6 +43,11 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"history.pushState"</code> " — no full document reload."
             </p>
             <p>"Modifier clicks (Ctrl/Cmd, middle button) and " <code>"target=\"_blank\""</code> " fall back to normal browser navigation."</p>
+            <p>
+                "Programmatic navigation: " <code>"await __resuma.navigate(href)"</code> " and "
+                <code>"__resuma.buildUrl(path, { key: value })"</code> " — see "
+                <a href="/docs/flow/query_params">"Query params"</a> "."
+            </p>
 
             <h2>"In layouts"</h2>
             {code_block(r#"#[layout("/docs")]

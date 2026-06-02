@@ -79,6 +79,16 @@ pub const ENTRIES: &[DocEntry] = &[
         keywords: "load data fetch server",
     },
     DocEntry {
+        title: "Query params",
+        href: "/docs/flow/query_params",
+        keywords: "search fecha servicio loader_refresh navigate buildUrl booking",
+    },
+    DocEntry {
+        title: "PWA & public",
+        href: "/docs/flow/pwa",
+        keywords: "manifest service worker installable icons precache static files",
+    },
+    DocEntry {
         title: "Prefetch",
         href: "/docs/flow/prefetch",
         keywords: "viewport lazy handler",

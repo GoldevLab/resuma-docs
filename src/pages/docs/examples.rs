@@ -15,7 +15,7 @@ pub fn page(_req: FlowRequest) -> View {
                 "Documentation is served at "
                 <a href="https://resuma-docs.fly.dev/" target="_blank">"resuma-docs.fly.dev"</a>
                 " (source in "
-                <code>"apps/docs-site"</code>", not an example crate)."
+                <code>"apps/resuma-docs"</code>", not an example crate)."
             </p>
 
             <table class="docs-table">
@@ -75,6 +75,7 @@ pub fn page(_req: FlowRequest) -> View {
                 <li><strong>"Learning Resuma?"</strong>" → " <code>"counter"</code> " then " <code>"todo"</code></li>
                 <li><strong>"Production backend patterns?"</strong>" → " <code>"todo"</code> " + " <a href="/docs/security">"Security docs"</a></li>
                 <li><strong>"Multi-page site?"</strong>" → " <code>"flow-pages"</code> " or " <code>"resuma new --template flow"</code></li>
+                <li><strong>"Bookings / calendars?"</strong>" → " <code>"resuma new --template flow-booking"</code> " + " <a href="/docs/flow/query_params">"Query params"</a></li>
                 <li><strong>"Streaming / loaders?"</strong>" → " <code>"flow-demo"</code></li>
                 <li><strong>"Full-stack + SQL?"</strong>" → " <code>"resuma new --template flow-fullstack"</code></li>
             </ul>
@@ -85,7 +86,7 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"NavLink"</code> ", " <code>"#[load]"</code> ", " <code>"#[submit]"</code> ", "
                 <code>"#[server]"</code> ", " <code>"#[data]"</code> ", signals, client handlers, redirects, flash messages, and middleware."
             </p>
-            {code_block(r#"cargo install resuma --version 0.4.4 --force
+            {code_block(r#"cargo install resuma --version 0.4.6 --force
 resuma new launchops --template basic
 cd launchops
 

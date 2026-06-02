@@ -1,8 +1,8 @@
-# Resuma documentation site (`site-docs`)
+# Resuma documentation site (`resuma-docs`)
 
 Official docs and landing page for [Resuma](https://github.com/GolfredoPerezFernandez/resuma).
 
-**Path:** sibling to the framework monorepo — `apps/site-docs` (i.e. `../site-docs` from `apps/Resuma`).  
+**Path:** sibling to the framework repo — `apps/resuma-docs` (i.e. `../resuma-docs` from `apps/resuma`).  
 **GitHub:** [resuma-docs](https://github.com/GolfredoPerezFernandez/resuma-docs)  
 **Live:** https://resuma-docs.fly.dev
 
@@ -52,7 +52,7 @@ Token alternativo (más permisos, varias apps): `fly auth token`
 
 ### Deploy manual
 
-From the **real** repo folder (`apps/docs-site` on disk — not a Windows junction):
+From the repo root (`apps/resuma-docs`):
 
 ```bash
 docker build -t resuma-docs .   # optional local test

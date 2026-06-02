@@ -49,6 +49,14 @@ pub fn page(_req: FlowRequest) -> View {
                     <h3>"Streaming"</h3>
                     <p>"Deferred #[load(stream)] SSR."</p>
                 </a>
+                <a href="/docs/flow/query_params" class="card" style="text-decoration: none;">
+                    <h3>"Query params"</h3>
+                    <p>"Search params, loader_refresh_input."</p>
+                </a>
+                <a href="/docs/flow/pwa" class="card" style="text-decoration: none;">
+                    <h3>"PWA & public/"</h3>
+                    <p>"Installable app, static files."</p>
+                </a>
             </div>
 
             <h2>"Flow path"</h2>

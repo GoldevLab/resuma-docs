@@ -15,14 +15,18 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"How big is the client bundle?"</h2>
             <p>"Static pages ship zero JS. Interactive pages load loader.js (~1–2 KB gzipped), then core.js on first interaction. Handler and island chunks load on demand. See the " <a href="/docs/benchmark">"benchmark page"</a> " for measured numbers."</p>
 
-            <h2>"How does resumability compare to hydration?"</h2>
-            <p>"Hydration re-runs components on the client to attach listeners. Resumability serializes signals and handler references during SSR; the client resumes only the interactions users trigger. Every " <code>"#[component]"</code> " is a resumable boundary; " <code>"#[island]"</code> " is optional for heavy lazy bundles."</p>
-
             <h2>"Do I need Node.js?"</h2>
             <p>"Only if you rebuild the JS runtime from source. Prebuilt assets ship inside the " <code>"resuma"</code> " crate (" <code>"assets/"</code> "). For app development, Rust + cargo (or " <code>"cargo install resuma"</code> ") is enough."</p>
 
             <h2>"Can I use Resuma without Flow?"</h2>
             <p>"Yes. ResumaApp supports single-page apps with manual route registration — ideal for counters, widgets, and embedded UI. Flow adds multi-page routing, loaders, submits, and middleware when you need a full site."</p>
+
+            <h2>"Does Flow include a PWA?"</h2>
+            <p>
+                "Yes — manifest and service worker are enabled by default on " <code>"FlowApp"</code> ". "
+                "Use " <code>".without_pwa()"</code> " or " <code>"RESUMA_PWA=0"</code> " to disable. "
+                <a href="/docs/flow/pwa">"Details →"</a>
+            </p>
 
             <h2>"How do forms work without JavaScript?"</h2>
             <p>"The " <code>"Form"</code> " component renders a real HTML form with " <code>"POST /_resuma/submit/:name"</code> ". Progressive enhancement: the runtime intercepts submit when loaded, but forms work as plain POST without JS."</p>

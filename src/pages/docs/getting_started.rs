@@ -5,7 +5,7 @@ use crate::site::{code_block, playground_card};
 pub fn page(_req: FlowRequest) -> View {
     view! {
         <>
-            <h1>"Getting Started Resumably"</h1>
+            <h1>"Getting Started"</h1>
             <p class="lead">
                 "Resuma is a resumable Rust web framework — no hydration, no eager JS execution. "
                 "Components run on the server; a tiny loader resumes interactivity on demand. "
@@ -33,8 +33,9 @@ pub fn page(_req: FlowRequest) -> View {
                 "Docs are live at "
                 <a href="https://resuma-docs.fly.dev/" target="_blank">"resuma-docs.fly.dev"</a>
                 ". To hack on the docs site locally: "
-                <code>"cargo run -p example-website"</code> " (source in "
-                <code>"apps/docs-site"</code>", not under "
+                <code>"cargo run"</code> " (from "
+                <code>"apps/resuma-docs"</code>", sibling to "
+                <code>"apps/resuma"</code>"; not under "
                 <code>"examples/"</code>")."
             </p>
 
@@ -79,19 +80,31 @@ resuma --help"#)}
             <div class="template-grid">
                 <div class="template-pill">
                     <strong>"basic"</strong>
-                    <span>"Static SSR page · zero client JS · clean starting point"</span>
+                    <span>"Static SSR · zero client JS"</span>
                 </div>
                 <div class="template-pill">
                     <strong>"todo"</strong>
-                    <span>"Signals · #[server] · #[island] · js! — all Resuma features"</span>
+                    <span>"Signals · #[server] · #[island] · js!"</span>
+                </div>
+                <div class="template-pill">
+                    <strong>"flow"</strong>
+                    <span>"Multi-page · src/pages/ · layouts"</span>
+                </div>
+                <div class="template-pill">
+                    <strong>"flow-booking"</strong>
+                    <span>"Appointments · query loaders · SPA date picker"</span>
+                </div>
+                <div class="template-pill">
+                    <strong>"flow-fullstack"</strong>
+                    <span>"Flow + SQLx SQLite sample"</span>
                 </div>
             </div>
-            {code_block(r#"# Static page (default)
-resuma new my-app
+            {code_block(r#"resuma new my-app                    # interactive menu
 resuma new my-app --template basic
-
-# Full feature showcase
 resuma new my-app --template todo
+resuma new my-app --template flow
+resuma new my-app --template flow-booking
+resuma new my-app --template flow-fullstack
 
 cd my-app"#)}
 
@@ -103,7 +116,9 @@ cd my-app"#)}
                 <code>"resuma dev"</code> " installs " <code>"cargo-watch"</code> " if needed, rebuilds on save, and refreshes the browser automatically."
             </p>
             {code_block(r#"resuma dev
-    resuma dev --open   # open http://127.0.0.1:3000"#)}
+resuma dev --open          # open browser
+resuma dev --kill-stale    # free port if something is stuck (Linux)
+# cargo-watch also watches public/ for static file changes"#)}
             <p>"Without the CLI, plain Cargo works too:"</p>
             {code_block("cargo run")}
 

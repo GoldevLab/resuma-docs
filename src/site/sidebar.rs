@@ -76,6 +76,7 @@ pub fn doc_sidebar(_active_path: &str) -> View {
                 "/docs/flow/caching" => "Caching",
                 "/docs/flow/streaming" => "Streaming",
                 "/docs/flow/prefetch" => "Prefetch",
+                "/docs/flow/pwa" => "PWA & public/",
             )}
 
             <h4>"Integrations"</h4>
@@ -110,7 +111,6 @@ pub fn doc_sidebar(_active_path: &str) -> View {
                 "/docs/architecture" => "Architecture",
                 "/docs/reactivity" => "Reactivity internals",
                 "/docs/package" => "Package",
-                "/docs/benchmark" => "Benchmark",
                 "/docs/cli" => "CLI",
                 "/docs/api" => "API reference",
             )}

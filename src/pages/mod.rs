@@ -48,6 +48,7 @@ pub mod docs {
         pub mod middleware;
         pub mod pages;
         pub mod prefetch;
+        pub mod pwa;
         pub mod query_params;
         pub mod routing;
         pub mod streaming;

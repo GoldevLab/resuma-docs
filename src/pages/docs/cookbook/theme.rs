@@ -35,6 +35,16 @@ fn ThemedButton() -> View {
     }
 }"#)}
 
+            <h2>"PWA colors from theme"</h2>
+            {code_block(r##"FlowApp::new()
+    .with_theme_pwa(Theme {
+        primary: "#c9a962".into(),
+        background: "#0a0908".into(),
+        ..Default::default()
+    })
+    .auto_pages("src/pages", PagesRegistry)"##)}
+            <p><a href="/docs/flow/pwa">"PWA & static files"</a>"."</p>
+
             <h2>"Toggle mode"</h2>
             {code_block(r#"let dark = signal(true);
 

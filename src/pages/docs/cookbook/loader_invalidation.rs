@@ -19,6 +19,14 @@ async fn cart(req: &FlowRequest) -> Cart {
     cart_for(req.user_id()).await
 }"#)}
 
+            <h2>"Same page, new query (SPA)"</h2>
+            <p>
+                "Filters and date pickers on one route (e.g. " <code>"/reservar?fecha="</code> ") should call "
+                <code>"__resuma.navigate"</code> " or use "
+                <code>"loader_refresh_input"</code> " — see "
+                <a href="/docs/flow/query_params">"Query params"</a> "."
+            </p>
+
             <h2>"After submit: full page navigation"</h2>
             <p>
                 "The simplest invalidation — redirect to GET (see "

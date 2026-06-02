@@ -33,6 +33,44 @@ async fn search_results(req: &FlowRequest) -> Result<Vec<Item>, LoaderError> {
     <input type="search" name="q" placeholder="Search docs…" />
 </form>"#)}
 
+            <h2>"Reload loaders without full page refresh (SPA)"</h2>
+            <p>
+                "Changing only client state does " <strong>"not"</strong> " re-run "
+                <code>"#[load]"</code> ". For booking flows (pick a date, refresh time slots), "
+                "navigate to the same path with new query params so the server renders again:"
+            </p>
+            {code_block(r#"on:change={js! {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement) || !input.value) return;
+    await __resuma.navigate(__resuma.buildUrl("/reservar", {
+        fecha: input.value,
+        servicio: new URLSearchParams(location.search).get("servicio"),
+    }));
+}}"#)}
+            <p>
+                <strong>"Use " <code>"event.target"</code> ", not " <code>"event.currentTarget"</code> "."</strong>
+                " In async handlers, " <code>"currentTarget"</code> " is often null."
+            </p>
+
+            <h3>"Rust helpers"</h3>
+            {code_block(r#"loader_refresh_input(
+    "/reservar",
+    "fecha",
+    &date,
+    &["servicio"],   // query keys to preserve
+    "date",
+    vec![("required".into(), AttrValue::Bool(true))],
+)
+
+query_nav_link("/servicios", &[("cat", "corte")], "active", "", vec![...]);
+
+build_query_href("/book", &[("fecha", "2026-06-02")]);"#)}
+            <p>
+                "See template " <code>"flow-booking"</code> " ("
+                <code>"resuma new my-app --template flow-booking"</code>") and "
+                <a href="/docs/flow/pwa">"PWA and public/"</a> " for a full sample."
+            </p>
+
             <h2>"Flash after redirect"</h2>
             <p>
                 "Combine " <a href="/docs/cookbook/prg">"PRG redirects"</a> " with a query flag:"
@@ -60,7 +98,7 @@ pub fn page(req: FlowRequest) -> View {
             <ul>
                 <li>"Values are percent-decoded by the Flow request layer."</li>
                 <li>"Duplicate keys: last value wins (same as typical query parsers)."</li>
-                <li>"Use path params (" <code>"req.param(\"id\")"</code> ") for " <code>"/users/:id"</code> " segments."</li>
+                <li>"Use path params (" <code>"req.param('id')"</code> ") for " <code>"/users/:id"</code> " segments."</li>
             </ul>
         </>
     }
