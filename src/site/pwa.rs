@@ -36,5 +36,6 @@ pub fn config() -> FlowPwaConfig {
         offline_title: "You are offline".into(),
         offline_message:
             "Resuma docs need a network connection for the latest pages. Cached content may still be available.".into(),
+        manifest_icons: Vec::new(),
     }
 }
