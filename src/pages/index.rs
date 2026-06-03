@@ -16,7 +16,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <div>
                         <span class="hero-badge">
                             <span class="hero-badge-dot"></span>
-                            "v0.4.6 · Rust · Server functions · Zero hydration"
+                            "v0.4.6 · Rust web framework · Not a resume builder"
                         </span>
         <h1>
                             "Build "
