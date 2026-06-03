@@ -30,7 +30,7 @@ pub fn page(_req: FlowRequest) -> View {
             </ul>
             <p>"Users depend on a single crate:"</p>
             {code_block(r#"[dependencies]
-resuma = "0.4.6"
+resuma = "0.4.7"
 tokio  = { version = "1", features = ["full"] }"#)}
 
             <p>"Everything re-exports through " <code>"resuma::prelude"</code>":"</p>
