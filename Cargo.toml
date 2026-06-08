@@ -9,5 +9,5 @@ name = "website"
 path = "src/main.rs"
 
 [dependencies]
-resuma = { path = "../resuma/crates/resuma" }
+resuma = "0.4.8"
 tokio = { version = "1", features = ["full"] }
