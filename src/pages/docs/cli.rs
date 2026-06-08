@@ -28,6 +28,15 @@ resuma new my-app --template flow-fullstack # Flow + SQLx sample"#)}
 resuma add sqlx    # src/db.rs, migrations/, deps
 resuma add turso  # src/turso.rs, .env.example"#)}
 
+            <h2>"resuma install skill"</h2>
+            <p>"Install the Resuma agent skill for Cursor, Codex, or project-local " <code>".cursor/skills/"</code> ". See " <a href="/docs/integrations/ai_assistant">"AI assistant guide"</a> "."</p>
+            {code_block(r#"resuma install skill                 # ~/.cursor/skills/resuma/
+resuma install skill --project       # .cursor/skills/resuma/
+resuma install skill --target agents # ~/.agents/skills/resuma/
+resuma install skill --target all
+resuma install skill --list
+resuma install skill --force"#)}
+
             <h2>"resuma update"</h2>
             <p>"Bump " <code>"resuma"</code> " and " <code>"resuma-macros"</code> " in the current project, or reinstall the global CLI."</p>
             {code_block(r#"resuma update              # align project deps with CLI version

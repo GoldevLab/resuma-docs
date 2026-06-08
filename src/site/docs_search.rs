@@ -74,6 +74,21 @@ pub const ENTRIES: &[DocEntry] = &[
         keywords: "open graph social preview",
     },
     DocEntry {
+        title: "SEO & GEO",
+        href: "/docs/integrations/seo_geo",
+        keywords: "meta pixel json-ld robots llms gptbot analytics",
+    },
+    DocEntry {
+        title: "AI assistant",
+        href: "/docs/integrations/ai_assistant",
+        keywords: "cursor skill mcp codex gemini agent install",
+    },
+    DocEntry {
+        title: "CLI",
+        href: "/docs/cli",
+        keywords: "resuma install skill dev build routes doctor",
+    },
+    DocEntry {
         title: "Loaders",
         href: "/docs/flow/loaders",
         keywords: "load data fetch server",

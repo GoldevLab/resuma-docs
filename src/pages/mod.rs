@@ -57,11 +57,13 @@ pub mod docs {
     pub mod getting_started;
     pub mod index;
     pub mod integrations {
+        pub mod ai_assistant;
         pub mod auth;
         pub mod e2e;
         pub mod i18n;
         pub mod index;
         pub mod og_image;
+        pub mod seo_geo;
         pub mod sqlx;
         pub mod supabase;
         pub mod tailwind;

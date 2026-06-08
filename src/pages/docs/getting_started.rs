@@ -72,6 +72,13 @@ cargo install --path crates/resuma --features cli
 
 resuma --help"#)}
 
+            <h2>"Install the AI skill (Cursor / Codex)"</h2>
+            <p>
+                "Optional but recommended — teaches your editor Resuma patterns (signals, Show, Flow, server actions):"
+            </p>
+            {code_block("resuma install skill")}
+            <p><a href="/docs/integrations/ai_assistant">"Full guide: skill vs MCP, Gemini, team setup →"</a></p>
+
             <h2>"Create an app using the CLI"</h2>
             <p>
                 "Use " <code>"resuma new"</code> " or " <code>"resuma create"</code> " to scaffold a starter. "

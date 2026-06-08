@@ -16,7 +16,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <div>
                         <span class="hero-badge">
                             <span class="hero-badge-dot"></span>
-                            "v0.4.7 · Rust web framework · Not a resume builder"
+                            "v0.4.8 · Rust web framework · Not a resume builder"
                         </span>
         <h1>
                             "Build "
@@ -33,10 +33,10 @@ pub fn page(_req: FlowRequest) -> View {
                             <a href="/docs/getting_started" class="btn btn-primary">"Get Started"</a>
                             <a href="/docs" class="btn btn-ghost">"Read the Docs"</a>
                             <a href="/docs/benchmark" class="btn btn-ghost">"Benchmark"</a>
-                            <a href="https://docs.rs/resuma/0.4.7" class="btn btn-ghost" target="_blank">"docs.rs"</a>
+                            <a href="https://docs.rs/resuma/0.4.8" class="btn btn-ghost" target="_blank">"docs.rs"</a>
                         </div>
                         <p class="hero-note">
-                            "Install: " <code>"cargo install resuma"</code> " · one crate for core + Flow + CLI"
+                            "Install: " <code>"cargo install resuma"</code> " · " <code>"resuma install skill"</code> " for Cursor/Codex"
                         </p>
                     </div>
                     <div class="hero-panel">
@@ -276,6 +276,16 @@ fn LiveSearch() {
                         </ul>
                     </article>
                 </div>
+            </section>
+
+            <section class="section section-alt">
+                <p class="section-eyebrow">"AI assistants"</p>
+                <h2 class="section-title">"Build faster with Cursor, Codex, or Gemini"</h2>
+                <p class="section-sub">"Install the Resuma agent skill in one command — reactive view! rules, Flow patterns, server actions, and debugging checklists built in."</p>
+                <div class="cta-install" style="margin: 1rem auto; max-width: 32rem;">"resuma install skill"</div>
+                <p style="text-align: center;">
+                    <a href="/docs/integrations/ai_assistant" class="btn btn-ghost">"AI assistant guide →"</a>
+                </p>
             </section>
 
             <section class="section">

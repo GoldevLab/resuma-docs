@@ -90,6 +90,8 @@ pub fn doc_sidebar(_active_path: &str) -> View {
                 "/docs/integrations/i18n" => "i18n",
                 "/docs/integrations/tailwind" => "Tailwind",
                 "/docs/integrations/og_image" => "OG Image",
+                "/docs/integrations/seo_geo" => "SEO & GEO",
+                "/docs/integrations/ai_assistant" => "AI assistant",
                 "/docs/integrations/e2e" => "E2E testing",
             )}
 

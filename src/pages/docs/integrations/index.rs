@@ -57,9 +57,21 @@ pub fn page(_req: FlowRequest) -> View {
                     <h3>"OG Image"</h3>
                     <p>"Social preview cards."</p>
                 </a>
+                <a href="/docs/integrations/seo_geo" class="card" style="text-decoration: none;">
+                    <h3>"SEO & GEO"</h3>
+                    <p>"Meta Pixel, JSON-LD, robots.txt, llms.txt."</p>
+                </a>
                 <a href="/docs/integrations/i18n" class="card" style="text-decoration: none;">
                     <h3>"i18n"</h3>
                     <p>"Locale loaders and Fluent."</p>
+                </a>
+            </div>
+
+            <h2>"AI coding assistants"</h2>
+            <div class="grid-3">
+                <a href="/docs/integrations/ai_assistant" class="card" style="text-decoration: none;">
+                    <h3>"Cursor / Codex skill"</h3>
+                    <p>"One command: resuma install skill — teaches the agent Resuma patterns."</p>
                 </a>
             </div>
 
