@@ -384,9 +384,10 @@ pre.code code { background: none; border: 0; padding: 0; }
   margin: -0.25rem -1.25rem 2rem; padding: 2rem 1.25rem 2.25rem;
   background: linear-gradient(180deg, var(--primary-soft) 0%, var(--bg) 100%);
   border-bottom: 1px solid var(--border);
+  border-radius: 12px;
 }
 @media (min-width: 960px) {
-  .docs-hero { margin-left: calc(-1 * var(--sidebar-w) - 2rem); margin-right: -2rem; padding: 2.5rem 2rem 2.75rem; }
+  .docs-hero { padding: 2.5rem 1.25rem 2.75rem; }
 }
 .docs-hero h1 { font-size: clamp(1.85rem, 4vw, 2.35rem); margin: 0 0 0.65rem; }
 .docs-hero-lead { color: var(--muted); font-size: 1.05rem; line-height: 1.6; margin: 0 0 1.25rem; max-width: 38rem; }
@@ -518,6 +519,7 @@ pre.code code { background: none; border: 0; padding: 0; }
 .docs-sidebar a:hover { background: var(--bg-subtle); color: var(--text); text-decoration: none; }
 
 .docs-main { min-width: 0; max-width: 48rem; }
+.docs-main:has(.docs-hub) { max-width: 52rem; }
 .docs-main h1 { font-size: 2rem; margin: 0 0 0.5rem; letter-spacing: -0.02em; color: var(--text); }
 .docs-main h2 {
   font-size: 1.25rem; margin: 2rem 0 0.65rem; padding-top: 0.5rem;
