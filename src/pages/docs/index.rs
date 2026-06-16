@@ -20,7 +20,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <a href="/docs/benchmark">"Benchmark"</a>
                     <a href="/docs/examples">"Examples"</a>
                     <a href="https://docs.rs/resuma/1.0.2" target="_blank">"API (docs.rs)"</a>
-                    <a href="https://github.com/GolfredoPerezFernandez/resuma" target="_blank">"GitHub"</a>
+                    <a href="https://github.com/GoldevLab/resuma" target="_blank">"GitHub"</a>
                 </div>
             </header>
 
@@ -165,7 +165,7 @@ pub fn page(_req: FlowRequest) -> View {
                 " · "
                 <a href="https://docs.rs/resuma/1.0.2" target="_blank">"docs.rs"</a>
                 " · benchmark source in the "
-                <a href="https://github.com/GolfredoPerezFernandez/resuma/tree/main/benchmark" target="_blank">"GitHub repo"</a>"."
+                <a href="https://github.com/GoldevLab/resuma/tree/main/benchmark" target="_blank">"GitHub repo"</a>"."
             </p>
         </div>
     }

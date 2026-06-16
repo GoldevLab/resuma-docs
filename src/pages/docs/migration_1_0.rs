@@ -57,13 +57,13 @@ resuma = "1.0"
             <p>
                 "MSRV Rust 1.91+, runtime gzip budgets (loader ≤ 1 KiB, core ≤ 5.7 KiB), semver for public API. "
                 "Full policy: "
-                <a href="https://github.com/GolfredoPerezFernandez/resuma/blob/main/docs/STABILITY.md" target="_blank" rel="noopener">"STABILITY.md"</a> " on GitHub."
+                <a href="https://github.com/GoldevLab/resuma/blob/main/docs/STABILITY.md" target="_blank" rel="noopener">"STABILITY.md"</a> " on GitHub."
             </p>
 
             <h2>"From other frameworks"</h2>
             <ul>
-                <li><a href="https://github.com/GolfredoPerezFernandez/resuma/blob/main/docs/MIGRATION_LEPTOS.md" target="_blank" rel="noopener">"Leptos → Resuma"</a></li>
-                <li><a href="https://github.com/GolfredoPerezFernandez/resuma/blob/main/docs/MIGRATION_QWIK.md" target="_blank" rel="noopener">"Qwik → Resuma"</a></li>
+                <li><a href="https://github.com/GoldevLab/resuma/blob/main/docs/MIGRATION_LEPTOS.md" target="_blank" rel="noopener">"Leptos → Resuma"</a></li>
+                <li><a href="https://github.com/GoldevLab/resuma/blob/main/docs/MIGRATION_QWIK.md" target="_blank" rel="noopener">"Qwik → Resuma"</a></li>
             </ul>
         </>
     }

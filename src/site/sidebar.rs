@@ -122,7 +122,7 @@ pub fn doc_sidebar(_active_path: &str) -> View {
             <nav>
                 <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a>
                 <a href="https://docs.rs/resuma/1.0.2" target="_blank">"docs.rs"</a>
-                <a href="https://github.com/GolfredoPerezFernandez/resuma" target="_blank">"GitHub"</a>
+                <a href="https://github.com/GoldevLab/resuma" target="_blank">"GitHub"</a>
             </nav>
         </aside>
     }

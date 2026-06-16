@@ -26,7 +26,7 @@ fn SiteLayout() -> View {
                     <a href="/docs/getting_started" class="btn btn-ghost">"Get Started"</a>
                     <a href="https://docs.rs/resuma/1.0.2" class="btn btn-ghost" target="_blank">"docs.rs"</a>
                     <a href="https://crates.io/crates/resuma" class="btn btn-ghost" target="_blank">"crates.io"</a>
-                    <a href="https://github.com/GolfredoPerezFernandez/resuma" class="btn btn-primary">"GitHub"</a>
+                    <a href="https://github.com/GoldevLab/resuma" class="btn btn-primary">"GitHub"</a>
                 </div>
             </div>
         </header>
@@ -39,7 +39,7 @@ fn SiteLayout() -> View {
                 <a href="/docs/package">"Install guide"</a>
                 <a href="/docs/architecture">"Architecture"</a>
                 <a href="/docs/benchmark">"Benchmarks"</a>
-                <a href="https://github.com/GolfredoPerezFernandez/resuma" target="_blank">"GitHub"</a>
+                <a href="https://github.com/GoldevLab/resuma" target="_blank">"GitHub"</a>
             </div>
         </footer>
     }

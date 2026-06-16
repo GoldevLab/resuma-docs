@@ -74,7 +74,7 @@ pub fn page(_req: FlowRequest) -> View {
     let col_brotli = "Brotli";
 
     let readme_href =
-        "https://github.com/GolfredoPerezFernandez/resuma/blob/main/benchmark/README.md";
+        "https://github.com/GoldevLab/resuma/blob/main/benchmark/README.md";
     let readme_label = "benchmark/README.md";
 
     let dash = "—";

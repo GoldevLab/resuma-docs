@@ -66,7 +66,7 @@ pub fn page(_req: FlowRequest) -> View {
                 <a href="https://docs.rs/resuma-macros/1.0.2" target="_blank">"docs.rs/resuma-macros"</a>
             </p>
             <p>"From source while developing the monorepo:"</p>
-            {code_block(r#"git clone https://github.com/GolfredoPerezFernandez/resuma
+            {code_block(r#"git clone https://github.com/GoldevLab/resuma
 cd resuma
 cargo install --path crates/resuma --features cli
 

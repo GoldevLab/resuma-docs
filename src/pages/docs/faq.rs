@@ -46,7 +46,7 @@ pub fn page(_req: FlowRequest) -> View {
                 "Yes — " <strong>"1.0"</strong> " follows semver for public APIs. Security defaults (CSRF, CSP, rate limits) ship enabled. "
                 "See " <a href="/docs/security">"Security"</a> ", the "
                 <a href="/docs/security/todo">"todo reference"</a> ", and "
-                <a href="https://github.com/GolfredoPerezFernandez/resuma/blob/main/docs/STABILITY.md" target="_blank" rel="noopener">"STABILITY.md"</a> " in the framework repo."
+                <a href="https://github.com/GoldevLab/resuma/blob/main/docs/STABILITY.md" target="_blank" rel="noopener">"STABILITY.md"</a> " in the framework repo."
             </p>
 
             <h2>"Where is the backend security reference?"</h2>

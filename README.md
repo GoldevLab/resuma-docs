@@ -1,9 +1,9 @@
 # Resuma documentation site (`resuma-docs`)
 
-Official docs and landing page for [Resuma](https://github.com/GolfredoPerezFernandez/resuma).
+Official docs and landing page for [Resuma](https://github.com/GoldevLab/resuma).
 
 **Path:** sibling to the framework repo — `apps/resuma-docs` (i.e. `../resuma-docs` from `apps/resuma`).  
-**GitHub:** [resuma-docs](https://github.com/GolfredoPerezFernandez/resuma-docs)  
+**GitHub:** [resuma-docs](https://github.com/GoldevLab/resuma-docs)  
 **Live:** https://resuma-docs.fly.dev
 
 ## Local dev
@@ -42,7 +42,7 @@ fly tokens create deploy -x 999999h
 
 Copia **todo** el token de la salida, incluyendo el prefijo `FlyV1` y el espacio.
 
-2. En GitHub → [resuma-docs](https://github.com/GolfredoPerezFernandez/resuma-docs) → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**
+2. En GitHub → [resuma-docs](https://github.com/GoldevLab/resuma-docs) → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**
    - Name: `FLY_API_TOKEN`
    - Value: el token del paso 1
 
