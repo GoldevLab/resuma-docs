@@ -43,7 +43,7 @@ resuma install skill --force"#)}
             {code_block(r#"resuma update              # align project deps with CLI version
 resuma update --check      # show versions, no changes
 resuma update --cli          # cargo install resuma --force
-resuma update --version 1.0.1  # pin a specific release"#)}
+resuma update --version 1.0.2  # pin a specific release"#)}
 
             <h2>"resuma doctor"</h2>
             <p>"Quick check for Rust toolchain, " <code>"cargo-watch"</code> ", CLI version, and project " <code>"Cargo.toml"</code> " setup."</p>

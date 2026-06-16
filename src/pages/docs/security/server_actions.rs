@@ -50,12 +50,19 @@ fn action_pipeline(req: FlowRequest) -> ... {
             <p>"Runtime sends " <code>"X-Resuma-CSRF"</code> ". Forms include hidden " <code>"_csrf"</code> " via " <code>"form()"</code>"."</p>
 
             <h2>"6. Handle errors in the UI"</h2>
-            {code_block(r#"try {
-    const next = await __resuma.action("add_todo", [title]);
-    state.todos.set(next);
-} catch (e) {
-    state.ui.update(s => { s.status = "Forbidden or rate limited"; });
-}"#)}
+            <p>
+                "Prefer " <code>"__resuma.safeAction"</code> " in " <code>"js!"</code> " handlers — it returns "
+                <code>"{ ok, value }"</code> " or " <code>"{ ok: false, error }"</code> " without throwing. See "
+                <a href="/docs/components/error_boundary">"Error boundaries"</a>"."
+            </p>
+            {code_block(r#"onClick={js!(async (_event, state, __resuma) => {
+    const res = await __resuma.safeAction("add_todo", [title]);
+    if (res.ok) {
+        state.todos.set(res.value);
+    } else {
+        state.ui.update(s => { s.status = res.error; });
+    }
+})}"#)}
         </>
     }
 }

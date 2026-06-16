@@ -9,10 +9,10 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"The resumability promise"</h2>
             <p>"Traditional SSR: render on server → hydrate on client (re-run all components). Resuma: render once → serialize state → client resumes only what the user touches."</p>
-            {code_block(r#"Server (Rust)  ──HTML + payload──►  Browser (~3KB)
-render components              parse resuma/state
-serialize signals              delegate events
-                               lazy-import handlers"#)}
+            {code_block(r#"Server (Rust)  ──HTML + payload──►  Browser
+render components              parse resuma/state + loader.js (907 B gzip)
+serialize signals              first click → core.js (~4 KiB gzip)
+                               lazy-import handler chunks"#)}
 
             <h2>"Pipeline of one click"</h2>
             <ol>
@@ -49,7 +49,7 @@ serialize signals              delegate events
                 <thead><tr><th>"Aspect"</th><th>"Classic SSR + hydration"</th><th>"Resuma"</th></tr></thead>
                 <tbody>
                     <tr><td>"Client after load"</td><td>"Re-run components"</td><td>"Resume handlers only"</td></tr>
-                    <tr><td>"Initial JS"</td><td>"App bundle grows with UI"</td><td>"~3KB runtime + lazy chunks"</td></tr>
+                    <tr><td>"Initial JS"</td><td>"App bundle grows with UI"</td><td>"907 B loader + ~5 KiB first interaction + lazy chunks"</td></tr>
                     <tr><td>"Static pages"</td><td>"Often still ship framework JS"</td><td>"Zero client JS"</td></tr>
                 </tbody>
             </table>

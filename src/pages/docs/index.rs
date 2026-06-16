@@ -19,7 +19,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <a href="/docs/getting_started">"Getting started"</a>
                     <a href="/docs/benchmark">"Benchmark"</a>
                     <a href="/docs/examples">"Examples"</a>
-                    <a href="https://docs.rs/resuma/1.0.1" target="_blank">"API (docs.rs)"</a>
+                    <a href="https://docs.rs/resuma/1.0.2" target="_blank">"API (docs.rs)"</a>
                     <a href="https://github.com/GolfredoPerezFernandez/resuma" target="_blank">"GitHub"</a>
                 </div>
             </header>
@@ -58,6 +58,12 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2 class="docs-section-title">"Start here"</h2>
             <div class="grid-3">
+                {doc_link_card(
+                    "/docs/migration_1_0",
+                    "Upgrading to 1.0",
+                    "semver, js! handlers, new APIs, and CLI renames from 0.4.x.",
+                    "1.0",
+                )}
                 {doc_link_card(
                     "/docs/getting_started",
                     "Getting Started",
@@ -157,7 +163,7 @@ pub fn page(_req: FlowRequest) -> View {
                 "Published on "
                 <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a>
                 " · "
-                <a href="https://docs.rs/resuma/1.0.1" target="_blank">"docs.rs"</a>
+                <a href="https://docs.rs/resuma/1.0.2" target="_blank">"docs.rs"</a>
                 " · benchmark source in the "
                 <a href="https://github.com/GolfredoPerezFernandez/resuma/tree/main/benchmark" target="_blank">"GitHub repo"</a>"."
             </p>

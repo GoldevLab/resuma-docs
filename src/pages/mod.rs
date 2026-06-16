@@ -70,6 +70,7 @@ pub mod docs {
         pub mod turso;
         pub mod validator;
     }
+    pub mod migration_1_0;
     pub mod package;
     pub mod project_structure;
     pub mod reactivity;

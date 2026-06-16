@@ -22,6 +22,7 @@ pub fn doc_sidebar(_active_path: &str) -> View {
             {nav!(
                 "/docs" => "Overview",
                 "/docs/getting_started" => "Getting Started",
+                "/docs/migration_1_0" => "Upgrading to 1.0",
                 "/docs/benchmark" => "Benchmark",
                 "/docs/examples" => "Examples",
                 "/docs/project_structure" => "Project structure",
@@ -120,7 +121,7 @@ pub fn doc_sidebar(_active_path: &str) -> View {
             <h4>"Resources"</h4>
             <nav>
                 <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a>
-                <a href="https://docs.rs/resuma/1.0.1" target="_blank">"docs.rs"</a>
+                <a href="https://docs.rs/resuma/1.0.2" target="_blank">"docs.rs"</a>
                 <a href="https://github.com/GolfredoPerezFernandez/resuma" target="_blank">"GitHub"</a>
             </nav>
         </aside>

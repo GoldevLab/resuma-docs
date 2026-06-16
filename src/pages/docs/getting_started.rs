@@ -61,9 +61,9 @@ pub fn page(_req: FlowRequest) -> View {
             {code_block("cargo install resuma")}
             <p>
                 "API reference: "
-                <a href="https://docs.rs/resuma/1.0.1" target="_blank">"docs.rs/resuma"</a>
+                <a href="https://docs.rs/resuma/1.0.2" target="_blank">"docs.rs/resuma"</a>
                 " · "
-                <a href="https://docs.rs/resuma-macros/1.0.1" target="_blank">"docs.rs/resuma-macros"</a>
+                <a href="https://docs.rs/resuma-macros/1.0.2" target="_blank">"docs.rs/resuma-macros"</a>
             </p>
             <p>"From source while developing the monorepo:"</p>
             {code_block(r#"git clone https://github.com/GolfredoPerezFernandez/resuma

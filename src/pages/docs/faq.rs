@@ -10,10 +10,20 @@ pub fn page(_req: FlowRequest) -> View {
             <p>"Hydration re-executes your entire component tree on the client to attach event listeners. Resumability serializes signals and handler references into HTML during SSR; the client resumes only what the user interacts with — no full-tree replay."</p>
 
             <h2>"Does Resuma run Rust in the browser?"</h2>
-            <p>"No. Components always execute on the server. Client-side code is limited to a tiny runtime (~3 KB loader + lazy core) and small JS chunks translated from handler closures at compile time (rs2js in resuma-macros). Business logic stays in Rust."</p>
+            <p>"No. Components always execute on the server. Client-side code is a fixed runtime (loader + lazy core on first interaction) plus small handler chunks translated from closures at compile time (rs2js in resuma-macros). Business logic stays in Rust."</p>
 
             <h2>"How big is the client bundle?"</h2>
-            <p>"Static pages ship zero JS. Interactive pages load loader.js (~1–2 KB gzipped), then core.js on first interaction. Handler and island chunks load on demand. See the " <a href="/docs/benchmark">"benchmark page"</a> " for measured numbers."</p>
+            <p>
+                "Static pages ship zero JS. Interactive pages parse HTML immediately with "
+                <strong>"907 B"</strong>
+                " gzip loader.js, then fetch core.js (~4 KiB gzip) on the first click — about "
+                <strong>"5 KiB"</strong>
+                " total for first interaction. Handler and island chunks load on demand. See the "
+                <a href="/docs/benchmark">"benchmark page"</a>
+                " and "
+                <a href="/docs/architecture">"architecture"</a>
+                " for measured numbers."
+            </p>
 
             <h2>"Do I need Node.js?"</h2>
             <p>"Only if you rebuild the JS runtime from source. Prebuilt assets ship inside the " <code>"resuma"</code> " crate (" <code>"assets/"</code> "). For app development, Rust + cargo (or " <code>"cargo install resuma"</code> ") is enough."</p>
