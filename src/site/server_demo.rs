@@ -41,7 +41,7 @@ pub fn server_function_demo() -> View {
                     type="button"
                     class="btn btn-primary"
                     id="demo-fetch-btn"
-                    onClick={js!(async (_, __resuma) => {
+                    onClick={js!(async (_event, _state, __resuma) => {
                         const input = document.getElementById("demo-input").value;
                         const okEl = document.getElementById("demo-ok");
                         const errEl = document.getElementById("demo-err");

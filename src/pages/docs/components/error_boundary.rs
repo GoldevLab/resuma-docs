@@ -45,7 +45,7 @@ error_boundary(build_panel(), |msg| view! {
                 "Use " <code>"__resuma.safeAction(name, args)"</code> " in " <code>"js!"</code> " for Result-style "
                 "handling without try/catch — like Leptos error boundaries for RPC:"
             </p>
-            {code_block(r#"onClick={js!(async (_, __resuma) => {
+            {code_block(r#"onClick={js!(async (_event, _state, __resuma) => {
     const res = await __resuma.safeAction("current_time", [input]);
     if (res.ok) {
         okEl.textContent = res.value;
