@@ -32,7 +32,12 @@ pub fn page(_req: FlowRequest) -> View {
             <p>"The " <code>"Form"</code> " component renders a real HTML form with " <code>"POST /_resuma/submit/:name"</code> ". Progressive enhancement: the runtime intercepts submit when loaded, but forms work as plain POST without JS."</p>
 
             <h2>"Is Resuma production-ready?"</h2>
-            <p>"v0.x — APIs may evolve. Security defaults (CSRF, headers, rate limits) are built in. See " <a href="/docs/security">"Security"</a> " and harden with the " <a href="/docs/security/todo">"todo reference"</a>"."</p>
+            <p>
+                "Yes — " <strong>"1.0"</strong> " follows semver for public APIs. Security defaults (CSRF, CSP, rate limits) ship enabled. "
+                "See " <a href="/docs/security">"Security"</a> ", the "
+                <a href="/docs/security/todo">"todo reference"</a> ", and "
+                <a href="https://github.com/GolfredoPerezFernandez/resuma/blob/main/docs/STABILITY.md" target="_blank" rel="noopener">"STABILITY.md"</a> " in the framework repo."
+            </p>
 
             <h2>"Where is the backend security reference?"</h2>
             <p><code>"examples/todo"</code> " — guards, DTO validation, service layer, authorization. Docs: " <a href="/docs/security/todo">"/docs/security/todo"</a>"."</p>

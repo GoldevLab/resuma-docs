@@ -22,6 +22,19 @@ let user = use_store(User {
 user.update(|u| u.name = "Augusta".into());
 user.set(User { name: "New".into(), email: u.email.clone() });"#)}
 
+            <h2>"#[derive(Store)]"</h2>
+            <p>"Generate typed field accessors on " <code>"Store&lt;T&gt;"</code> " (1.0+):"</p>
+            {code_block(r#"#[derive(Store)]
+#[data]
+struct Cart {
+    items: u32,
+    total_cents: u64,
+}
+
+let cart = use_store(Cart { items: 0, total_cents: 0 });
+cart.set_items(2);
+cart.update(|c| c.total_cents += 500);"#)}
+
             <h2>"In templates"</h2>
             {code_block(r#"view! {
     <p>{user.signal()}</p>

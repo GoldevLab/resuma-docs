@@ -134,11 +134,6 @@ pub const ENTRIES: &[DocEntry] = &[
         keywords: "csrf rate limit auth",
     },
     DocEntry {
-        title: "CLI",
-        href: "/docs/cli",
-        keywords: "dev build routes add",
-    },
-    DocEntry {
         title: "Package",
         href: "/docs/package",
         keywords: "crates install dependencies",

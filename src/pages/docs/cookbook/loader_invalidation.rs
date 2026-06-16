@@ -36,7 +36,17 @@ async fn cart(req: &FlowRequest) -> Cart {
 
             <h2>"set_load_cache (runtime)"</h2>
             {code_block(r#"// After successful mutation in #[server] or enhanced submit client path:
-    set_load_cache("product_list", "public, max-age=0");"#)}
+set_load_cache("product_list", "public, max-age=0");"#)}
+
+            <h2>"SPA invalidation (1.0+)"</h2>
+            <p>"Re-fetch the current page or a linked route without a full reload:"</p>
+            {code_block(r#"// Rust (Flow helpers):
+invalidate_href("/docs");
+invalidate_href_now("/docs");
+invalidate_link(nav_anchor_element);
+
+// Client (after mutation in js!):
+await __resuma.invalidate();"#)}
 
             <h2>"FlowExtensions for DB"</h2>
             <p>

@@ -18,6 +18,17 @@ view! {
     </button>
 }"#)}
 
+            <h2>"Async handlers"</h2>
+            <p>
+                "Lazy handlers receive " <code>"(event, state, __resuma)"</code> ". For async code, use an explicit arrow function "
+                "(required since 1.0.1 — do not rely on double-wrapping):"
+            </p>
+            {code_block(r#"onClick={js!(async (_event, _state, __resuma) => {
+    const res = await __resuma.safeAction("save", [draft]);
+    if (res.ok) state.status.set("Saved");
+    else state.error.set(res.error);
+})}"#)}
+
             <h2>"Server actions"</h2>
             {code_block(r#"view! {
     <button onClick={ js! {
@@ -27,6 +38,11 @@ view! {
         "Greet"
     </button>
 }"#)}
+            <p>
+                "Prefer " <code>"__resuma.safeAction(name, args)"</code> " when you want "
+                <code>"{ ok, value } | { ok: false, error }"</code> " without try/catch — see "
+                <a href="/docs/components/error_boundary">"Error boundaries"</a>"."
+            </p>
 
             <h2>"SPA navigation"</h2>
             {code_block(r#"on:change={js! {

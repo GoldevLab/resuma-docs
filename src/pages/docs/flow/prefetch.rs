@@ -5,7 +5,7 @@ pub fn page(_req: FlowRequest) -> View {
     view! {
         <>
             <h1>"Prefetch"</h1>
-            <p class="lead">"Resuma prefetches lazy handler chunks when resumable boundaries enter the viewport (v0.3+)."</p>
+            <p class="lead">"Resuma prefetches lazy handler chunks when resumable boundaries enter the viewport, and prefetches route HTML on NavLink hover (1.0+)."</p>
 
             <h2>"Handler prefetch (automatic)"</h2>
             <p>
@@ -13,10 +13,15 @@ pub fn page(_req: FlowRequest) -> View {
                 "The 907 B loader uses " <code>"IntersectionObserver"</code> " to prefetch handlers before the user clicks."
             </p>
 
-            <h2>"Loader prefetch (app-level)"</h2>
+            <h2>"Route prefetch (NavLink)"</h2>
             <p>
-                "Use " <code>"NavLink"</code> " for internal routes — the browser fetches the next page on hover/focus when you add "
-                <code>"data-r-prefetch"</code> " (future) or short " <code>"cache"</code> " on loaders for CDN edge caching:"
+                <code>"NavLink"</code> " prefetches the next page HTML on hover/focus (SPA navigation without a full reload). "
+                "See " <a href="/docs/components/nav_link">"NavLink"</a> "."
+            </p>
+
+            <h2>"Loader cache headers"</h2>
+            <p>
+                "Use short " <code>"cache"</code> " on " <code>"#[load]"</code> " for CDN edge caching when data can be stale briefly:"
             </p>
             {code_block(r#"#[load(cache = "public, max-age=30")]
 async fn docs_index(_req: &FlowRequest) -> DocsNav {

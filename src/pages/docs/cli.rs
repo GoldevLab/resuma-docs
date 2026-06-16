@@ -21,7 +21,8 @@ resuma new my-app --template basic          # static SSR (default)
 resuma new my-app --template todo           # full showcase
 resuma new my-app --template flow           # file-based pages
 resuma new my-app --template flow-booking   # appointments + query loaders
-resuma new my-app --template flow-fullstack # Flow + SQLx sample"#)}
+resuma new my-app --template flow-fullstack # Flow + SQLx sample
+resuma new my-app --template production     # Dockerfile + fly.toml + security stub"#)}
 
             <h2>"resuma add"</h2>
             {code_block(r#"resuma add              # interactive menu
@@ -42,7 +43,7 @@ resuma install skill --force"#)}
             {code_block(r#"resuma update              # align project deps with CLI version
 resuma update --check      # show versions, no changes
 resuma update --cli          # cargo install resuma --force
-resuma update --version 0.4.7  # pin a specific release"#)}
+resuma update --version 1.0.1  # pin a specific release"#)}
 
             <h2>"resuma doctor"</h2>
             <p>"Quick check for Rust toolchain, " <code>"cargo-watch"</code> ", CLI version, and project " <code>"Cargo.toml"</code> " setup."</p>
@@ -58,7 +59,9 @@ resuma dev --skip-runtime
 # Watches src/, public/, and Cargo.toml"#)}
 
             <h2>"resuma build"</h2>
-            {code_block("resuma build")}
+            {code_block(r#"resuma build                    # release binary
+resuma build --static-export    # HTML from src/pages/
+resuma build --static-export --out dist --base-url https://example.com"#)}
 
             <h2>"resuma routes"</h2>
             {code_block(r#"resuma routes --path src/pages

@@ -61,9 +61,9 @@ pub fn page(_req: FlowRequest) -> View {
             {code_block("cargo install resuma")}
             <p>
                 "API reference: "
-                <a href="https://docs.rs/resuma" target="_blank">"docs.rs/resuma"</a>
+                <a href="https://docs.rs/resuma/1.0.1" target="_blank">"docs.rs/resuma"</a>
                 " · "
-                <a href="https://docs.rs/resuma-macros" target="_blank">"docs.rs/resuma-macros"</a>
+                <a href="https://docs.rs/resuma-macros/1.0.1" target="_blank">"docs.rs/resuma-macros"</a>
             </p>
             <p>"From source while developing the monorepo:"</p>
             {code_block(r#"git clone https://github.com/GolfredoPerezFernandez/resuma
@@ -105,6 +105,10 @@ resuma --help"#)}
                     <strong>"flow-fullstack"</strong>
                     <span>"Flow + SQLx SQLite sample"</span>
                 </div>
+                <div class="template-pill">
+                    <strong>"production"</strong>
+                    <span>"Flow + security stub + Dockerfile + fly.toml"</span>
+                </div>
             </div>
             {code_block(r#"resuma new my-app                    # interactive menu
 resuma new my-app --template basic
@@ -112,6 +116,7 @@ resuma new my-app --template todo
 resuma new my-app --template flow
 resuma new my-app --template flow-booking
 resuma new my-app --template flow-fullstack
+resuma new my-app --template production
 
 cd my-app"#)}
 

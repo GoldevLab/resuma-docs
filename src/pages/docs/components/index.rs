@@ -15,7 +15,7 @@ pub fn page(_req: FlowRequest) -> View {
                 </a>
                 <a href="/docs/components/control_flow" class="card" style="text-decoration: none;">
                     <h3>"Control flow"</h3>
-                    <p>"Show, if/match/map in view!."</p>
+                    <p>"Show, Match, For, if/match in view!."</p>
                 </a>
                 <a href="/docs/components/signals" class="card" style="text-decoration: none;">
                     <h3>"Signals"</h3>

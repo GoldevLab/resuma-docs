@@ -6,9 +6,9 @@ pub fn page(_req: FlowRequest) -> View {
         <>
             <h1>"Control flow & iteration"</h1>
             <p class="lead">
-                "Resuma uses plain Rust inside " <code>"view!"</code> " — no separate "
-                <code>"&lt;Show&gt;"</code> " / " <code>"&lt;For&gt;"</code> " components. "
-                "That keeps templates predictable and fully type-checked."
+                "Use Rust " <code>"if"</code> " / " <code>"match"</code> " for static branches, reactive "
+                <code>"&lt;Show&gt;"</code> " / " <code>"&lt;Match&gt;"</code> ", and keyed "
+                <code>"&lt;For&gt;"</code> " for lists bound to signals."
             </p>
 
             <h2>"Conditional UI"</h2>
@@ -41,13 +41,14 @@ view! {
 }"#)}
 
             <h2>"Lists and iteration"</h2>
+            <p>"For static SSR lists, use " <code>".iter().map()"</code> ". For reactive lists, use " <code>"&lt;For&gt;"</code> ":"</p>
             {code_block(r#"let items = signal(vec!["Rust", "Resuma", "Flow"]);
 
 view! {
     <ul>
-        {items.get().iter().map(|label| {
-            view! { <li>{label.to_string()}</li> }
-        }).collect::<Vec<_>>()}
+        <For each={items} let:label>
+            <li>{label.clone()}</li>
+        </For>
     </ul>
 }"#)}
 

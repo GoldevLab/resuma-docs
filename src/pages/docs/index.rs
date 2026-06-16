@@ -19,7 +19,7 @@ pub fn page(_req: FlowRequest) -> View {
                     <a href="/docs/getting_started">"Getting started"</a>
                     <a href="/docs/benchmark">"Benchmark"</a>
                     <a href="/docs/examples">"Examples"</a>
-                    <a href="https://docs.rs/resuma" target="_blank">"API (docs.rs)"</a>
+                    <a href="https://docs.rs/resuma/1.0.1" target="_blank">"API (docs.rs)"</a>
                     <a href="https://github.com/GolfredoPerezFernandez/resuma" target="_blank">"GitHub"</a>
                 </div>
             </header>
@@ -157,7 +157,7 @@ pub fn page(_req: FlowRequest) -> View {
                 "Published on "
                 <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a>
                 " · "
-                <a href="https://docs.rs/resuma" target="_blank">"docs.rs"</a>
+                <a href="https://docs.rs/resuma/1.0.1" target="_blank">"docs.rs"</a>
                 " · benchmark source in the "
                 <a href="https://github.com/GolfredoPerezFernandez/resuma/tree/main/benchmark" target="_blank">"GitHub repo"</a>"."
             </p>

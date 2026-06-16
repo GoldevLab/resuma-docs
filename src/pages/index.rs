@@ -243,8 +243,8 @@ fn LiveSearch() {
                 <p class="section-sub">"Resumable SSR in Rust — one install, progressive enhancement, full-stack Flow when you need it."</p>
                 <div class="grid-3">
                     {feature_card("🌊", "Resuma Flow", "File-based pages, #[load], #[submit], layouts, middleware — built into the same crate.")}
-                    {feature_card("📄", "Static export", "resuma build --static scaffolds HTML from src/pages/ for edge-friendly deploys.")}
-                    {feature_card("🔧", "Dev experience", "resuma dev with HMR WebSocket, resuma new templates (basic, todo, flow).")}
+                    {feature_card("📄", "Static export", "resuma build --static-export scaffolds HTML from src/pages/ for edge-friendly deploys.")}
+                    {feature_card("🔧", "Dev experience", "resuma dev with HMR WebSocket, resuma new templates (basic, todo, flow, production).")}
                     {feature_card("🔗", "JS bridge", "view! translates Rust closures via rs2js. js!{} for escape hatches when you need raw client code.")}
                     {feature_card("🏝️", "Islands (optional)", "#[island(load = \"visible\")] for heavy widgets — most UI only needs #[component].")}
                     {feature_card("🛡️", "Security built in", "Crypto CSRF, security headers, rate limits — see examples/todo for production patterns.")}
