@@ -605,4 +605,40 @@ pre.code code { background: none; border: 0; padding: 0; }
   background: #ffebe9; color: var(--danger); border: 1px solid #ffcecb;
 }
 .server-demo-ok:not([hidden]), .server-demo-err:not([hidden]) { display: block; }
+
+.exec-demo {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+}
+.exec-demo-intro h3 { margin: 0 0 0.35rem; font-size: 1.15rem; color: var(--text); }
+.exec-demo-lead { margin: 0 0 1rem; color: var(--muted); font-size: 0.95rem; max-width: 52rem; }
+.exec-demo-grid {
+  display: grid; gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 960px) {
+  .exec-demo-grid { grid-template-columns: minmax(16rem, 22rem) 1fr; align-items: start; }
+}
+.exec-demo-controls { display: flex; flex-direction: column; gap: 0.75rem; }
+.exec-demo-label {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  font-size: 0.85rem; color: var(--muted);
+}
+.exec-demo-label input,
+.exec-demo-label textarea {
+  font: inherit; padding: 0.45rem 0.6rem; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--bg-subtle); resize: vertical;
+}
+.exec-demo-err {
+  margin: 0; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.92rem;
+  background: #ffebe9; color: var(--danger); border: 1px solid #ffcecb;
+  display: none;
+}
+.exec-demo-err:not([hidden]) { display: block; }
+.exec-demo-hint { margin: 0; font-size: 0.88rem; color: var(--muted); }
+.exec-demo-dash .r-flow-dash { margin: 0; }
+.exec-flow-slot { margin-top: 1.25rem; }
+.exec-flow-slot:not([hidden]) { display: block; }
 </style>"#;

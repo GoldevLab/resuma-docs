@@ -99,6 +99,12 @@ pub fn page(_req: FlowRequest) -> View {
                     "",
                 )}
                 {doc_link_card(
+                    "/docs/exec",
+                    "Resuma OS",
+                    "Workers, disk queue, cron scheduler, ops dashboard.",
+                    "New",
+                )}
+                {doc_link_card(
                     "/docs/security",
                     "Security",
                     "CSRF, headers, rate limits, auth, authorization.",

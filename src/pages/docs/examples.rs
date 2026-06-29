@@ -67,6 +67,16 @@ pub fn page(_req: FlowRequest) -> View {
                             <a href="/docs/flow/pages">"Docs →"</a>
                         </td>
                     </tr>
+                    <tr>
+                        <td><strong>"production template"</strong></td>
+                        <td><code>"resuma new app --template production"</code></td>
+                        <td>"FlowApp"</td>
+                        <td>
+                            "Security stub, Dockerfile, fly.toml, "
+                            <code>"/ops"</code> " dashboard. "
+                            <a href="/docs/exec/ops">"Docs →"</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -78,6 +88,7 @@ pub fn page(_req: FlowRequest) -> View {
                 <li><strong>"Bookings / calendars?"</strong>" → " <code>"resuma new --template flow-booking"</code> " + " <a href="/docs/flow/query_params">"Query params"</a></li>
                 <li><strong>"Streaming / loaders?"</strong>" → " <code>"flow-demo"</code></li>
                 <li><strong>"Full-stack + SQL?"</strong>" → " <code>"resuma new --template flow-fullstack"</code></li>
+                <li><strong>"Production + ops dashboard?"</strong>" → " <code>"resuma new --template production"</code> " + " <a href="/docs/exec">"Resuma OS"</a></li>
             </ul>
 
             <h2>"Full app from scratch"</h2>

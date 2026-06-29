@@ -164,6 +164,51 @@ pub const ENTRIES: &[DocEntry] = &[
         keywords: "unit test render assert view",
     },
     DocEntry {
+        title: "Resuma OS",
+        href: "/docs/exec",
+        keywords: "workers queue scheduler durable execution ops resuma os",
+    },
+    DocEntry {
+        title: "Workers",
+        href: "/docs/exec/workers",
+        keywords: "worker macro graph pause resume cancel queue WorkerContext",
+    },
+    DocEntry {
+        title: "Disk queue",
+        href: "/docs/exec/queue",
+        keywords: "enqueue pending processing multi-process claim",
+    },
+    DocEntry {
+        title: "Cron scheduler",
+        href: "/docs/exec/scheduler",
+        keywords: "cron schedule tick jobs fire",
+    },
+    DocEntry {
+        title: "Webhooks",
+        href: "/docs/exec/webhooks",
+        keywords: "graph.done failed paused hmac signature outbound",
+    },
+    DocEntry {
+        title: "Exec tools",
+        href: "/docs/exec/tools",
+        keywords: "fetch ai scrape map-reduce planner SSRF",
+    },
+    DocEntry {
+        title: "Flow UI",
+        href: "/docs/exec/flow_ui",
+        keywords: "resuma-flow dashboard graph execution worker panel",
+    },
+    DocEntry {
+        title: "Ops dashboard",
+        href: "/docs/exec/ops",
+        keywords: "production RESUMA_EXEC_API_KEY metrics prometheus ops",
+    },
+    DocEntry {
+        title: "Exec security",
+        href: "/docs/exec/security",
+        keywords: "api key graph token rate limit exec public",
+    },
+    DocEntry {
         title: "Flow overview",
         href: "/docs/flow",
         keywords: "pages routing fullstack file-based",

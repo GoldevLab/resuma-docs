@@ -2,17 +2,20 @@
 
 mod css;
 mod docs_search;
+mod exec_demo;
 mod hero_bg;
 mod pwa;
 mod seo;
 mod server_demo;
 mod sidebar;
+mod workers;
 
 pub use css::SITE_CSS;
 pub use docs_search::search;
 pub use hero_bg::hero_particles_mount;
 pub use pwa::config as pwa_config;
 pub use seo::{json_ld, site_description, site_title, site_url};
+pub use exec_demo::exec_showcase_demo;
 pub use server_demo::server_function_demo;
 pub use sidebar::doc_sidebar;
 

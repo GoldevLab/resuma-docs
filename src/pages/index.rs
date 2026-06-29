@@ -1,8 +1,8 @@
 use resuma::prelude::*;
 
 use crate::site::{
-    bench_row_full, code_block, compare_column, feature_card, hero_particles_mount, metric_item,
-    pillar_card, pipeline_step, server_function_demo,
+    bench_row_full, code_block, compare_column, exec_showcase_demo, feature_card,
+    hero_particles_mount, metric_item, pillar_card, pipeline_step, server_function_demo,
 };
 
 pub fn page(_req: FlowRequest) -> View {
@@ -69,9 +69,21 @@ fn Counter() {
                     {metric_item("907 B", "initial JS (gzip)")}
                     {metric_item("5.08 KiB", "first interaction")}
                     {metric_item("0 B", "static pages")}
+                    {metric_item("Resuma OS", "workers + queue")}
                     {metric_item("1", "cargo dependency")}
                 </div>
             </div>
+
+            <section class="section section-alt">
+                <p class="section-eyebrow">"Resuma OS"</p>
+                <h2 class="section-title">"Durable workers — live on this page"</h2>
+                <p class="section-sub">
+                    "The same execution layer as production templates: "
+                    <code>"#[worker]"</code>
+                    ", graph checkpoints, SSE events, and pause/cancel — no external orchestrator."
+                </p>
+                {exec_showcase_demo()}
+            </section>
 
             <section class="section section-alt">
                 <p class="section-eyebrow">"Try it"</p>

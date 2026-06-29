@@ -37,6 +37,17 @@ pub mod docs {
         pub mod view_transitions;
     }
     pub mod examples;
+    pub mod exec {
+        pub mod flow_ui;
+        pub mod index;
+        pub mod ops;
+        pub mod queue;
+        pub mod scheduler;
+        pub mod security;
+        pub mod tools;
+        pub mod webhooks;
+        pub mod workers;
+    }
     pub mod faq;
     pub mod flow {
         pub mod caching;

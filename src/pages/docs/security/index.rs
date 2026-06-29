@@ -14,7 +14,7 @@ pub fn page(_req: FlowRequest) -> View {
             <ul>
                 <li><strong>"CSRF"</strong>" — " <code>"X-Resuma-CSRF"</code> " on actions and submits"</li>
                 <li><strong>"Headers"</strong>" — CSP nonces, HSTS, X-Frame-Options, COOP, CORP"</li>
-                <li><strong>"Rate limiting"</strong>" — per-IP on " <code>"/_resuma/action/*"</code></li>
+                <li><strong>"Rate limiting"</strong>" — per-IP on actions, submits, and exec routes (" <code>"RESUMA_RATE_BACKEND=disk"</code> " in prod)"</li>
                 <li><strong>"Origin check"</strong>" — blocks cross-origin POST abuse"</li>
                 <li><strong>"SSR safety"</strong>" — escaped HTML + sanitized JSON state + JSON-LD"</li>
                 <li><strong>"Client bundles"</strong>" — " <code>"script-src 'self'"</code> "; TypeScript via " <code>"ClientComponent"</code></li>
@@ -35,15 +35,19 @@ pub fn page(_req: FlowRequest) -> View {
             </table>
 
             <h2>"Rate limiting"</h2>
-            <p>"Per-IP sliding window in memory (resets on process restart). Defaults: 120 action RPC/min, 60 submits/min. "
-                "Tune with " <code>"RESUMA_RATE_ACTIONS"</code> " / " <code>"RESUMA_RATE_SUBMITS"</code> ". "
-                "For multi-instance deployments, add edge rate limiting (Fly, Cloudflare, nginx) in front of Resuma."</p>
+            <p>"Per-IP sliding window. Defaults: 120 action RPC/min, 60 submits/min. "
+                "Set " <code>"RESUMA_RATE_BACKEND=disk"</code> " in production for multi-process persistence. "
+                "Exec routes have separate limits — " <a href="/docs/exec/security">"Exec security"</a>"."</p>
 
             <h2>"Guides"</h2>
             <div class="template-grid">
                 <a href="/docs/security/todo" class="template-pill" style="text-decoration: none;">
                     <strong>"Todo example"</strong>
                     <span>"Start here — full backend reference (main + security + todo_store)"</span>
+                </a>
+                <a href="/docs/exec/security" class="template-pill" style="text-decoration: none;">
+                    <strong>"Exec security"</strong>
+                    <span>"API keys, graph tokens, worker rate limits"</span>
                 </a>
                 <a href="/docs/security/configure" class="template-pill" style="text-decoration: none;">
                     <strong>"Configure server"</strong>

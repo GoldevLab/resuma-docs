@@ -179,6 +179,7 @@ async fn greet(name: String) -> String {
             <ul>
                 <li><a href="/docs/security/todo">"Todo example — full backend reference"</a></li>
                 <li><a href="/docs/flow">"Resuma Flow — multi-page apps"</a></li>
+                <li><a href="/docs/exec">"Resuma OS — workers, queue, scheduler"</a></li>
                 <li><a href="/docs/package">"Package map"</a></li>
                 <li><a href="/docs/architecture">"Architecture"</a></li>
                 <li><a href="/docs/cookbook/docker">"Docker deploy"</a></li>

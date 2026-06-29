@@ -29,6 +29,19 @@ pub fn doc_sidebar(_active_path: &str) -> View {
                 "/docs/faq" => "FAQ",
             )}
 
+            <h4>"Resuma OS"</h4>
+            {nav!(
+                "/docs/exec" => "Overview",
+                "/docs/exec/workers" => "Workers",
+                "/docs/exec/queue" => "Queue",
+                "/docs/exec/scheduler" => "Scheduler",
+                "/docs/exec/webhooks" => "Webhooks",
+                "/docs/exec/tools" => "Tools",
+                "/docs/exec/flow_ui" => "Flow UI",
+                "/docs/exec/ops" => "Ops & production",
+                "/docs/exec/security" => "Exec security",
+            )}
+
             <h4>"Security"</h4>
             {nav!(
                 "/docs/security" => "Overview",

@@ -15,10 +15,12 @@ pub fn page(_req: FlowRequest) -> View {
                 <tbody>
                     <tr><td>"1"</td><td><strong>"Resuma"</strong></td><td><code>"resuma"</code></td><td>"Signals, view!, resumability, ResumaApp"</td></tr>
                     <tr><td>"2"</td><td><strong>"Resuma Flow"</strong></td><td><code>"resuma::flow"</code></td><td>"FlowApp, pages, loaders, actions"</td></tr>
-                    <tr><td>"3"</td><td><strong>"Resuma Macros"</strong></td><td><code>"resuma-macros"</code></td><td>"view!, #[component], rs2js"</td></tr>
-                    <tr><td>"4"</td><td><strong>"Resuma Runtime"</strong></td><td><code>"runtime/"</code></td><td>"Browser loader + core (/_resuma/*.js)"</td></tr>
-                    <tr><td>"5"</td><td><strong>"Resuma Client"</strong></td><td><code>"client/resuma-client.ts"</code></td><td>"TypeScript widgets via ClientComponent"</td></tr>
-                    <tr><td>"6"</td><td><strong>"Resuma CLI"</strong></td><td><code>"resuma"</code>" feature "</td><td>"new, dev, build, update"</td></tr>
+                    <tr><td>"3"</td><td><strong>"Resuma OS"</strong></td><td><code>"resuma::exec"</code></td><td>"Workers, queue, scheduler, graphs"</td></tr>
+                    <tr><td>"4"</td><td><strong>"Resuma Flow UI"</strong></td><td><code>"resuma-flow"</code></td><td>"Ops dashboard + graph widgets"</td></tr>
+                    <tr><td>"5"</td><td><strong>"Resuma Macros"</strong></td><td><code>"resuma-macros"</code></td><td>"view!, #[component], #[worker], rs2js"</td></tr>
+                    <tr><td>"6"</td><td><strong>"Resuma Runtime"</strong></td><td><code>"runtime/"</code></td><td>"Browser loader + core (/_resuma/*.js)"</td></tr>
+                    <tr><td>"7"</td><td><strong>"Resuma Client"</strong></td><td><code>"client/resuma-client.ts"</code></td><td>"TypeScript widgets via ClientComponent"</td></tr>
+                    <tr><td>"8"</td><td><strong>"Resuma CLI"</strong></td><td><code>"resuma"</code>" feature "</td><td>"new, dev, build, update"</td></tr>
                 </tbody>
             </table>
 
@@ -26,6 +28,8 @@ pub fn page(_req: FlowRequest) -> View {
             <ul>
                 <li><strong>"Resuma"</strong>" — ResumaApp for single-page apps, widgets, resumable UI."</li>
                 <li><strong>"Resuma Flow"</strong>" — FlowApp + src/pages/ for multi-page apps."</li>
+                <li><strong>"Resuma OS"</strong>" — " <code>"#[worker]"</code> ", queues, scheduler for background work (" <a href="/docs/exec">"docs →"</a> ")."</li>
+                <li><strong>"Resuma Flow UI"</strong>" — optional " <code>"resuma-flow"</code> " crate for ops dashboards."</li>
                 <li><strong>"Resuma Client"</strong>" — ClientComponent for TypeScript bundles (Three.js, charts)."</li>
             </ul>
             <p>"Users depend on a single crate:"</p>
@@ -94,6 +98,8 @@ resuma routes --generate --path src/pages   # Flow apps only"#)}
                     <tr><td>"Form mutation"</td><td>"Resuma Flow"</td><td>"#[submit]"</td></tr>
                     <tr><td>"Request middleware"</td><td>"Resuma Flow"</td><td>"#[middleware]"</td></tr>
                     <tr><td>"File-based pages"</td><td>"Resuma Flow"</td><td>"src/pages/"</td></tr>
+                    <tr><td>"Background worker"</td><td>"Resuma OS"</td><td>"#[worker]"</td></tr>
+                    <tr><td>"Job queue / cron"</td><td>"Resuma OS"</td><td>"enqueue, scheduler HTTP"</td></tr>
                     <tr><td>"TS client widget"</td><td>"Resuma Client"</td><td>"ClientComponent, client_asset()"</td></tr>
                 </tbody>
             </table>

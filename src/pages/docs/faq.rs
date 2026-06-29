@@ -44,13 +44,21 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"Is Resuma production-ready?"</h2>
             <p>
                 "Yes — " <strong>"1.0"</strong> " follows semver for public APIs. Security defaults (CSRF, CSP, rate limits) ship enabled. "
-                "See " <a href="/docs/security">"Security"</a> ", the "
+                "Resuma OS adds self-hosted workers and ops. "
+                "See " <a href="/docs/security">"Security"</a> ", "
+                <a href="/docs/exec/ops">"Ops & production"</a> ", and "
                 <a href="/docs/security/todo">"todo reference"</a> ", and "
                 <a href="https://github.com/GoldevLab/resuma/blob/main/docs/STABILITY.md" target="_blank" rel="noopener">"STABILITY.md"</a> " in the framework repo."
             </p>
 
             <h2>"Where is the backend security reference?"</h2>
             <p><code>"examples/todo"</code> " — guards, DTO validation, service layer, authorization. Docs: " <a href="/docs/security/todo">"/docs/security/todo"</a>"."</p>
+
+            <h2>"Do I need Redis or Cloudflare Workers for background jobs?"</h2>
+            <p>
+                "No. " <strong>"Resuma OS"</strong> " (" <code>"resuma::exec"</code> ") provides disk-backed queues, cron scheduler, durable graphs, and webhooks — "
+                "multi-process safe on a shared volume. See " <a href="/docs/exec">"/docs/exec"</a> "."
+            </p>
         </>
     }
 }

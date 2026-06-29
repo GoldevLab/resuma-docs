@@ -39,6 +39,8 @@ serialize signals              first click → core.js (~4 KiB gzip)
                     <tr><td><code>"resuma::ssr"</code></td><td>"HTML rendering + streaming chunks"</td></tr>
                     <tr><td><code>"resuma::server"</code></td><td>"axum HTTP, /_resuma/* endpoints"</td></tr>
                     <tr><td><code>"resuma::flow"</code></td><td>"FlowApp, pages, loads, submits"</td></tr>
+                    <tr><td><code>"resuma::exec"</code></td><td>"Resuma OS — workers, queue, scheduler, graphs"</td></tr>
+                    <tr><td><code>"resuma-flow"</code></td><td>"Ops UI — dashboard, graph widgets (optional crate)"</td></tr>
                     <tr><td><code>"resuma::router"</code></td><td>"File-based page scanner"</td></tr>
                     <tr><td><code>"resuma-macros"</code></td><td>"view!, #[component], #[load], #[submit] (proc-macros)"</td></tr>
                 </tbody>
@@ -55,11 +57,20 @@ serialize signals              first click → core.js (~4 KiB gzip)
             </table>
 
             <h2>"HTTP endpoints"</h2>
+            <h3>"Core (all apps)"</h3>
             <ul>
                 <li><code>"GET /_resuma/runtime.js"</code>" — client bootstrap"</li>
                 <li><code>"POST /_resuma/action/:name"</code>" — #[server] RPC"</li>
                 <li><code>"POST /_resuma/submit/:name"</code>" — #[submit] forms"</li>
                 <li><code>"GET /_resuma/handler/:chunk"</code>" — lazy handler JS"</li>
+            </ul>
+            <h3>"Resuma OS (when exec is enabled)"</h3>
+            <p><a href="/docs/exec">"Full route list →"</a></p>
+            <ul>
+                <li><code>"POST /_resuma/worker/:name"</code>" — start execution graph"</li>
+                <li><code>"POST /_resuma/queue/:name"</code>" — durable enqueue"</li>
+                <li><code>"GET /_resuma/graph/:id/events"</code>" — SSE event stream"</li>
+                <li><code>"GET /_resuma/status"</code>" · " <code>"GET /_resuma/metrics"</code>" — ops / Prometheus"</li>
             </ul>
         </>
     }

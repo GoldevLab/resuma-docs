@@ -20,6 +20,7 @@ fn SiteLayout() -> View {
                     <NavLink href="/docs" activeClass="active">"Docs"</NavLink>
                     <NavLink href="/docs/getting_started" activeClass="active">"Tutorial"</NavLink>
                     <NavLink href="/docs/flow" activeClass="active">"Flow"</NavLink>
+                    <NavLink href="/docs/exec" activeClass="active">"Resuma OS"</NavLink>
                     <NavLink href="/docs/benchmark" activeClass="active">"Benchmark"</NavLink>
                 </nav>
                 <div class="header-actions">

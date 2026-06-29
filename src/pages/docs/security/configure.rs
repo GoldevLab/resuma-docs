@@ -42,7 +42,22 @@ RESUMA_CSRF=1              # default on (set 0 to disable)
 RESUMA_ORIGIN_CHECK=1      # default on
 RESUMA_BODY_LIMIT=1048576
 RESUMA_RATE_ACTIONS=120    # per IP / minute — in-memory
-RESUMA_RATE_SUBMITS=60     # per IP / minute — in-memory"#)}
+RESUMA_RATE_SUBMITS=60     # per IP / minute — in-memory
+RESUMA_RATE_BACKEND=disk   # memory | disk (prod) | redis (feature)
+
+# Resuma OS (execution layer) — see /docs/exec/security
+RESUMA_DATA_DIR=/data/resuma
+RESUMA_EXEC_API_KEY=<secret>      # required in production for worker/queue routes
+RESUMA_OPS_SESSION=<secret>       # production template /ops cookie
+RESUMA_METRICS_PUBLIC=0
+RESUMA_SCHEDULER_TICK_SECS=30"#)}
+
+            <h2>"Resuma OS (exec layer)"</h2>
+            <p>
+                "Worker, queue, graph, scheduler, and webhook routes use a separate API key and disk rate limits. "
+                "Full reference: " <a href="/docs/exec/security">"Exec security"</a> " · "
+                <a href="/docs/exec/ops">"Ops & production"</a>"."
+            </p>
 
             <h2>"CSP (Qwik-style, stronger defaults)"</h2>
             <p>
