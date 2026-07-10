@@ -290,20 +290,27 @@ pub fn ReactivityWidget() -> View {
 #[component]
 pub fn PipelineWidget() -> View {
     let step = signal(0_i32);
+    let label = signal("1. SSR render".to_string());
     view! {
         <>
-            <p class="demo-output">
-                {match step.get() {
-                    0 => "1. SSR render",
-                    1 => "2. Serialize signals",
-                    2 => "3. Embed payload",
-                    3 => "4. Loader resumes",
-                    _ => "5. Client reactive",
-                }}
-            </p>
+            <p class="demo-output">{label}</p>
             <div class="demo-row">
-                <button type="button" class="btn btn-sm" onClick={step.update(|s| *s = (*s + 1) % 5)}>"Next step"</button>
-                <button type="button" class="btn btn-sm btn-ghost" onClick={step.set(0)}>"Reset"</button>
+                <button type="button" class="btn btn-sm" onClick={js! {
+                    const s = (state.step.value + 1) % 5;
+                    state.step.set(s);
+                    const labels = [
+                        "1. SSR render",
+                        "2. Serialize signals",
+                        "3. Embed payload",
+                        "4. Loader resumes",
+                        "5. Client reactive",
+                    ];
+                    state.label.set(labels[s]);
+                }}>"Next step"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js! {
+                    state.step.set(0);
+                    state.label.set("1. SSR render");
+                }}>"Reset"</button>
             </div>
         </>
     }
