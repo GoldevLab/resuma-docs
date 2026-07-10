@@ -1,11 +1,13 @@
 use crate::site::code_block;
 use resuma::prelude::*;
 
-pub fn page(_req: FlowRequest) -> View {
+pub fn page(req: FlowRequest) -> View {
     view! {
         <>
             <h1>"Query parameters"</h1>
             <p class="lead">"Read URL search params from " <code>"FlowRequest"</code> " in pages, loaders, and submits."</p>
+
+            {crate::site::demos::flow_query_params(&req)}
 
             <h2>"Single parameter"</h2>
             {code_block(r#"pub fn page(req: FlowRequest) -> View {

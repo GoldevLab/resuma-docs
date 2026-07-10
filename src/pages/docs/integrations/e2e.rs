@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"E2E testing"</h1>
             <p class="lead">"End-to-end tests for Resuma apps with Playwright."</p>
 
+            {crate::site::demos::integrations_generic("E2E testing", "npm run e2e")}
+
             <h2>"Approach"</h2>
             <ul>
                 <li>"Spin up the app with " <code>"cargo run"</code> " or " <code>"resuma dev"</code> " in CI"</li>

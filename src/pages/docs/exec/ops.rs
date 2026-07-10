@@ -10,18 +10,34 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"/ops"</code> " page before exposing to the internet."
             </p>
 
+            {crate::site::demos::exec_ops()}
+
             <h2>"Environment variables"</h2>
-            {code_block(r#"
-RESUMA_ENV=production
-RESUMA_DATA_DIR=/data/resuma
-RESUMA_EXEC_API_KEY=<openssl rand -hex 32>
-RESUMA_OPS_SESSION=<openssl rand -hex 32>
+            <p>
+                "The production template needs secrets for exec routes and the "
+                <code>"/ops"</code> " dashboard. "
+                <code>"RESUMA_ENV"</code> " and " <code>"RESUMA_TRUST_PROXY"</code> " are already in the scaffold "
+                <code>"fly.toml"</code> " — set secrets manually:"
+            </p>
+            <p><a href="/docs/security/environment">"Full environment guide →"</a></p>
+            {code_block(r#"fly secrets set RESUMA_EXEC_API_KEY=$(openssl rand -hex 32)
+fly secrets set RESUMA_OPS_SESSION=$(openssl rand -hex 32)
 # Browser cookie: resuma_session=<RESUMA_OPS_SESSION>
 
+# Mount a persistent volume at /data/resuma (rate-limit, queue, durable graphs)
+RESUMA_DATA_DIR=/data/resuma
 RESUMA_RATE_BACKEND=disk
 RESUMA_SCHEDULER_TICK_SECS=30
-RESUMA_METRICS_PUBLIC=0
-"#)}
+RESUMA_METRICS_PUBLIC=0"#)}
+
+            <h2>"Persistent volume"</h2>
+            <p>
+                "Production apps should mount a volume at " <code>"RESUMA_DATA_DIR"</code> ". "
+                "Resuma stores rate-limit counters, exec queues, scheduler jobs, and graph checkpoints on disk — "
+                "no Redis. On Fly: " <code>"fly volumes create resuma_data --size 1"</code> " and mount at "
+                <code>"/data/resuma"</code> " in " <code>"fly.toml"</code>". "
+                "See " <a href="/docs/cookbook/docker">"Docker deploy"</a> "."
+            </p>
 
             <h2>"Dashboard"</h2>
             <p>"The production template serves " <code>"/ops"</code> " with "

@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Resuma Flow"</h1>
             <p class="lead">"Full-stack layer: pages, layouts, server data, forms, and middleware — included in the resuma crate."</p>
 
+            {crate::site::demos::flow_overview()}
+
             <h2>"Topics"</h2>
             <div class="grid-3">
                 <a href="/docs/flow/routing" class="card" style="text-decoration: none;">

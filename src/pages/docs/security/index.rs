@@ -10,11 +10,13 @@ pub fn page(_req: FlowRequest) -> View {
                 <a href="/docs/security/todo">"examples/todo"</a> " as the reference implementation."
             </p>
 
+            {crate::site::demos::security_overview()}
+
             <h2>"Built in (no setup)"</h2>
             <ul>
                 <li><strong>"CSRF"</strong>" — " <code>"X-Resuma-CSRF"</code> " on actions and submits"</li>
                 <li><strong>"Headers"</strong>" — CSP nonces, HSTS, X-Frame-Options, COOP, CORP"</li>
-                <li><strong>"Rate limiting"</strong>" — per-IP on actions, submits, and exec routes (" <code>"RESUMA_RATE_BACKEND=disk"</code> " in prod)"</li>
+                <li><strong>"Rate limiting"</strong>" — per-IP on actions, submits, and exec routes; disk-backed in prod (" <code>"RESUMA_RATE_BACKEND=disk"</code> ", no Redis)"</li>
                 <li><strong>"Origin check"</strong>" — blocks cross-origin POST abuse"</li>
                 <li><strong>"SSR safety"</strong>" — escaped HTML + sanitized JSON state + JSON-LD"</li>
                 <li><strong>"Client bundles"</strong>" — " <code>"script-src 'self'"</code> "; TypeScript via " <code>"ClientComponent"</code></li>
@@ -35,9 +37,36 @@ pub fn page(_req: FlowRequest) -> View {
             </table>
 
             <h2>"Rate limiting"</h2>
-            <p>"Per-IP sliding window. Defaults: 120 action RPC/min, 60 submits/min. "
-                "Set " <code>"RESUMA_RATE_BACKEND=disk"</code> " in production for multi-process persistence. "
-                "Exec routes have separate limits — " <a href="/docs/exec/security">"Exec security"</a>"."</p>
+            <p>
+                "Per-IP sliding window on actions, submits, and exec routes. "
+                "Defaults: 120 action RPC/min, 60 submits/min — tune with "
+                <code>"RESUMA_RATE_ACTIONS"</code> " and " <code>"RESUMA_RATE_SUBMITS"</code>". "
+                <strong>"No Redis or external datastore"</strong> " — Resuma ships built-in backends:"
+            </p>
+            <table class="docs-table">
+                <thead>
+                    <tr><th>"Backend"</th><th>"When"</th><th>"Storage"</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>"memory"</code></td>
+                        <td>"Local dev (default)"</td>
+                        <td>"In-process HashMap"</td>
+                    </tr>
+                    <tr>
+                        <td><code>"disk"</code></td>
+                        <td><code>"RESUMA_ENV=production"</code> " (auto)"</td>
+                        <td><code>"{RESUMA_DATA_DIR}/rate-limit/"</code> " — file locks, multi-process on same volume"</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                "Set " <code>"RESUMA_RATE_BACKEND=memory|disk"</code> " to override. "
+                "Mount a persistent volume at " <code>"RESUMA_DATA_DIR"</code> " on Fly/Docker so limits survive restarts. "
+                "For multi-region or many machines without a shared volume, add edge rate limiting (nginx "
+                <code>"limit_req"</code> ", Fly proxy, Cloudflare) — still no Redis in your app. "
+                "Exec routes have separate limits — " <a href="/docs/exec/security">"Exec security"</a>"."
+            </p>
 
             <h2>"Guides"</h2>
             <div class="template-grid">
@@ -49,9 +78,13 @@ pub fn page(_req: FlowRequest) -> View {
                     <strong>"Exec security"</strong>
                     <span>"API keys, graph tokens, worker rate limits"</span>
                 </a>
+                <a href="/docs/security/environment" class="template-pill" style="text-decoration: none;">
+                    <strong>"Environment variables"</strong>
+                    <span>"Local vs prod · RESUMA_ENV · Fly secrets · resuma doctor"</span>
+                </a>
                 <a href="/docs/security/configure" class="template-pill" style="text-decoration: none;">
                     <strong>"Configure server"</strong>
-                    <span>"SecurityConfig · env vars · Fly/Docker"</span>
+                    <span>"SecurityConfig in Rust · CSP · Fly/Docker checklist"</span>
                 </a>
                 <a href="/docs/security/server_actions" class="template-pill" style="text-decoration: none;">
                     <strong>"Secure #[server] actions"</strong>

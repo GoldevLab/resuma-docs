@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Testing"</h1>
             <p class="lead">"Strategies for verifying Resuma apps — HTTP integration, loader logic, and E2E."</p>
 
+            {crate::site::demos::components_testing()}
+
             <h2>"Integration tests (recommended)"</h2>
             <p>"Test the axum router produced by " <code>"FlowApp::into_router()"</code> ":"</p>
             {code_block(r#"use axum::body::Body;

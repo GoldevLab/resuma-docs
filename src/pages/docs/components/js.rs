@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"js!"</h1>
             <p class="lead">"The js! macro embeds raw JavaScript for cases where rs2js translation is insufficient."</p>
 
+            {crate::site::demos::components_js()}
+
             <h2>"Basic usage"</h2>
             {code_block(r#"let count = signal(0);
 

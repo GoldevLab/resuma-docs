@@ -6,6 +6,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"SEO, GEO & Analytics"</h1>
             <p class="lead">"Production-grade metadata inspired by real apps (ACUPATAS): Open Graph, JSON-LD, Meta Pixel, and AI crawler policies."</p>
 
+            {crate::site::demos::integrations_generic("SEO & GEO", "resuma add seo")}
+
             <h2>"SeoKit"</h2>
             <pre style="background:#0b1020;padding:1rem;border-radius:8px;font-size:.85rem">{r#"use resuma::prelude::*;
 

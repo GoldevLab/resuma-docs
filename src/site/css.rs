@@ -641,4 +641,45 @@ pre.code code { background: none; border: 0; padding: 0; }
 .exec-demo-dash .r-flow-dash { margin: 0; }
 .exec-flow-slot { margin-top: 1.25rem; }
 .exec-flow-slot:not([hidden]) { display: block; }
+
+/* Live documentation demos */
+.live-demo {
+  background: linear-gradient(135deg, #f8f5ff 0%, #f0f7ff 100%);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin: 0 0 2rem;
+}
+.live-demo-info {
+  background: linear-gradient(135deg, #f6f8fa 0%, #eef2ff 100%);
+  border-color: #818cf8;
+}
+.live-demo-header {
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
+}
+.live-demo-badge {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem; border-radius: 999px;
+  background: var(--primary); color: #fff;
+}
+.live-demo-badge-info { background: #4f46e5; }
+.live-demo-title { margin: 0; font-size: 1.05rem; color: var(--text); }
+.live-demo-body { font-size: 0.95rem; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.5rem 0; }
+.demo-output { margin: 0.5rem 0; font-weight: 600; color: var(--text); }
+.demo-muted { margin: 0.5rem 0; color: var(--muted); font-size: 0.9rem; }
+.demo-error { color: var(--danger); font-weight: 600; }
+.demo-slot-shell { border: 1px dashed var(--border); padding: 0.75rem; border-radius: 8px; }
+.demo-modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.demo-modal {
+  background: var(--bg); padding: 1.25rem; border-radius: 12px;
+  max-width: 20rem; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.demo-theme-panel { padding: 0.75rem; border-radius: 8px; }
+.btn-sm { font-size: 0.85rem; padding: 0.35rem 0.7rem; }
+.btn-themed { background: var(--resuma-primary, var(--primary)); color: #fff; }
+#modals { position: relative; z-index: 999; }
 </style>"#;

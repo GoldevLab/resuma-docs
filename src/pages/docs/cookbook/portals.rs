@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Portals"</h1>
             <p class="lead">"Portals render children into a remote DOM target — ideal for modals, toasts, and tooltips."</p>
 
+            {crate::site::demos::cookbook_portals()}
+
             <h2>"Portal target"</h2>
             <p>"Add a target element in your layout shell:"</p>
             {code_block(r#"view! {

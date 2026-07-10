@@ -9,6 +9,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "Connect Resuma Flow to databases, auth, styling, and testing using first-class Rust crates and Flow APIs."
             </p>
 
+            {crate::site::demos::integrations_generic("Integrations overview", "resuma add <extension>")}
+
             <h2>"Recommended stack"</h2>
             <p>
                 <a href="/docs/integrations/sqlx"><strong>"SQLx"</strong></a>

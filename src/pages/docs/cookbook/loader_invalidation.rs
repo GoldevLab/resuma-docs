@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Loader invalidation"</h1>
             <p class="lead">"Refresh stale " <code>"#[load]"</code> " data after mutations by re-running loaders or invalidating cached responses."</p>
 
+            {crate::site::demos::cookbook_loader_invalidation()}
+
             <h2>"Short cache TTL"</h2>
             {code_block(r#"#[load(cache = "public, max-age=10")]
 async fn product_list(_req: &FlowRequest) -> Vec<Product> {

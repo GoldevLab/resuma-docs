@@ -10,10 +10,26 @@ pub fn page(_req: FlowRequest) -> View {
                 "Complements " <a href="/docs/security">"app security"</a> " (CSRF, CSP, actions)."
             </p>
 
-            <h2>"Required in production"</h2>
+            {crate::site::demos::exec_security()}
+
+            <h2>"When exec routes need a key"</h2>
+            <p>
+                "Exec routes (" <code>"/_resuma/*"</code>") mount only when you call "
+                <code>".workers(registry)"</code> " or set " <code>"RESUMA_EXEC_ENABLED=1"</code>". "
+                "Pure SSR/Flow apps never expose them — no API key required."
+            </p>
+            <p>
+                "When exec routes are mounted, Resuma is "
+                <strong>"fail-closed"</strong> ": without "
+                <code>"RESUMA_EXEC_API_KEY"</code> " in production, admin routes return 401. "
+                "Locally, use " <code>"RESUMA_EXEC_PUBLIC=1"</code> " instead of managing a secret."
+            </p>
+            <p>
+                <a href="/docs/security/environment">"Environment variables guide →"</a> " (by app type, Fly secrets, full reference)"
+            </p>
             {code_block(r#"RESUMA_ENV=production
-RESUMA_EXEC_API_KEY=<openssl rand -hex 32>   # admin routes
-RESUMA_OPS_SESSION=<openssl rand -hex 32>    # /ops cookie value
+RESUMA_EXEC_API_KEY=$(openssl rand -hex 32)   # fly secrets set …
+RESUMA_OPS_SESSION=$(openssl rand -hex 32)     # /ops cookie (production template)
 RESUMA_DATA_DIR=/data/resuma
 RESUMA_RATE_BACKEND=disk"#)}
 
@@ -37,6 +53,11 @@ RESUMA_RATE_BACKEND=disk"#)}
             </p>
 
             <h2>"Rate limits (exec)"</h2>
+            <p>
+                "Exec routes share the same built-in rate-limit backends as app actions — "
+                <code>"memory"</code> " in dev, " <code>"disk"</code> " under "
+                <code>"{RESUMA_DATA_DIR}/rate-limit/"</code> " in production. No Redis."
+            </p>
             <ul>
                 <li><code>"RESUMA_RATE_EXEC_WORKERS"</code> " — default 30/min (worker + queue POST)"</li>
                 <li><code>"RESUMA_RATE_EXEC_GRAPH"</code> " — default 180/min (reads, SSE)"</li>
@@ -49,7 +70,7 @@ RESUMA_RATE_BACKEND=disk"#)}
                 <li><code>"RESUMA_EXEC_MAX_DEPTH"</code> " — nesting depth (default 32)"</li>
             </ul>
 
-            <p><a href="/docs/exec/flow_ui">"← Flow UI"</a> " · " <a href="/docs/security/configure">"Server security →"</a></p>
+            <p><a href="/docs/exec/flow_ui">"← Flow UI"</a> " · " <a href="/docs/security/environment">"Environment variables →"</a></p>
         </>
     }
 }

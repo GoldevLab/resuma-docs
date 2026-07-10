@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Tasks"</h1>
             <p class="lead">"Tasks run side effects on the server during render, or register client-only work for after visibility."</p>
 
+            {crate::site::demos::components_tasks()}
+
             <h2>"use_task"</h2>
             <p>"Alias for use_effect — runs during SSR and re-runs when tracked signals change."</p>
             {code_block(r#"let filter = signal("all".into());

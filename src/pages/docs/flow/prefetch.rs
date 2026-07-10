@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Prefetch"</h1>
             <p class="lead">"Resuma prefetches lazy handler chunks when resumable boundaries enter the viewport, and prefetches route HTML on NavLink hover (1.0+)."</p>
 
+            {crate::site::demos::flow_prefetch()}
+
             <h2>"Handler prefetch (automatic)"</h2>
             <p>
                 "Every " <code>"#[component]"</code> " registers " <code>"/_resuma/handler/{Name}.js"</code> ". "

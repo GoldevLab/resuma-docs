@@ -7,8 +7,12 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Resuma OS (execution layer)"</h1>
             <p class="lead">
                 "Durable workers, disk-backed queues, cron scheduler, webhooks, and an ops dashboard — "
-                "self-hosted. No Redis or Cloudflare Workers required."
+                "self-hosted. No Redis or Cloudflare Workers required. "
+                "Rate limiting for the whole app (actions, submits, exec) also lives on disk under "
+                <code>"{RESUMA_DATA_DIR}/rate-limit/"</code> "."
             </p>
+
+            {crate::site::demos::exec_overview()}
 
             <h2>"When to use"</h2>
             <ul>

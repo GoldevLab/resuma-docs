@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Layouts"</h1>
             <p class="lead">"Layouts wrap pages with shared chrome — nav, sidebars, and nested shells via #[layout] and Slot."</p>
 
+            {crate::site::demos::flow_layouts()}
+
             <h2>"Define a layout"</h2>
             {code_block(r#"#[layout("/")]
 fn SiteLayout() -> View {

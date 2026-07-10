@@ -1,9 +1,12 @@
 //! Shared UI for the Resuma documentation site.
 
 mod css;
+mod demo_actions;
+mod demo_shell;
 mod docs_search;
 mod exec_demo;
 mod hero_bg;
+pub mod live_demos;
 mod pwa;
 mod seo;
 mod server_demo;
@@ -11,8 +14,10 @@ mod sidebar;
 mod workers;
 
 pub use css::SITE_CSS;
+pub use demo_shell::{live_demo, live_info};
 pub use docs_search::search;
 pub use hero_bg::hero_particles_mount;
+pub use live_demos as demos;
 pub use pwa::config as pwa_config;
 pub use seo::{json_ld, site_description, site_title, site_url};
 pub use exec_demo::exec_showcase_demo;

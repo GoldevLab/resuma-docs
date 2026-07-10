@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Streaming"</h1>
             <p class="lead">"Deferred #[load(stream)] handlers let SSR flush the shell immediately while slow data streams in."</p>
 
+            {crate::site::demos::flow_streaming()}
+
             <h2>"Stream loader"</h2>
             {code_block(r#"#[load(stream)]
 async fn home(req: &FlowRequest) -> HomeData {

@@ -6,6 +6,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Flow Endpoints"</h1>
             <p class="lead">"HTTP paths that connect browser forms and client code to Rust submit and server handlers."</p>
 
+            {crate::site::demos::flow_endpoints()}
+
             <h2>"Submit endpoints"</h2>
             <table class="docs-table">
                 <thead>

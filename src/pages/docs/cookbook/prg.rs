@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"PRG pattern"</h1>
             <p class="lead">"Post/Redirect/Get — avoid duplicate form submissions after " <code>"#[submit]"</code>"."</p>
 
+            {crate::site::demos::cookbook_prg()}
+
             <h2>"Why"</h2>
             <p>"After a successful POST, redirect to a GET URL so refresh does not re-submit the form."</p>
 

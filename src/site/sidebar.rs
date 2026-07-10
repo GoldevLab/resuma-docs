@@ -45,6 +45,7 @@ pub fn doc_sidebar(_active_path: &str) -> View {
             <h4>"Security"</h4>
             {nav!(
                 "/docs/security" => "Overview",
+                "/docs/security/environment" => "Environment variables",
                 "/docs/security/configure" => "Configure server",
                 "/docs/security/server_actions" => "Server actions",
                 "/docs/security/middleware" => "Auth middleware",

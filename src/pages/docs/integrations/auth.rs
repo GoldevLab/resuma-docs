@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"FlowRequest"</code> " extensions and gate loaders and submits."
             </p>
 
+            {crate::site::demos::integrations_generic("Auth", "resuma add auth")}
+
             <h2>"Pattern"</h2>
             <ul>
                 <li><code>"#[middleware]"</code> " — read session cookie, set " <code>"req.extensions"</code></li>

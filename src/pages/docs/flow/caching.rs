@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Caching"</h1>
             <p class="lead">"Set Cache-Control headers on #[load] responses to cache server data at the edge or in the browser."</p>
 
+            {crate::site::demos::flow_caching()}
+
             <h2>"cache attribute"</h2>
             {code_block(r#"#[load(cache = "public, max-age=60")]
 async fn home(_req: &FlowRequest) -> HomeData {

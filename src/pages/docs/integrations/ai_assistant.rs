@@ -9,6 +9,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "Teach your editor how to write Resuma — reactive " <code>"view!"</code> ", Flow routes, server actions, and common pitfalls — with one CLI command."
             </p>
 
+            {crate::site::demos::integrations_generic("AI assistant", "resuma add ai")}
+
             <h2>"Skill vs MCP — which one?"</h2>
             <table class="bench">
                 <thead>

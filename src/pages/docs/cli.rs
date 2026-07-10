@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"CLI Reference"</h1>
             <p class="lead">"The resuma command scaffolds projects, runs dev servers, builds releases, and generates route registries."</p>
 
+            {crate::site::demos::reference_cli()}
+
             <h2>"Install"</h2>
             {code_block(r#"cargo install resuma
 

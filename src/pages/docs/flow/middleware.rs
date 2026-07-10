@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Middleware"</h1>
             <p class="lead">"#[middleware] runs before pages, loaders, submits, and server actions in FlowApp."</p>
 
+            {crate::site::demos::flow_middleware()}
+
             <h2>"Define middleware"</h2>
             {code_block(r#"#[middleware]
 async fn log_all(req: FlowRequest) -> Result<FlowRequest> {

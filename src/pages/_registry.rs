@@ -87,6 +87,7 @@ match module {
             "docs::security::authorization" => Some(super::docs::security::authorization::page(req)),
             "docs::security::backend_patterns" => Some(super::docs::security::backend_patterns::page(req)),
             "docs::security::configure" => Some(super::docs::security::configure::page(req)),
+            "docs::security::environment" => Some(super::docs::security::environment::page(req)),
             "docs::security::middleware" => Some(super::docs::security::middleware::page(req)),
             "docs::security::server_actions" => Some(super::docs::security::server_actions::page(req)),
             "docs::security::todo" => Some(super::docs::security::todo::page(req)),

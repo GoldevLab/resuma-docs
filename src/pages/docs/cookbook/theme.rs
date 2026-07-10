@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Theme"</h1>
             <p class="lead">"Provide theme tokens via context and expose CSS variables for consistent styling."</p>
 
+            {crate::site::demos::cookbook_theme()}
+
             <h2>"Provide theme"</h2>
             {code_block(r##"#[layout("/")]
 fn AppLayout() -> View {

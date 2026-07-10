@@ -12,6 +12,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "Use " <code>"file:"</code> " locally and a remote URL + auth token in production."
             </p>
 
+            {crate::site::demos::integrations_generic("Turso", "resuma add turso")}
+
             <h2>"Why Turso with Resuma"</h2>
             <ul>
                 <li>"SQLite semantics — zero server to manage for small/medium apps"</li>

@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Loaders"</h1>
             <p class="lead">"#[load] handlers fetch server data before a page renders — the Flow equivalent of route loaders."</p>
 
+            {crate::site::demos::flow_loaders()}
+
             <h2>"Define a loader"</h2>
             {code_block(r#"#[data]
 struct HomeData {

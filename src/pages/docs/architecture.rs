@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Architecture"</h1>
             <p class="lead">"How Resuma turns Rust components into instantly-interactive HTML without hydration."</p>
 
+            {crate::site::demos::reference_architecture()}
+
             <h2>"The resumability promise"</h2>
             <p>"Traditional SSR: render on server → hydrate on client (re-run all components). Resuma: render once → serialize state → client resumes only what the user touches."</p>
             {code_block(r#"Server (Rust)  ──HTML + payload──►  Browser

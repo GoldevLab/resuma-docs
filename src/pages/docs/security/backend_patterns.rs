@@ -9,6 +9,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <a href="/docs/security/todo">"examples/todo"</a>"."
             </p>
 
+            {crate::site::demos::security_backend()}
+
             <table class="docs-table">
                 <thead>
                     <tr><th>"Pattern"</th><th>"Resuma"</th><th>"Todo file"</th></tr>

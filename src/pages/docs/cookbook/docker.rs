@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Docker Deploy"</h1>
             <p class="lead">"Build a minimal production image for a Resuma Flow app."</p>
 
+            {crate::site::demos::cookbook_docker()}
+
             <h2>"Dockerfile"</h2>
             <p>"This repo (" <code>"resuma-docs"</code> ") is standalone: " <code>"Dockerfile"</code> ", "
                 <code>"fly.toml"</code> ", and " <code>".dockerignore"</code> " live at the repo root. "
@@ -63,7 +65,12 @@ fly open"##)}
             <ul>
                 <li>"Node.js is only in the build stage (Resuma Client bundles); the runtime image is Rust + pages only."</li>
                 <li>"Resuma runtime JS is embedded in the " <code>"resuma"</code> " crate — no extra Node step for apps without client components."</li>
-                <li>"Set " <code>"RESUMA_ENV=production"</code> " and " <code>"RESUMA_TRUST_PROXY=1"</code> " — see " <a href="/docs/security/configure">"Configure security"</a>"."</li>
+                <li>"Set " <code>"RESUMA_ENV=production"</code> " and " <code>"RESUMA_TRUST_PROXY=1"</code> " — see " <a href="/docs/security/environment">"Environment variables"</a> " (workers need " <code>"RESUMA_EXEC_API_KEY"</code> " via " <code>"fly secrets"</code> ")."</li>
+                <li>
+                    "Mount a persistent volume at " <code>"RESUMA_DATA_DIR"</code> " (default "
+                    <code>".resuma"</code> ") for disk-backed rate limits, exec queues, and scheduler — "
+                    <strong>"no Redis required"</strong>"."
+                </li>
                 <li>"Health check hits " <code>"/"</code> " (see " <code>"fly.toml"</code> "); Flow also serves " <code>"/robots.txt"</code> " and " <code>"/sitemap.xml"</code>"."</li>
             </ul>
         </>

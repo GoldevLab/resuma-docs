@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <a href="/docs/security/todo">"todo example"</a> " (switch guest / alice / bob)."
             </p>
 
+            {crate::site::demos::security_authorization()}
+
             <h2>"Check ownership in handlers"</h2>
             {code_block(r#"pub fn assert_owner(owner_id: &str, req: &FlowRequest) -> Result<()> {
     let uid = req.user_id().ok_or(ResumaError::Unauthorized)?;

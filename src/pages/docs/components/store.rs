@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Store"</h1>
             <p class="lead">"Stores wrap structured reactive state — mutations go through update or set, and the whole object serializes as one payload blob."</p>
 
+            {crate::site::demos::components_store()}
+
             <h2>"use_store"</h2>
             {code_block(r#"#[data]
 struct User {

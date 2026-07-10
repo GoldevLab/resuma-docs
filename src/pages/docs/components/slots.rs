@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Slots"</h1>
             <p class="lead">"Slots project child content into component templates — default and named slots via the slot attribute."</p>
 
+            {crate::site::demos::components_slots()}
+
             <h2>"Default slot"</h2>
             {code_block(r#"#[component]
 fn Panel() -> View {

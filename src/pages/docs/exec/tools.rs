@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "The planner chooses execution strategy (single node vs map-reduce) from worker intent."
             </p>
 
+            {crate::site::demos::exec_tools()}
+
             <h2>"Built-in tools"</h2>
             <table class="docs-table">
                 <thead><tr><th>"Name"</th><th>"Purpose"</th></tr></thead>

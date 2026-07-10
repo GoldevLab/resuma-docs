@@ -281,12 +281,17 @@ pub const ENTRIES: &[DocEntry] = &[
     DocEntry {
         title: "Security overview",
         href: "/docs/security",
-        keywords: "csrf rate limit headers production",
+        keywords: "csrf rate limit headers production disk memory no redis RESUMA_DATA_DIR",
     },
     DocEntry {
         title: "Configure server",
         href: "/docs/security/configure",
-        keywords: "csp nonce auto_pages security env",
+        keywords: "csp nonce auto_pages security SecurityConfig",
+    },
+    DocEntry {
+        title: "Environment variables",
+        href: "/docs/security/environment",
+        keywords: "RESUMA_ENV RESUMA_TRUST_PROXY RESUMA_EXEC_API_KEY RESUMA_RATE_BACKEND RESUMA_DATA_DIR fly secrets deploy production local dev no redis",
     },
     DocEntry {
         title: "Secure server actions",

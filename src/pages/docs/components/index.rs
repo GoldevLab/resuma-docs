@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Components"</h1>
             <p class="lead">"Author UI with the view! macro, signals, and slots — components only execute on the server."</p>
 
+            {crate::site::demos::components_overview()}
+
             <h2>"Topics"</h2>
             <div class="grid-3">
                 <a href="/docs/components/view" class="card" style="text-decoration: none;">

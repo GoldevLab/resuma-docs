@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Configure security"</h1>
             <p class="lead">"Tune Resuma's HTTP hardening from Rust or environment variables."</p>
 
+            {crate::site::demos::security_configure()}
+
             <h2>"ServeOptions + SecurityConfig"</h2>
             {code_block(r#"use resuma::prelude::*;
 
@@ -35,27 +37,39 @@ async fn main() -> std::io::Result<()> {
 }"#)}
 
             <h2>"Environment variables"</h2>
-            <p>"When you omit explicit config, " <code>"SecurityConfig::from_env()"</code> " reads:"</p>
-            {code_block(r#"RESUMA_ENV=production        # generic client errors
-RESUMA_TRUST_PROXY=1       # X-Forwarded-For / Proto
-RESUMA_CSRF=1              # default on (set 0 to disable)
+            <p>
+                "Local dev needs no env vars — " <code>"cargo run"</code> " and " <code>"resuma dev"</code> " use secure defaults. "
+                "For production, " <code>"SecurityConfig::from_env()"</code> " reads "
+                <code>"RESUMA_ENV"</code> ", " <code>"RESUMA_TRUST_PROXY"</code> ", rate limits, and CSP flags."
+            </p>
+            <p>
+                <strong>"Full guide:"</strong> " "
+                <a href="/docs/security/environment">"Environment variables"</a> " — what you need by app type (SSR vs workers), "
+                "automatic vs manual setup, Fly scaffold, and " <code>"resuma doctor"</code>"."
+            </p>
+            {code_block(r#"RESUMA_CSRF=1              # default on
 RESUMA_ORIGIN_CHECK=1      # default on
 RESUMA_BODY_LIMIT=1048576
-RESUMA_RATE_ACTIONS=120    # per IP / minute — in-memory
-RESUMA_RATE_SUBMITS=60     # per IP / minute — in-memory
-RESUMA_RATE_BACKEND=disk   # memory | disk (prod) | redis (feature)
+RESUMA_RATE_ACTIONS=120
+RESUMA_RATE_SUBMITS=60
+RESUMA_RATE_BACKEND=memory|disk   # disk auto when RESUMA_ENV=production
+RESUMA_DATA_DIR=/data/resuma      # persistent volume for disk rate limits + exec"#)}
 
-# Resuma OS (execution layer) — see /docs/exec/security
-RESUMA_DATA_DIR=/data/resuma
-RESUMA_EXEC_API_KEY=<secret>      # required in production for worker/queue routes
-RESUMA_OPS_SESSION=<secret>       # production template /ops cookie
-RESUMA_METRICS_PUBLIC=0
-RESUMA_SCHEDULER_TICK_SECS=30"#)}
+            <h2>"Built-in rate limiting (no Redis)"</h2>
+            <p>
+                "Resuma includes per-IP rate limiting for actions, submits, and exec routes. "
+                "Dev uses memory; production uses " <code>"{RESUMA_DATA_DIR}/rate-limit/"</code> " with "
+                "file locks — shared across processes on the same volume. "
+                "For multi-region deploys without a shared disk, add edge rate limiting "
+                "(nginx, Fly proxy, Cloudflare) instead of an external datastore."
+            </p>
 
             <h2>"Resuma OS (exec layer)"</h2>
             <p>
-                "Worker, queue, graph, scheduler, and webhook routes use a separate API key and disk rate limits. "
-                "Full reference: " <a href="/docs/exec/security">"Exec security"</a> " · "
+                "Worker, queue, graph, scheduler, and webhook routes need "
+                <code>"RESUMA_EXEC_API_KEY"</code> " in production (fail-closed without it). "
+                "See " <a href="/docs/security/environment">"Environment variables"</a> " · "
+                <a href="/docs/exec/security">"Exec security"</a> " · "
                 <a href="/docs/exec/ops">"Ops & production"</a>"."
             </p>
 

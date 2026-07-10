@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Event Handlers"</h1>
             <p class="lead">"Closures in onClick and other event attributes are translated to JavaScript at compile time (rs2js in resuma-macros) and lazy-loaded on first interaction."</p>
 
+            {crate::site::demos::components_handlers()}
+
             <h2>"onClick"</h2>
             {code_block(r#"let count = signal(0);
 

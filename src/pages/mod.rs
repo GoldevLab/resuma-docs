@@ -90,6 +90,7 @@ pub mod docs {
         pub mod authorization;
         pub mod backend_patterns;
         pub mod configure;
+        pub mod environment;
         pub mod index;
         pub mod middleware;
         pub mod server_actions;

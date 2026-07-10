@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "the browser resumes signals and lazy handler chunks."
             </p>
 
+            {crate::site::demos::reference_reactivity()}
+
             <h2>"Lifecycle overview"</h2>
             <ol>
                 <li><strong>"SSR render"</strong> " — " <code>"#[component]"</code> " functions build a " <code>"View"</code> " tree."</li>

@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Server Actions"</h1>
             <p class="lead">"#[server] registers Rust functions as RPC endpoints callable from handlers and client code."</p>
 
+            {crate::site::demos::components_server()}
+
             <h2>"Define an action"</h2>
             {code_block(r#"#[server]
 async fn search(q: String) -> Vec<String> {

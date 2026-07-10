@@ -11,6 +11,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <a href="/docs/flow/middleware">"Flow middleware"</a>"."
             </p>
 
+            {crate::site::demos::security_middleware()}
+
             <h2>"ResumaApp (single-page / todo template)"</h2>
             <p>"Use " <code>"set_action_middleware"</code> " for " <code>"#[server]"</code> " actions only. See " <a href="/docs/security/todo">"todo example"</a>"."</p>
             {code_block(r#"set_action_middleware(|req| {

@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"/robots.txt"</code> " and " <code>"/sitemap.xml"</code>"."
             </p>
 
+            {crate::site::demos::reference_api()}
+
             <h2>"Runtime assets"</h2>
             <table class="docs-table">
                 <thead>
@@ -127,7 +129,7 @@ X-Resuma-CSRF: <token>
                 <li><code>"Strict-Transport-Security"</code> " when HTTPS is detected"</li>
                 <li><code>"X-Frame-Options: DENY"</code></li>
                 <li><code>"X-Content-Type-Options: nosniff"</code></li>
-                <li>"Rate limiting on POST actions and submits"</li>
+                <li>"Rate limiting on POST actions and submits (built-in memory/disk — no Redis)"</li>
             </ul>
 
             <h2>"CSRF"</h2>

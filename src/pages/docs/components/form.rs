@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Form"</h1>
             <p class="lead">"The Form component wires HTML forms to #[submit] handlers with progressive enhancement."</p>
 
+            {crate::site::demos::components_form()}
+
             <h2>"Basic form"</h2>
             {code_block(r#"#[submit]
 async fn contact(form: ContactForm, _req: &FlowRequest)

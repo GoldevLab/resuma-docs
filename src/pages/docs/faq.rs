@@ -54,6 +54,24 @@ pub fn page(_req: FlowRequest) -> View {
             <h2>"Where is the backend security reference?"</h2>
             <p><code>"examples/todo"</code> " — guards, DTO validation, service layer, authorization. Docs: " <a href="/docs/security/todo">"/docs/security/todo"</a>"."</p>
 
+            <h2>"Do I need Redis, Postgres, or Cloudflare Workers?"</h2>
+            <p>
+                <strong>"No — for core Resuma features."</strong> " SSR, signals, server actions, CSRF, CSP, and "
+                "rate limiting work out of the box with no external services. Rate limits use "
+                <strong>"memory"</strong> " in dev and a "
+                <strong>"disk backend"</strong> " in production (" <code>"{RESUMA_DATA_DIR}/rate-limit/"</code> ")."
+            </p>
+            <p>
+                <strong>"Resuma OS"</strong> " (" <code>"resuma::exec"</code> ") adds disk-backed queues, cron scheduler, "
+                "durable graphs, and webhooks — also without Redis. See "
+                <a href="/docs/exec">"/docs/exec"</a> "."
+            </p>
+            <p>
+                "Optional: add Postgres/SQLite via SQLx for your app's data — Resuma does not require a database "
+                "for the framework itself. See "
+                <a href="/docs/integrations/sqlx">"SQLx integration"</a> "."
+            </p>
+
             <h2>"Do I need Redis or Cloudflare Workers for background jobs?"</h2>
             <p>
                 "No. " <strong>"Resuma OS"</strong> " (" <code>"resuma::exec"</code> ") provides disk-backed queues, cron scheduler, durable graphs, and webhooks — "

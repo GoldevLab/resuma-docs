@@ -11,6 +11,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"include_bytes!"</code> "."
             </p>
 
+            {crate::site::demos::flow_pwa()}
+
             <h2>"PWA (on by default)"</h2>
             <p>
                 <code>"FlowApp::into_router"</code> " enables PWA from page title/description and precaches static routes. "

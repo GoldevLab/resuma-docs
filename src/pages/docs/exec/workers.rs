@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"#[worker]"</code> ". Each run becomes an execution graph with durable checkpoints."
             </p>
 
+            {crate::site::demos::exec_workers()}
+
             <h2>"Define a worker"</h2>
             {code_block(r#"use resuma::prelude::*;
 use serde::Deserialize;

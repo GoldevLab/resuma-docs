@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"view!"</h1>
             <p class="lead">"The view! macro builds a View tree from JSX-like syntax — elements, text, and Rust expressions."</p>
 
+            {crate::site::demos::components_view()}
+
             <h2>"Basic syntax"</h2>
             {code_block(r#"view! {
     <main class="page">

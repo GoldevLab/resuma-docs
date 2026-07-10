@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"NavLink"</h1>
             <p class="lead">"NavLink renders an anchor with active-state styling and client-side navigation when the Resuma runtime is loaded."</p>
 
+            {crate::site::demos::components_nav_link()}
+
             <h2>"Basic usage"</h2>
             {code_block(r#"view! {
     <nav>

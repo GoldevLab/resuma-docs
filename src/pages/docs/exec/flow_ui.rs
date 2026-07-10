@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "Add " <code>"resuma-flow"</code> " as a path dependency in the monorepo, or copy components into your app."
             </p>
 
+            {crate::site::demos::exec_flow_ui()}
+
             <h2>"Cargo.toml"</h2>
             {code_block(r#"[dependencies]
 resuma = "1.0.2"

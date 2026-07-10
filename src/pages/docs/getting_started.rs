@@ -47,6 +47,11 @@ pub fn page(_req: FlowRequest) -> View {
                 <li>"Your favorite editor ("<a href="https://code.visualstudio.com/">"VS Code"</a>" + rust-analyzer recommended)"</li>
             </ul>
             <p>
+                "Core Resuma needs " <strong>"no Redis, no database, and no external services"</strong> " — "
+                "CSRF, CSP, and rate limiting are built in. Optional SQLx/Postgres is for your app data only. "
+                "See " <a href="/docs/faq">"FAQ"</a> " and " <a href="/docs/security">"Security"</a>"."
+            </p>
+            <p>
                 "Optionally, read "
                 <a href="/docs/architecture">"How resumability works"</a>
                 " before scaffolding."
@@ -175,9 +180,23 @@ async fn greet(name: String) -> String {
     ├── security.rs
     └── todo_store.rs"##)}
 
+            <h2>"Deploy to production"</h2>
+            <p>
+                "Local dev needs "
+                <strong>"zero env vars"</strong> " — "
+                <code>"cargo run"</code> " and " <code>"resuma dev"</code> " work out of the box. "
+                "For Fly or Docker, scaffold with "
+                <code>"resuma new --template production"</code> " (includes "
+                <code>"fly.toml"</code> " with " <code>"RESUMA_ENV"</code> " and "
+                <code>"RESUMA_TRUST_PROXY"</code> "). Only add "
+                <code>"RESUMA_EXEC_API_KEY"</code> " if your app uses workers."
+            </p>
+            <p><a href="/docs/security/environment">"Environment variables — local vs prod, Fly secrets, resuma doctor →"</a></p>
+
             <h2>"Next steps"</h2>
             <ul>
                 <li><a href="/docs/security/todo">"Todo example — full backend reference"</a></li>
+                <li><a href="/docs/security/environment">"Environment variables — deploy checklist"</a></li>
                 <li><a href="/docs/flow">"Resuma Flow — multi-page apps"</a></li>
                 <li><a href="/docs/exec">"Resuma OS — workers, queue, scheduler"</a></li>
                 <li><a href="/docs/package">"Package map"</a></li>

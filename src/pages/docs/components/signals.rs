@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Signals"</h1>
             <p class="lead">"Signals are fine-grained reactive cells serialized in the resumability payload and resumed on the client."</p>
 
+            {crate::site::demos::components_signals()}
+
             <h2>"signal"</h2>
             {code_block(r#"let count = signal(0);
 

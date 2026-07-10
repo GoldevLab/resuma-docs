@@ -6,6 +6,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Cookbook"</h1>
             <p class="lead">"Practical recipes for common Resuma patterns — copy, adapt, and ship."</p>
 
+            {crate::site::demos::cookbook_overview()}
+
             <h2>"Recipes"</h2>
             <div class="grid-3">
                 <a href="/docs/cookbook/debouncer" class="card" style="text-decoration: none;">

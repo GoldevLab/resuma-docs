@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Actions (Submits)"</h1>
             <p class="lead">"#[submit] handlers process form POSTs with typed validation and field-level errors."</p>
 
+            {crate::site::demos::flow_submits()}
+
             <h2>"Define a submit handler"</h2>
             {code_block(r#"#[data]
 struct ContactForm {

@@ -25,7 +25,7 @@ fn SiteLayout() -> View {
                 </nav>
                 <div class="header-actions">
                     <a href="/docs/getting_started" class="btn btn-ghost">"Get Started"</a>
-                    <a href="https://docs.rs/resuma/1.0.2" class="btn btn-ghost" target="_blank">"docs.rs"</a>
+                    <a href="https://docs.rs/resuma/1.2.0" class="btn btn-ghost" target="_blank">"docs.rs"</a>
                     <a href="https://crates.io/crates/resuma" class="btn btn-ghost" target="_blank">"crates.io"</a>
                     <a href="https://github.com/GoldevLab/resuma" class="btn btn-primary">"GitHub"</a>
                 </div>
@@ -36,7 +36,7 @@ fn SiteLayout() -> View {
             <p>"Made with ❤️ by the Resuma team · MIT License"</p>
             <div class="site-footer-links">
                 <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a>
-                <a href="https://docs.rs/resuma/1.0.2" target="_blank">"docs.rs"</a>
+                <a href="https://docs.rs/resuma/1.2.0" target="_blank">"docs.rs"</a>
                 <a href="/docs/package">"Install guide"</a>
                 <a href="/docs/architecture">"Architecture"</a>
                 <a href="/docs/benchmark">"Benchmarks"</a>
@@ -58,6 +58,7 @@ fn DocsLayout() -> View {
             <main class="docs-main">
                 <Slot />
             </main>
+            <div id="modals"></div>
         </div>
     }
 }

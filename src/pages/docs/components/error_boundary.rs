@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"&lt;ErrorBoundary&gt;"</code> ", adapted for Resuma's SSR-first model."
             </p>
 
+            {crate::site::demos::components_error_boundary()}
+
             <h2>"Loader boundaries"</h2>
             <p>
                 "Loaders run on the server before paint. Use " <code>"load_boundary"</code> " to branch on "

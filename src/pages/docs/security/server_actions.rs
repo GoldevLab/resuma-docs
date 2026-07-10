@@ -11,6 +11,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <a href="/docs/security/todo">"todo example"</a>"."
             </p>
 
+            {crate::site::demos::security_server_actions()}
+
             <h2>"1. Return Result (fail closed)"</h2>
             <p>"Do not silently ignore bad input. Return " <code>"Result<T, ResumaError>"</code> " — the framework maps errors to HTTP 401/403/422."</p>
             {code_block(r#"#[server]

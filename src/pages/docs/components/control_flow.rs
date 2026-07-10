@@ -11,6 +11,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"&lt;For&gt;"</code> " for lists bound to signals."
             </p>
 
+            {crate::site::demos::components_control_flow()}
+
             <h2>"Conditional UI"</h2>
             <p>"Use Rust " <code>"if"</code> " / " <code>"match"</code> ", or the " <code>"&lt;Show&gt;"</code> " helper (Leptos-style):"</p>
             {code_block(r#"let logged_in = signal(false);

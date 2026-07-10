@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Effects"</h1>
             <p class="lead">"Derived state and side effects. Use macros for client replay; plain functions for SSR-only work."</p>
 
+            {crate::site::demos::components_effects()}
+
             <h2>"computed! — client + SSR"</h2>
             {code_block(r#"let first = signal("Ada".into());
 let last = signal("Lovelace".into());

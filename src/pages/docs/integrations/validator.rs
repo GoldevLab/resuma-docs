@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Validation"</h1>
             <p class="lead">"Typed form validation in " <code>"#[submit]"</code> " with the " <code>"validator"</code> " crate."</p>
 
+            {crate::site::demos::integrations_generic("Validation", "resuma add validator")}
+
             <h2>"Install"</h2>
             {code_block(r#"validator = { version = "0.19", features = ["derive"] }"#)}
 

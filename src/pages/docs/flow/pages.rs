@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Pages"</h1>
             <p class="lead">"Each page is a Rust module exporting pub fn page(FlowRequest) -> View, discovered from your pages directory."</p>
 
+            {crate::site::demos::flow_pages()}
+
             <h2>"Page module"</h2>
             {code_block(r#"use resuma::prelude::*;
 

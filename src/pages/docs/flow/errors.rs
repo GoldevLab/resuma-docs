@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Error Handling"</h1>
             <p class="lead">"FlowError unifies not-found, loader failures, and render errors into consistent error pages."</p>
 
+            {crate::site::demos::flow_errors()}
+
             <h2>"FlowError variants"</h2>
             <ul>
                 <li><code>"FlowError::NotFound"</code>" — 404, no matching route"</li>

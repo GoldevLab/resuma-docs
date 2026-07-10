@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Context"</h1>
             <p class="lead">"Context passes serializable values down the component tree without prop drilling."</p>
 
+            {crate::site::demos::components_context()}
+
             <h2>"Define a context"</h2>
             {code_block(r#"#[data]
 struct Locale {

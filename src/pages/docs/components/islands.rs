@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Islands (optional)"</h1>
             <p class="lead">"Resumability is the default for every " <code>"#[component]"</code> ". Islands are an optional extra boundary for heavy lazy JS, " <code>"load = \"visible\""</code> ", or dev HMR."</p>
 
+            {crate::site::demos::components_islands()}
+
             <h2>"Default: resumable components"</h2>
             {code_block(r#"#[component]
 fn Counter() {

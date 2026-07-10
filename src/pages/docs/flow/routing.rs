@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Routing"</h1>
             <p class="lead">"Resuma Flow discovers routes from files under your pages directory — no manual route tables."</p>
 
+            {crate::site::demos::flow_routing()}
+
             <h2>"File conventions"</h2>
             {code_block(r##"index.rs           → /
 about.rs           → /about

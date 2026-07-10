@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Streaming Loaders"</h1>
             <p class="lead">"Ship the HTML shell immediately and stream slow loader results into stream_slot placeholders."</p>
 
+            {crate::site::demos::cookbook_streaming_loaders()}
+
             <h2>"Enable streaming"</h2>
             {code_block(r#"FlowApp::new()
     .streaming(true)

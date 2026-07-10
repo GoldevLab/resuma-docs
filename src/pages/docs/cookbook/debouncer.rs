@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Debouncer"</h1>
             <p class="lead">"Debounce a search input so API calls fire only after the user stops typing."</p>
 
+            {crate::site::demos::cookbook_debouncer()}
+
             <h2>"Search component"</h2>
             {code_block(r#"#[component]
 fn SearchBox() {

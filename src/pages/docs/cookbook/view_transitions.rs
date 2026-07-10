@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"View Transitions"</h1>
             <p class="lead">"Wrap page content with with_view_transition for smooth animated navigation using the View Transitions API."</p>
 
+            {crate::site::demos::cookbook_view_transitions()}
+
             <h2>"Page wrapper"</h2>
             {code_block(r#"pub fn page(_req: FlowRequest) -> View {
     with_view_transition(

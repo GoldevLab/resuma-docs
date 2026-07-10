@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Client components (TypeScript)"</h1>
             <p class="lead">"Ship prebuilt TypeScript widgets alongside resumable Rust UI — Three.js, charts, editors — without forcing them through rs2js or " <code>"#[island]"</code> "."</p>
 
+            {crate::site::demos::components_client()}
+
             <h2>"When to use"</h2>
             <ul>
                 <li>"Heavy third-party JS (Three.js, WebGPU, D3, Monaco)"</li>

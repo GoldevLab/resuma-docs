@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "HMAC-signed payloads for verification."
             </p>
 
+            {crate::site::demos::exec_webhooks()}
+
             <h2>"Events"</h2>
             <ul>
                 <li><code>"graph.done"</code> " — successful completion"</li>

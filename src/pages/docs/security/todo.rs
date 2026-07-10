@@ -9,6 +9,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"cargo run -p example-todo"</code> " — full Resuma showcase plus production backend patterns in Rust."
             </p>
 
+            {crate::site::demos::security_todo()}
+
             <h2>"Files"</h2>
             <table class="docs-table">
                 <thead><tr><th>"File"</th><th>"Role"</th></tr></thead>

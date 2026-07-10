@@ -10,6 +10,8 @@ pub fn page(_req: FlowRequest) -> View {
                 "Any Resuma process can enqueue; any process can claim pending jobs."
             </p>
 
+            {crate::site::demos::exec_queue()}
+
             <h2>"Layout"</h2>
             <pre class="docs-pre">{r#".resuma/queue/{name}/
   pending/      ← new jobs

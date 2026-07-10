@@ -11,6 +11,8 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"RESUMA_SCHEDULER_TICK_SECS"</code> " (default 30s)."
             </p>
 
+            {crate::site::demos::exec_scheduler()}
+
             <h2>"Create a schedule"</h2>
             {code_block(r#"POST /_resuma/scheduler
 Authorization: Bearer $RESUMA_EXEC_API_KEY

@@ -7,6 +7,8 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Resuma product map"</h1>
             <p class="lead">"One crate to install — layered products like Qwik + Qwik City or Solid + SolidStart."</p>
 
+            {crate::site::demos::reference_package()}
+
             <h2>"Layers"</h2>
             <table class="docs-table">
                 <thead>
