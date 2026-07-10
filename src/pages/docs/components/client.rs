@@ -94,7 +94,7 @@ cargo run"#)}
             <h2>"Mount contract"</h2>
             <p>"Rust emits a mount root + CSP-nonce module script (production CSP requires the nonce on external scripts, 1.0.2+):"</p>
             {code_block(r#"<div data-r-client="hero-particles" id="r-client-hero-particles" class="hero-particles"></div>
-<script type="module" src="/static/client/hero-particles.js" defer nonce="…"></script>"#)}
+    <script type="module" src="/static/client/hero-particles.js" defer nonce="…"></script>"#)}
             <p>"Optional props via " <code>"ClientComponent::props(...)"</code> " → " <code>"data-r-client-props"</code> " JSON on the root element."</p>
 
             <h2>"Live example"</h2>

@@ -1,6 +1,5 @@
 //! Reusable interactive widgets for documentation live demos.
 
-use crate::site::demo_actions::docs_greet;
 use resuma::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -84,7 +83,7 @@ pub fn HandlersWidget() -> View {
 }
 
 #[island]
-pub fn IslandWidget() -> View {
+pub fn island_demo() -> View {
     let n = signal(0_i32);
     view! {
         <>
@@ -159,7 +158,7 @@ pub fn GreetFormWidget() -> View {
     let result = signal(String::new());
     view! {
         <>
-            <Form submit={docs_greet}>
+            <Form submit={crate::site::demo_actions::docs_greet}>
                 <label>"Name" <input name="name" type="text" required=true /></label>
                 <button type="submit" class="btn btn-sm">"Greet via #[submit]"</button>
             </Form>

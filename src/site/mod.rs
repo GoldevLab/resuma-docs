@@ -14,13 +14,13 @@ mod sidebar;
 mod workers;
 
 pub use css::SITE_CSS;
-pub use demo_shell::{live_demo, live_info};
+pub use demo_shell::live_info;
 pub use docs_search::search;
+pub use exec_demo::exec_showcase_demo;
 pub use hero_bg::hero_particles_mount;
 pub use live_demos as demos;
 pub use pwa::config as pwa_config;
 pub use seo::{json_ld, site_description, site_title, site_url};
-pub use exec_demo::exec_showcase_demo;
 pub use server_demo::server_function_demo;
 pub use sidebar::doc_sidebar;
 

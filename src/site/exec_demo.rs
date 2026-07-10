@@ -6,11 +6,9 @@ use serde_json::{json, Value};
 
 #[server]
 async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> {
-    let started = resuma::exec::FlowEngine::start(
-        "docs_showcase",
-        json!({ "topic": topic, "blurb": blurb }),
-    )
-    .await?;
+    let started =
+        resuma::exec::FlowEngine::start("docs_showcase", json!({ "topic": topic, "blurb": blurb }))
+            .await?;
     Ok(json!({
         "graph_id": started.graph_id.0,
         "access_token": started.access_token.unwrap_or_default(),

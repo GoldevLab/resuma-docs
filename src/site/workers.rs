@@ -34,9 +34,7 @@ pub async fn docs_showcase(
     }
 
     let blurb = if input.blurb.trim().is_empty() {
-        format!(
-            "Exploring {topic} with Resuma OS — durable graphs, SSE events, pause and cancel."
-        )
+        format!("Exploring {topic} with Resuma OS — durable graphs, SSE events, pause and cancel.")
     } else {
         input.blurb.trim().to_string()
     };

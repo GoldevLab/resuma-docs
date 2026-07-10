@@ -21,7 +21,7 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"Register via env (boot)"</h2>
             {code_block(r#"RESUMA_WEBHOOK_URLS=https://hooks.example.com/resuma,https://backup.example/hooks
-RESUMA_WEBHOOK_SECRET=<openssl rand -hex 32>"#)}
+    RESUMA_WEBHOOK_SECRET=<openssl rand -hex 32>"#)}
 
             <h2>"Register via HTTP"</h2>
             {code_block(r#"POST /_resuma/webhooks

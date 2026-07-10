@@ -34,7 +34,7 @@ Content-Type: application/json
 
             <h2>"Stats"</h2>
             {code_block(r#"GET /_resuma/queue/default/stats
-// { "pending": 2, "processing": 1, "done": 10, "failed": 0 }"#)}
+    // { "pending": 2, "processing": 1, "done": 10, "failed": 0 }"#)}
 
             <h2>"Multi-process"</h2>
             <p>

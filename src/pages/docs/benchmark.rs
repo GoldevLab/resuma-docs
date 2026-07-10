@@ -73,8 +73,7 @@ pub fn page(_req: FlowRequest) -> View {
     let col_gzip = "Gzip";
     let col_brotli = "Brotli";
 
-    let readme_href =
-        "https://github.com/GoldevLab/resuma/blob/main/benchmark/README.md";
+    let readme_href = "https://github.com/GoldevLab/resuma/blob/main/benchmark/README.md";
     let readme_label = "benchmark/README.md";
 
     let dash = "—";

@@ -59,7 +59,7 @@ async fn enrich(input: EnrichInput, ctx: WorkerContext) -> Result<Value> {
 
             <h2>"Start a graph"</h2>
             {code_block(r#"let started = FlowEngine::start("enrich", json!({ "url": "https://example.com" })).await?;
-// started.graph_id, started.access_token, started.plan"#)}
+    // started.graph_id, started.access_token, started.plan"#)}
 
             <h2>"HTTP & queue"</h2>
             {code_block(r#"POST /_resuma/worker/enrich

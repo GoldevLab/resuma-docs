@@ -2,8 +2,8 @@
 
 mod widgets;
 
-use crate::site::demo_shell::{live_demo, live_info};
 use crate::site::demo_actions::{DocsCachedData, DocsSearchData};
+use crate::site::demo_shell::{live_demo, live_info};
 use crate::site::exec_demo::exec_showcase_demo;
 use crate::site::server_demo::server_function_demo;
 use resuma::prelude::*;
@@ -38,7 +38,7 @@ pub fn exec_scheduler() -> View {
         view! {
             <>
                 <p>"Register jobs via " <code>"GET|POST /_resuma/scheduler"</code></p>
-                <ServerActionWidget />
+                {ServerActionWidget::render(ServerActionWidgetProps::default())}
             </>
         },
     )
@@ -90,7 +90,10 @@ pub fn exec_security() -> View {
 // ── Security ────────────────────────────────────────────────────────────────
 
 pub fn security_overview() -> View {
-    live_demo("Server action round-trip", ServerActionWidget::render(ServerActionWidgetProps::default()))
+    live_demo(
+        "Server action round-trip",
+        ServerActionWidget::render(ServerActionWidgetProps::default()),
+    )
 }
 
 pub fn security_configure() -> View {
@@ -103,7 +106,10 @@ pub fn security_configure() -> View {
 }
 
 pub fn security_server_actions() -> View {
-    live_demo("#[server] RPC", ServerActionWidget::render(ServerActionWidgetProps::default()))
+    live_demo(
+        "#[server] RPC",
+        ServerActionWidget::render(ServerActionWidgetProps::default()),
+    )
 }
 
 pub fn security_middleware() -> View {
@@ -135,41 +141,65 @@ pub fn security_backend() -> View {
 }
 
 pub fn security_todo() -> View {
-    live_demo("Interactive counter (todo pattern)", CounterWidget::render(CounterWidgetProps::default()))
+    live_demo(
+        "Interactive counter (todo pattern)",
+        CounterWidget::render(CounterWidgetProps::default()),
+    )
 }
 
 // ── Components ──────────────────────────────────────────────────────────────
 
 pub fn components_overview() -> View {
-    live_demo("Signals + handlers", CounterWidget::render(CounterWidgetProps::default()))
+    live_demo(
+        "Signals + handlers",
+        CounterWidget::render(CounterWidgetProps::default()),
+    )
 }
 
 pub fn components_view() -> View {
-    live_demo("view! counter", CounterWidget::render(CounterWidgetProps::default()))
+    live_demo(
+        "view! counter",
+        CounterWidget::render(CounterWidgetProps::default()),
+    )
 }
 
 pub fn components_control_flow() -> View {
-    live_demo("<Show> toggle", ShowWidget::render(ShowWidgetProps::default()))
+    live_demo(
+        "<Show> toggle",
+        ShowWidget::render(ShowWidgetProps::default()),
+    )
 }
 
 pub fn components_signals() -> View {
-    live_demo("signal()", CounterWidget::render(CounterWidgetProps::default()))
+    live_demo(
+        "signal()",
+        CounterWidget::render(CounterWidgetProps::default()),
+    )
 }
 
 pub fn components_effects() -> View {
-    live_demo("effect! / computed", EffectsWidget::render(EffectsWidgetProps::default()))
+    live_demo(
+        "effect! / computed",
+        EffectsWidget::render(EffectsWidgetProps::default()),
+    )
 }
 
 pub fn components_error_boundary() -> View {
-    live_demo("error_boundary()", ErrorBoundaryWidget::render(ErrorBoundaryWidgetProps::default()))
+    live_demo(
+        "error_boundary()",
+        ErrorBoundaryWidget::render(ErrorBoundaryWidgetProps::default()),
+    )
 }
 
 pub fn components_handlers() -> View {
-    live_demo("onClick handler", HandlersWidget::render(HandlersWidgetProps::default()))
+    live_demo(
+        "onClick handler",
+        HandlersWidget::render(HandlersWidgetProps::default()),
+    )
 }
 
 pub fn components_islands() -> View {
-    live_demo("#[island]", IslandWidget())
+    live_demo("#[island]", island_demo())
 }
 
 pub fn components_client() -> View {
@@ -177,13 +207,16 @@ pub fn components_client() -> View {
         "TypeScript client",
         view! {
             <p>"Client components mount via " <code>"ClientComponent"</code> " — see homepage hero particles."</p>
-            <JsWidget />
+            {JsWidget::render(JsWidgetProps::default())}
         },
     )
 }
 
 pub fn components_server() -> View {
-    live_demo("#[server]", ServerActionWidget::render(ServerActionWidgetProps::default()))
+    live_demo(
+        "#[server]",
+        ServerActionWidget::render(ServerActionWidgetProps::default()),
+    )
 }
 
 pub fn components_js() -> View {
@@ -199,11 +232,17 @@ pub fn components_nav_link() -> View {
 }
 
 pub fn components_form() -> View {
-    live_demo("#[submit] Form", GreetFormWidget::render(GreetFormWidgetProps::default()))
+    live_demo(
+        "#[submit] Form",
+        GreetFormWidget::render(GreetFormWidgetProps::default()),
+    )
 }
 
 pub fn components_store() -> View {
-    live_demo("use_store", StoreWidget::render(StoreWidgetProps::default()))
+    live_demo(
+        "use_store",
+        StoreWidget::render(StoreWidgetProps::default()),
+    )
 }
 
 pub fn components_context() -> View {
@@ -215,13 +254,16 @@ pub fn components_tasks() -> View {
         "Visible tasks",
         view! {
             <p>"Defer work until viewport via " <code>"use_visible_task"</code> " — scroll this panel into view to mount."</p>
-            <CounterWidget />
+            {CounterWidget::render(CounterWidgetProps::default())}
         },
     )
 }
 
 pub fn components_testing() -> View {
-    live_demo("Testable signal", CounterWidget::render(CounterWidgetProps::default()))
+    live_demo(
+        "Testable signal",
+        CounterWidget::render(CounterWidgetProps::default()),
+    )
 }
 
 // ── Flow ────────────────────────────────────────────────────────────────────
@@ -309,7 +351,10 @@ pub fn flow_loaders() -> View {
 }
 
 pub fn flow_submits() -> View {
-    live_demo("#[submit]", GreetFormWidget::render(GreetFormWidgetProps::default()))
+    live_demo(
+        "#[submit]",
+        GreetFormWidget::render(GreetFormWidgetProps::default()),
+    )
 }
 
 pub fn flow_middleware() -> View {
@@ -322,11 +367,17 @@ pub fn flow_middleware() -> View {
 }
 
 pub fn flow_endpoints() -> View {
-    live_demo("#[server] endpoint", ServerActionWidget::render(ServerActionWidgetProps::default()))
+    live_demo(
+        "#[server] endpoint",
+        ServerActionWidget::render(ServerActionWidgetProps::default()),
+    )
 }
 
 pub fn flow_errors() -> View {
-    live_demo("Error boundary", ErrorBoundaryWidget::render(ErrorBoundaryWidgetProps::default()))
+    live_demo(
+        "Error boundary",
+        ErrorBoundaryWidget::render(ErrorBoundaryWidgetProps::default()),
+    )
 }
 
 pub fn flow_caching() -> View {
@@ -371,7 +422,7 @@ pub fn integrations_overview() -> View {
         view! {
             <>
                 <p><code>"resuma add sqlx|turso|tailwind|…"</code></p>
-                <ServerActionWidget />
+                {ServerActionWidget::render(ServerActionWidgetProps::default())}
             </>
         },
     )
@@ -383,7 +434,7 @@ pub fn integrations_generic(title: &str, cmd: &str) -> View {
         view! {
             <>
                 <p><code>{cmd.to_string()}</code></p>
-                <CounterWidget />
+                {CounterWidget::render(CounterWidgetProps::default())}
             </>
         },
     )
@@ -392,15 +443,24 @@ pub fn integrations_generic(title: &str, cmd: &str) -> View {
 // ── Cookbook ────────────────────────────────────────────────────────────────
 
 pub fn cookbook_overview() -> View {
-    live_demo("Debounced input", DebounceWidget::render(DebounceWidgetProps::default()))
+    live_demo(
+        "Debounced input",
+        DebounceWidget::render(DebounceWidgetProps::default()),
+    )
 }
 
 pub fn cookbook_debouncer() -> View {
-    live_demo("Debouncer", DebounceWidget::render(DebounceWidgetProps::default()))
+    live_demo(
+        "Debouncer",
+        DebounceWidget::render(DebounceWidgetProps::default()),
+    )
 }
 
 pub fn cookbook_portals() -> View {
-    live_demo("portal()", PortalWidget::render(PortalWidgetProps::default()))
+    live_demo(
+        "portal()",
+        PortalWidget::render(PortalWidgetProps::default()),
+    )
 }
 
 pub fn cookbook_view_transitions() -> View {
@@ -416,7 +476,10 @@ pub fn cookbook_view_transitions() -> View {
 }
 
 pub fn cookbook_theme() -> View {
-    live_demo("provide_theme", ThemeWidget::render(ThemeWidgetProps::default()))
+    live_demo(
+        "provide_theme",
+        ThemeWidget::render(ThemeWidgetProps::default()),
+    )
 }
 
 pub fn cookbook_streaming_loaders() -> View {
@@ -466,11 +529,17 @@ pub fn cookbook_docker() -> View {
 // ── Reference ───────────────────────────────────────────────────────────────
 
 pub fn reference_architecture() -> View {
-    live_demo("Resumability pipeline", PipelineWidget::render(PipelineWidgetProps::default()))
+    live_demo(
+        "Resumability pipeline",
+        PipelineWidget::render(PipelineWidgetProps::default()),
+    )
 }
 
 pub fn reference_reactivity() -> View {
-    live_demo("Signal → effect chain", ReactivityWidget::render(ReactivityWidgetProps::default()))
+    live_demo(
+        "Signal → effect chain",
+        ReactivityWidget::render(ReactivityWidgetProps::default()),
+    )
 }
 
 pub fn reference_package() -> View {
@@ -479,7 +548,7 @@ pub fn reference_package() -> View {
         view! {
             <>
                 <p><code>"cargo add resuma@1.2.0"</code></p>
-                <ServerActionWidget />
+                {ServerActionWidget::render(ServerActionWidgetProps::default())}
             </>
         },
     )
@@ -504,7 +573,7 @@ pub fn reference_api() -> View {
         view! {
             <>
                 <p><a href="https://docs.rs/resuma/1.2.0" target="_blank">"docs.rs/resuma"</a></p>
-                <CounterWidget />
+                {CounterWidget::render(CounterWidgetProps::default())}
             </>
         },
     )
