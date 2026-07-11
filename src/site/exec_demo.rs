@@ -16,7 +16,8 @@ async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> {
 }
 
 /// Interactive worker + live execution graph (Resuma OS).
-pub fn exec_showcase_demo() -> View {
+#[component]
+fn ExecShowcaseDemo() -> View {
     let status = resuma::exec::exec_status();
 
     view! {
@@ -124,4 +125,10 @@ pub fn exec_showcase_demo() -> View {
             <div id="exec-flow-slot" class="exec-flow-slot" hidden></div>
         </section>
     }
+}
+
+/// Public entry — resumable boundary so the large Run-worker handler loads from
+/// `/_resuma/handler/ExecShowcaseDemo.js` instead of the shared `__page__` chunk.
+pub fn exec_showcase_demo() -> View {
+    view! { <ExecShowcaseDemo /> }
 }
