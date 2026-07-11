@@ -11,6 +11,10 @@ pub fn page(_req: FlowRequest) -> View {
     view! {
         <main id="main-content" class="landing">
             <div class="hero-wrap">
+                <div class="liquid-orbs" aria-hidden="true">
+                    <div class="liquid-blob liquid-blob-a"></div>
+                    <div class="liquid-blob liquid-blob-b"></div>
+                </div>
                 {hero_particles_mount()}
                 <section class="hero">
                     <div>
@@ -41,7 +45,7 @@ pub fn page(_req: FlowRequest) -> View {
                             " · no Node.js for app development"
                         </p>
                     </div>
-                    <div class="hero-panel">
+                    <div class="hero-panel liquid-surface">
                         <div class="hero-panel-top">
                             <div class="hero-panel-dots">
                                 <span></span><span></span><span></span>

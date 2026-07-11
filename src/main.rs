@@ -54,6 +54,9 @@ fn DocsLayout() -> View {
 
     view! {
         <div class="docs-shell">
+            <div class="liquid-orbs liquid-orbs-docs" aria-hidden="true">
+                <div class="liquid-blob liquid-blob-c"></div>
+            </div>
             {site::doc_sidebar(&path)}
             <main class="docs-main">
                 <Slot />

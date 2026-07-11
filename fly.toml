@@ -20,6 +20,7 @@ primary_region = 'iad'
   RESUMA_TRUST_PROXY = '1'
   # Fly edge proxies use the fdaa::/16 private network — required by resuma 1.2+.
   RESUMA_TRUSTED_PROXY_CIDRS = 'fdaa::/16'
+  RESUMA_RATE_EXEC_GRAPH = '600'
 
 [http_service]
   internal_port = 3000

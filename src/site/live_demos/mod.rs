@@ -24,9 +24,9 @@ pub fn exec_queue() -> View {
         "Queue API",
         view! {
             <>
-                <p>"Enqueue durable jobs with " <code>"POST /_resuma/queue/{name}"</code></p>
-                <p class="demo-muted">"Run the worker demo above — queue consumers share the same disk-backed store."</p>
                 {exec_showcase_demo()}
+                <p>"Enqueue durable jobs with " <code>"POST /_resuma/queue/{name}"</code></p>
+                <p class="demo-muted">"The live worker above uses the same disk-backed queue store as production apps."</p>
             </>
         },
     )
