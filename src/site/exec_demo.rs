@@ -94,10 +94,10 @@ fn ExecShowcaseDemo() -> View {
                                 "<div class=\"r-flow-exec__panel\"><h3>Controls</h3>" +
                                 "<div class=\"r-worker-panel\" data-r-worker-panel=\"" + graphId + "\" data-r-graph-token=\"" + token + "\">" +
                                 "<div class=\"r-worker-panel__actions\">" +
-                                "<button type=\"button\" class=\"r-flow-control r-flow-control--ghost r-flow-control--pause\" data-r-worker-pause=\"true\">Pause</button>" +
-                                "<button type=\"button\" class=\"r-flow-control r-flow-control--ghost r-flow-control--resume\" data-r-worker-resume=\"true\">Resume</button>" +
-                                "<button type=\"button\" class=\"r-flow-control r-flow-control--danger\" data-r-worker-cancel=\"true\">Cancel</button>" +
-                                "<button type=\"button\" class=\"r-flow-control r-flow-control--ghost r-flow-control--replay\" data-r-worker-replay=\"true\">Replay</button>" +
+                                "<button type=\"button\" class=\"btn btn-ghost btn-sm\" data-r-worker-pause=\"true\">Pause</button>" +
+                                "<button type=\"button\" class=\"btn btn-ghost btn-sm\" data-r-worker-resume=\"true\">Resume</button>" +
+                                "<button type=\"button\" class=\"btn btn-ghost btn-sm r-worker-cancel\" data-r-worker-cancel=\"true\">Cancel</button>" +
+                                "<button type=\"button\" class=\"btn btn-ghost btn-sm\" data-r-worker-replay=\"true\">Replay</button>" +
                                 "</div>" +
                                 "<p class=\"r-worker-panel__status\" data-r-worker-status aria-live=\"polite\"></p>" +
                                 "</div></div>" +

@@ -1614,6 +1614,7 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   max-height: min(42vh, 22rem);
   overflow-x: hidden;
   overflow-y: auto;
+  overflow-anchor: none;
   padding: 0.7rem 0.8rem;
   border-radius: 14px;
   border: 1px solid rgba(15, 23, 42, 0.07);
@@ -1663,6 +1664,7 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   background: rgba(255, 255, 255, 0.88) !important;
   border-color: rgba(37, 99, 235, 0.12) !important;
   color: var(--text) !important;
+  overflow-anchor: auto;
 }
 .exec-flow-slot .r-worker-panel {
   margin: 0;
@@ -1677,6 +1679,20 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 }
+.exec-flow-slot .r-worker-panel__actions .btn {
+  width: 100%;
+  font-size: 0.8rem;
+  padding: 0.52rem 0.65rem;
+}
+.exec-flow-slot .r-worker-panel__actions .r-worker-cancel {
+  color: #991b1b;
+  border-color: rgba(248, 113, 113, 0.42);
+  background: rgba(254, 242, 242, 0.42);
+}
+.exec-flow-slot .r-worker-panel__actions .r-worker-cancel:hover {
+  color: #7f1d1d;
+  background: rgba(254, 226, 226, 0.62);
+}
 /* Fallback when older markup injects bare buttons */
 .exec-flow-slot .r-worker-panel:has(> button) {
   display: grid !important;
@@ -1687,58 +1703,6 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   .exec-flow-slot .r-worker-panel:has(> button) {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
-}
-.exec-flow-slot .r-flow-control {
-  width: 100%;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.55rem 0.75rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.68);
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(18px) saturate(170%);
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
-  color: var(--text);
-  box-shadow:
-    0 6px 22px rgba(15, 23, 42, 0.06),
-    inset 0 1px 1px rgba(255, 255, 255, 0.95),
-    inset 0 -8px 18px rgba(255, 255, 255, 0.1);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-.exec-flow-slot .r-flow-control:hover:not(:disabled) {
-  transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.34);
-  border-color: rgba(255, 255, 255, 0.88);
-  box-shadow:
-    0 10px 28px rgba(15, 23, 42, 0.08),
-    inset 0 1px 1px rgba(255, 255, 255, 1),
-    inset 0 -8px 20px rgba(255, 255, 255, 0.14);
-}
-.exec-flow-slot .r-flow-control:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
-.exec-flow-slot .r-flow-control--pause {
-  border-color: rgba(96, 165, 250, 0.45);
-}
-.exec-flow-slot .r-flow-control--resume {
-  border-color: rgba(52, 211, 153, 0.45);
-}
-.exec-flow-slot .r-flow-control--replay {
-  border-color: rgba(167, 139, 250, 0.4);
-}
-.exec-flow-slot .r-flow-control--danger {
-  color: #991b1b;
-  background: rgba(254, 242, 242, 0.55);
-  border-color: rgba(248, 113, 113, 0.55);
-  box-shadow:
-    0 6px 20px rgba(220, 38, 38, 0.08),
-    inset 0 1px 1px rgba(255, 255, 255, 0.9);
-}
-.exec-flow-slot .r-flow-control--danger:hover:not(:disabled) {
-  background: rgba(254, 226, 226, 0.75);
-  color: #7f1d1d;
 }
 .exec-flow-slot .r-worker-panel__status {
   margin: 0.15rem 0 0;
