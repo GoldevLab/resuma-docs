@@ -1,7 +1,7 @@
 //! Live Resuma OS worker demo — variants per docs page.
 
 use resuma::prelude::*;
-use resuma_flow::{flow_dashboard_poll, flow_styles};
+use resuma_flow::{flow_dashboard_poll, flow_styles_link};
 use serde_json::{json, Value};
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -58,7 +58,7 @@ fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
 
     view! {
         <section class="exec-demo" aria-labelledby="exec-demo-title">
-            {flow_styles()}
+            {flow_styles_link()}
             <div class="exec-demo-intro">
                 <h3 id="exec-demo-title">{title.to_string()}</h3>
                 {lead}
@@ -77,50 +77,9 @@ fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
                         type="button"
                         class="btn btn-primary"
                         id="exec-start-btn"
-                        onClick={js!(async (_event, _state, __resuma) => {
-                            const topic = document.getElementById("exec-topic").value;
-                            const blurb = document.getElementById("exec-blurb").value;
-                            const errEl = document.getElementById("exec-err");
-                            const slot = document.getElementById("exec-flow-slot");
-                            const btn = document.getElementById("exec-start-btn");
-                            errEl.hidden = true;
-                            btn.disabled = true;
-                            const res = await __resuma.safeAction("start_docs_showcase", [topic, blurb]);
-                            btn.disabled = false;
-                            if (!res.ok) {
-                                errEl.textContent = res.error;
-                                errEl.hidden = false;
-                                return;
-                            }
-                            const graphId = res.value.graph_id;
-                            const token = res.value.access_token || "";
-                            if (!graphId) {
-                                errEl.textContent = "Worker started but no graph id was returned.";
-                                errEl.hidden = false;
-                                return;
-                            }
-                            const prev = slot.querySelector("[data-r-flow-execution]");
-                            if (window.__resumaCoreReady) await window.__resumaCoreReady;
-                            let flow;
-                            try {
-                                flow = await import("/_resuma/flow.js");
-                            } catch (e) {
-                                errEl.textContent = "Could not load Flow widgets: " + String(e);
-                                errEl.hidden = false;
-                                return;
-                            }
-                            if (prev) flow.disconnectFlowWidgets(prev);
-                            slot.innerHTML = "";
-                            const panelRes = await __resuma.safeAction("flow_execution_panel_html", [graphId, token]);
-                            if (!panelRes.ok) {
-                                errEl.textContent = panelRes.error;
-                                errEl.hidden = false;
-                                return;
-                            }
-                            slot.innerHTML = panelRes.value;
-                            slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
-                            slot.hidden = false;
-                            flow.initFlowWidgets(slot, { flush: false });
+                        onClick={js!(async () => {
+                            const m = await import("/static/client/docs-flow-worker.js");
+                            await m.runDocsFlowWorker("exec");
                         })}
                     >
                         "Run worker"

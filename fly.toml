@@ -42,3 +42,8 @@ primary_region = 'iad'
 [[vm]]
   size = 'shared-cpu-1x'
   memory = '512mb'
+
+# Graph tokens + durable state survive restarts (create once: fly volumes create resuma_docs_data -r iad)
+[mounts]
+  source = 'resuma_docs_data'
+  destination = '/app/.resuma'

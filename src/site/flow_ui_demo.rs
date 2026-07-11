@@ -50,50 +50,9 @@ pub fn flow_ui_demo() -> View {
                         type="button"
                         class="btn btn-primary"
                         id="flow-ui-start-btn"
-                        onClick={js!(async (_event, _state, __resuma) => {
-                            const topic = document.getElementById("flow-ui-topic").value;
-                            const blurb = document.getElementById("flow-ui-blurb").value;
-                            const errEl = document.getElementById("flow-ui-err");
-                            const slot = document.getElementById("flow-ui-slot");
-                            const btn = document.getElementById("flow-ui-start-btn");
-                            errEl.hidden = true;
-                            btn.disabled = true;
-                            const res = await __resuma.safeAction("start_docs_showcase", [topic, blurb]);
-                            btn.disabled = false;
-                            if (!res.ok) {
-                                errEl.textContent = res.error;
-                                errEl.hidden = false;
-                                return;
-                            }
-                            const graphId = res.value.graph_id;
-                            const token = res.value.access_token || "";
-                            if (!graphId) {
-                                errEl.textContent = "Worker started but no graph id was returned.";
-                                errEl.hidden = false;
-                                return;
-                            }
-                            const prev = slot.querySelector("[data-r-flow-execution]");
-                            if (window.__resumaCoreReady) await window.__resumaCoreReady;
-                            let flow;
-                            try {
-                                flow = await import("/_resuma/flow.js");
-                            } catch (e) {
-                                errEl.textContent = "Could not load Flow widgets: " + String(e);
-                                errEl.hidden = false;
-                                return;
-                            }
-                            if (prev) flow.disconnectFlowWidgets(prev);
-                            slot.innerHTML = "";
-                            const panelRes = await __resuma.safeAction("flow_execution_panel_html", [graphId, token]);
-                            if (!panelRes.ok) {
-                                errEl.textContent = panelRes.error;
-                                errEl.hidden = false;
-                                return;
-                            }
-                            slot.innerHTML = panelRes.value;
-                            slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
-                            slot.hidden = false;
-                            flow.initFlowWidgets(slot, { flush: false });
+                        onClick={js!(async () => {
+                            const m = await import("/static/client/docs-flow-worker.js");
+                            await m.runDocsFlowWorker("flow-ui");
                         })}
                     >
                         "Run worker"

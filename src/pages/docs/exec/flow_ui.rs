@@ -20,13 +20,13 @@ tokio = { version = "1", features = ["full"] }"#)}
 
             <h2>"Ops dashboard"</h2>
             {code_block(r#"use resuma::prelude::*;
-use resuma_flow::{flow_dashboard_poll, flow_styles};
+use resuma_flow::{flow_dashboard_poll, flow_styles_link};
 
 #[component]
 fn OpsPage(initial: ExecStatus) -> View {
     view! {
         <main>
-            {flow_styles()}
+            {flow_styles_link()}
             {flow_dashboard_poll(5000, Some(initial))}
         </main>
     }

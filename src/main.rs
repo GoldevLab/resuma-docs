@@ -108,6 +108,10 @@ async fn main() -> std::io::Result<()> {
             include_bytes!("../static/client/hero-particles.js"),
         )
         .client_asset("docs-copy", include_bytes!("../static/client/docs-copy.js"))
+        .client_asset(
+            "docs-flow-worker",
+            include_bytes!("../static/client/docs-flow-worker.js"),
+        )
         .route("/_resuma/demo/webhook-inbox", post(site::inbox_handler))
         .streaming(true)
         .not_found(not_found_page)
