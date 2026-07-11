@@ -118,6 +118,7 @@ fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
                                 return;
                             }
                             slot.innerHTML = panelRes.value;
+                            slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
                             slot.hidden = false;
                             flow.initFlowWidgets(slot, { flush: false });
                         })}

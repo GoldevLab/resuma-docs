@@ -1754,10 +1754,67 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 }
-.exec-flow-slot .r-worker-panel__actions .btn {
+.exec-flow-slot .r-worker-panel__actions .btn,
+.exec-flow-slot .r-worker-panel__actions .r-flow-control {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  font: inherit;
   font-size: 0.8rem;
-  padding: 0.52rem 0.65rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.52rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(22px) saturate(190%) brightness(1.06);
+  -webkit-backdrop-filter: blur(22px) saturate(190%) brightness(1.06);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow:
+    0 6px 28px rgba(15, 23, 42, 0.07),
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.98),
+    inset 0 -10px 22px rgba(255, 255, 255, 0.12),
+    inset 2px 2px 6px rgba(255, 255, 255, 0.38);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.exec-flow-slot .r-worker-panel__actions .r-flow-control:hover:not(:disabled),
+.exec-flow-slot .r-worker-panel__actions .btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.28);
+}
+.exec-flow-slot .r-worker-panel__actions .r-flow-control:active:not(:disabled),
+.exec-flow-slot .r-worker-panel__actions .btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.exec-flow-slot .r-worker-panel__actions .r-flow-control:disabled,
+.exec-flow-slot .r-worker-panel__actions .btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+}
+.exec-flow-slot .r-worker-panel__actions .r-flow-control--danger {
+  color: #fff;
+  background: rgba(15, 23, 42, 0.58);
+  border-color: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(24px) saturate(180%) brightness(0.95);
+  -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(0.95);
+  box-shadow:
+    0 10px 36px rgba(15, 23, 42, 0.2),
+    0 2px 8px rgba(15, 23, 42, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.12);
+}
+.exec-flow-slot .r-worker-panel__actions .r-flow-control--danger:hover:not(:disabled) {
+  color: #fff;
+  background: rgba(15, 23, 42, 0.68);
+  border-color: rgba(255, 255, 255, 0.58);
 }
 .exec-flow-slot .r-worker-panel__actions .r-worker-cancel {
   color: #991b1b;

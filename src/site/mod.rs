@@ -5,6 +5,7 @@ mod demo_actions;
 mod demo_shell;
 mod docs_search;
 mod exec_demo;
+mod flow_panel;
 mod flow_ui_demo;
 mod hero_bg;
 pub mod live_demos;

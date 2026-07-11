@@ -69,9 +69,7 @@ pub fn exec_tools() -> View {
 pub fn exec_flow_ui() -> View {
     live_demo(
         "resuma-flow widgets",
-        crate::site::flow_ui_demo::FlowUiDemoWidget::render(
-            crate::site::flow_ui_demo::FlowUiDemoWidgetProps::default(),
-        ),
+        crate::site::flow_ui_demo::flow_ui_demo(),
     )
 }
 

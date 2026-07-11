@@ -1,22 +1,10 @@
-//! Live resuma-flow widget demo — ops dashboard + `flow_execution_auth` panel.
+//! Live resuma-flow widget demo — ops dashboard + execution panel.
 
 use resuma::prelude::*;
-use resuma::ssr::render_view;
-use resuma_flow::{flow_dashboard_poll, flow_execution_auth, flow_styles};
-
-#[server]
-async fn flow_execution_panel_html(graph_id: String, access_token: String) -> Result<String> {
-    let token = if access_token.is_empty() {
-        None
-    } else {
-        Some(access_token)
-    };
-    Ok(render_view(&flow_execution_auth(graph_id, true, token)))
-}
+use resuma_flow::{flow_dashboard_poll, flow_styles};
 
 /// Interactive Flow UI panel for `/docs/exec/flow_ui`.
-#[component]
-pub fn FlowUiDemoWidget() -> View {
+pub fn flow_ui_demo() -> View {
     let status = resuma::exec::exec_status();
 
     view! {
@@ -103,6 +91,7 @@ pub fn FlowUiDemoWidget() -> View {
                                 return;
                             }
                             slot.innerHTML = panelRes.value;
+                            slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
                             slot.hidden = false;
                             flow.initFlowWidgets(slot, { flush: false });
                         })}
