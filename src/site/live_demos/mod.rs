@@ -8,7 +8,7 @@ use crate::site::demo_shell::{live_demo, live_info};
 use crate::site::exec_demo::{exec_showcase_demo, exec_workers_demo};
 use crate::site::server_demo::server_function_demo;
 use resuma::prelude::*;
-use resuma_flow::{flow_dashboard_poll, flow_styles};
+use resuma_flow::{flow_dashboard_poll, flow_styles_link};
 use widgets::*;
 
 // ── Resuma OS ───────────────────────────────────────────────────────────────
@@ -90,8 +90,15 @@ pub fn exec_ops() -> View {
                     <code>"GET /_resuma/metrics"</code>
                     " (Prometheus)."
                 </p>
-                {flow_styles()}
+                {flow_styles_link()}
                 {flow_dashboard_poll(5000, Some(status))}
+                <p class="demo-muted exec-demo-hint">
+                    "SSR snapshot above updates every 5s when JavaScript loads "
+                    <code>"flow.js"</code>
+                    " — cards poll "
+                    <code>"exec_status"</code>
+                    "."
+                </p>
             </>
         },
     )

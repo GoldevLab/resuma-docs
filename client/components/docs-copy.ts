@@ -2,6 +2,19 @@
  * Copy buttons for docs pages — main content only (not sidebar/header).
  */
 
+/** Mount Flow widgets (ops dashboard, etc.) inside docs content. */
+export async function initDocsFlow() {
+  const scope = document.querySelector<HTMLElement>('.docs-main');
+  if (!scope?.querySelector('[data-r-flow-dashboard], [data-r-flow-graph]')) return;
+  try {
+    if (window.__resumaCoreReady) await window.__resumaCoreReady;
+    const mod = await import('/_resuma/flow.js');
+    mod.initFlowWidgets(scope);
+  } catch (e) {
+    console.warn('[docs-flow]', e);
+  }
+}
+
 function flashCopied(btn: HTMLButtonElement, label = "Copied!") {
   const prev = btn.textContent;
   btn.textContent = label;
