@@ -112,6 +112,8 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
     let flow: {
       disconnectFlowWidgets: (el: Element) => void;
       initFlowWidgets: (root: HTMLElement, opts: { flush: boolean }) => void;
+      teardownGraph: (graphId: string) => void;
+      syncFlowControls: (root: HTMLElement) => void;
     };
     try {
       flow = await import("/_resuma/flow.js");
@@ -123,13 +125,22 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
       return;
     }
 
+    const oldGraphId =
+      slot.querySelector<HTMLElement>("[data-r-flow-execution]")?.getAttribute(
+        "data-r-flow-execution",
+      ) ?? "";
+
     flow.disconnectFlowWidgets(slot);
+    if (oldGraphId) flow.teardownGraph(oldGraphId);
     slot.innerHTML = "";
     slot.dataset.docsExecPanel = "1";
     slot.innerHTML = panelHtml;
     slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
     slot.hidden = false;
     flow.initFlowWidgets(slot, { flush: false });
+    flow.syncFlowControls(slot);
+    window.setTimeout(() => flow.syncFlowControls(slot), 600);
+    window.setTimeout(() => flow.syncFlowControls(slot), 2500);
     setGuideStep(
       ids.guide,
       3,
