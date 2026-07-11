@@ -1615,6 +1615,7 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   overflow-x: hidden;
   overflow-y: auto;
   overflow-anchor: none;
+  overscroll-behavior: contain;
   padding: 0.7rem 0.8rem;
   border-radius: 14px;
   border: 1px solid rgba(15, 23, 42, 0.07);
