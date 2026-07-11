@@ -5,9 +5,16 @@ pub fn page(_req: FlowRequest) -> View {
     view! {
         <>
             <h1>"View Transitions"</h1>
-            <p class="lead">"Wrap page content with with_view_transition for smooth animated navigation using the View Transitions API."</p>
+            <p class="lead">"Wrap page content with " <code>"with_view_transition"</code> " for per-route boundaries. " <code>"NavLink"</code> " SPA navigation uses the View Transitions API automatically."</p>
 
             {crate::site::demos::cookbook_view_transitions()}
+
+            <h2>"Docs site wiring"</h2>
+            <p>
+                "This documentation app wraps layout " <code>"Slot"</code> " content in "
+                <code>"with_view_transition(path_slug, …)"</code> " and styles "
+                <code>"::view-transition-old/new(root)"</code> " in site CSS — try the sidebar or the demo above."
+            </p>
 
             <h2>"Page wrapper"</h2>
             {code_block(r#"pub fn page(_req: FlowRequest) -> View {

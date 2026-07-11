@@ -20,3 +20,13 @@ pub fn json_ld(site_url: &str) -> String {
 pub fn site_url() -> String {
     std::env::var("SITE_URL").unwrap_or_else(|_| "https://resuma-docs.fly.dev".into())
 }
+
+/// Stable `with_view_transition` name from the current request path.
+pub fn view_transition_name(path: &str) -> String {
+    let slug = path.trim_matches('/');
+    if slug.is_empty() {
+        "home".into()
+    } else {
+        slug.replace('/', "-")
+    }
+}

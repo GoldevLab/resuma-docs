@@ -514,16 +514,21 @@ pub fn DeployInfoWidget() -> View {
 
 #[component]
 pub fn ViewTransitionsWidget() -> View {
-    view! {
-        <>
-            <p class="demo-muted">"Click navigate — route transition uses " <code>"data-r-vt"</code> " (slide)."</p>
-            <div class="demo-row">
-                <NavLink href="/docs/cookbook/theme" activeClass="active" data-r-vt="slide">"→ Theme"</NavLink>
-                <NavLink href="/docs/cookbook/portals" activeClass="active" data-r-vt="slide">"→ Portals"</NavLink>
-                <NavLink href="/docs/cookbook/debouncer" activeClass="active" data-r-vt="slide">"→ Debouncer"</NavLink>
-            </div>
-        </>
-    }
+    with_view_transition(
+        "docs-vt-demo",
+        vec![Child::View(view! {
+            <>
+                <p class="demo-muted">
+                    "Click navigate — every " <code>"NavLink"</code> " on this site uses Resuma SPA navigation with the View Transitions API."
+                </p>
+                <div class="demo-row">
+                    <NavLink href="/docs/cookbook/theme" activeClass="active">"→ Theme"</NavLink>
+                    <NavLink href="/docs/cookbook/portals" activeClass="active">"→ Portals"</NavLink>
+                    <NavLink href="/docs/cookbook/debouncer" activeClass="active">"→ Debouncer"</NavLink>
+                </div>
+            </>
+        })],
+    )
 }
 
 #[component]

@@ -10,6 +10,11 @@ use resuma::prelude::*;
 
 #[layout("/")]
 fn SiteLayout() -> View {
+    let vt = site::view_transition_name(
+        &current_request()
+            .map(|r| r.path)
+            .unwrap_or_else(|| "/".into()),
+    );
     view! {
         <header class="site-header">
             <div class="header-inner">
@@ -32,7 +37,7 @@ fn SiteLayout() -> View {
                 </div>
             </div>
         </header>
-        <Slot />
+        {with_view_transition(vt, vec![Child::View(view! { <Slot /> })])}
         <footer class="site-footer">
             <p>"Made with ❤️ by the Resuma team · MIT License"</p>
             <div class="site-footer-links">
@@ -52,6 +57,7 @@ fn DocsLayout() -> View {
     let path = current_request()
         .map(|r| r.path)
         .unwrap_or_else(|| "/docs".into());
+    let vt = site::view_transition_name(&path);
 
     visible_task!(
         r#"
@@ -80,7 +86,7 @@ fn DocsLayout() -> View {
             </div>
             {site::doc_sidebar(&path)}
             <main class="docs-main">
-                <Slot />
+                {with_view_transition(vt, vec![Child::View(view! { <Slot /> })])}
             </main>
             <div id="modals"></div>
         </div>

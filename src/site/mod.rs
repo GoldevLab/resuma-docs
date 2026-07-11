@@ -31,7 +31,7 @@ pub use docs_search::search;
 pub use hero_bg::hero_particles_mount;
 pub use live_demos as demos;
 pub use pwa::config as pwa_config;
-pub use seo::{json_ld, site_description, site_title, site_url};
+pub use seo::{json_ld, site_description, site_title, site_url, view_transition_name};
 pub use sidebar::doc_sidebar;
 
 use resuma::prelude::*;

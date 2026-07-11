@@ -2052,4 +2052,29 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   pointer-events: none;
   overflow: hidden;
 }
+
+/* Resuma SPA view transitions (NavLink + with_view_transition) */
+[data-r-vt] {
+  display: block;
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: r-vt-out 220ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: r-vt-in 320ms cubic-bezier(0, 0, 0.2, 1) both;
+  }
+}
+
+@keyframes r-vt-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes r-vt-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>"#;
