@@ -53,7 +53,8 @@ fn DocsLayout() -> View {
         .map(|r| r.path)
         .unwrap_or_else(|| "/docs".into());
 
-    visible_task!(r#"
+    visible_task!(
+        r#"
         async (_state, __resuma) => {
             const load = async () => {
                 try {
@@ -68,7 +69,8 @@ fn DocsLayout() -> View {
             document.addEventListener('resuma:navigate', onNav);
             return () => document.removeEventListener('resuma:navigate', onNav);
         }
-    "#);
+    "#
+    );
 
     view! {
         <div class="docs-shell">
@@ -105,14 +107,8 @@ async fn main() -> std::io::Result<()> {
             "hero-particles",
             include_bytes!("../static/client/hero-particles.js"),
         )
-        .client_asset(
-            "docs-copy",
-            include_bytes!("../static/client/docs-copy.js"),
-        )
-        .route(
-            "/_resuma/demo/webhook-inbox",
-            post(site::inbox_handler),
-        )
+        .client_asset("docs-copy", include_bytes!("../static/client/docs-copy.js"))
+        .route("/_resuma/demo/webhook-inbox", post(site::inbox_handler))
         .streaming(true)
         .not_found(not_found_page)
         .auto_pages(pages_root, PagesRegistry)

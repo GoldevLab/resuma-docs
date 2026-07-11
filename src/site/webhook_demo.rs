@@ -50,9 +50,8 @@ pub async fn inbox_handler(request: Request) -> impl IntoResponse {
         Err(_) => return StatusCode::PAYLOAD_TOO_LARGE,
     };
 
-    let payload: Value = serde_json::from_slice(&body).unwrap_or_else(|_| {
-        json!({ "raw": String::from_utf8_lossy(&body) })
-    });
+    let payload: Value = serde_json::from_slice(&body)
+        .unwrap_or_else(|_| json!({ "raw": String::from_utf8_lossy(&body) }));
 
     let mut inbox = inbox_store().lock().unwrap();
     inbox.push(InboxEntry {

@@ -6,7 +6,7 @@ use serde_json::json;
 
 #[server]
 async fn docs_queue_enqueue() -> Result<EnqueueResponse> {
-  enqueue(
+    enqueue(
         "docs",
         "docs_showcase",
         json!({

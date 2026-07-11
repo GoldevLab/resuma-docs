@@ -156,7 +156,8 @@ pub fn nav_link_widget() -> View {
 #[component]
 pub fn GreetFormWidget() -> View {
     let result = signal(String::new());
-    visible_task!(r#"
+    visible_task!(
+        r#"
         async () => {
             const form = document.getElementById("docs-greet-form");
             const out = document.getElementById("docs-greet-out");
@@ -192,7 +193,8 @@ pub fn GreetFormWidget() -> View {
             form.addEventListener("submit", onSubmit);
             return () => form.removeEventListener("submit", onSubmit);
         }
-    "#);
+    "#
+    );
     view! {
         <>
             <Form submit={crate::site::demo_actions::docs_greet} id="docs-greet-form">
@@ -207,11 +209,13 @@ pub fn GreetFormWidget() -> View {
 #[component]
 pub fn VisibleTaskWidget() -> View {
     let armed = signal(false);
-    visible_task!(r#"
+    visible_task!(
+        r#"
         async (state) => {
             state.armed.set(true);
         }
-    "#);
+    "#
+    );
     view! {
         <>
             <p class="demo-muted">"This panel uses " <code>"visible_task!"</code> " — the message below appears when the demo scrolls into view."</p>

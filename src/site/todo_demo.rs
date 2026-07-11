@@ -65,13 +65,15 @@ pub fn TodoDemoWidget() -> View {
     let items = signal(Vec::<DocsTodoItem>::new());
     let status = signal(String::new());
 
-    visible_task!(r#"
+    visible_task!(
+        r#"
         async (state, __resuma) => {
             const res = await __resuma.safeAction("docs_todo_list", []);
             if (res.ok) state.items.set(res.value.items);
             else state.status.set(res.error);
         }
-    "#);
+    "#
+    );
 
     view! {
         <div class="todo-demo">
