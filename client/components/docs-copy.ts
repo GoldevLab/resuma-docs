@@ -96,19 +96,103 @@ function teardown(main: HTMLElement) {
   });
 }
 
+function sidebarHrefMatches(href: string, current: string, exact: boolean): boolean {
+  if (exact) {
+    if (href === current) return true;
+    const base = "http://resuma.local";
+    const a = new URL(href, base);
+    const b = new URL(current, base);
+    if (a.search) return a.pathname + a.search === b.pathname + b.search;
+    return a.pathname === b.pathname;
+  }
+  if (href === current) return true;
+  const base = "http://resuma.local";
+  const a = new URL(href, base);
+  const b = new URL(current, base);
+  if (a.search) return a.pathname + a.search === b.pathname + b.search;
+  if (a.pathname === b.pathname) return true;
+  if (a.pathname !== "/" && b.pathname.startsWith(a.pathname)) {
+    const next = b.pathname.charCodeAt(a.pathname.length);
+    return next === undefined || next === 47;
+  }
+  return false;
+}
+
+/** Keep docs sidebar active state in sync after SPA navigation. */
+export function updateDocsSidebarNav(path = location.pathname + location.search): void {
+  const sidebar = document.querySelector(".docs-sidebar");
+  if (!sidebar) return;
+
+  let best: HTMLAnchorElement | null = null;
+  let bestLen = -1;
+
+  sidebar.querySelectorAll<HTMLAnchorElement>("a[data-r-nav]").forEach((a) => {
+    const href = a.getAttribute("href");
+    if (!href) return;
+    const activeClass = a.getAttribute("data-r-active-class") ?? "docs-nav-link--active";
+    const exact = a.hasAttribute("data-r-nav-exact");
+    const active = sidebarHrefMatches(href, path, exact);
+    a.className = active ? `docs-nav-link ${activeClass}` : "docs-nav-link";
+    a.removeAttribute("aria-current");
+    if (active && href.length > bestLen) {
+      best = a;
+      bestLen = href.length;
+    }
+  });
+
+  best?.setAttribute("aria-current", "page");
+}
+
 function scrollActiveSidebarLink() {
   const sidebar = document.querySelector<HTMLElement>(".docs-sidebar-scroll");
-  const active = sidebar?.querySelector<HTMLElement>(".docs-nav-link--active");
+  const active =
+    sidebar?.querySelector<HTMLElement>('.docs-nav-link--active[aria-current="page"]') ??
+    sidebar?.querySelector<HTMLElement>(".docs-nav-link--active");
   if (!sidebar || !active) return;
   const top = active.offsetTop - sidebar.clientHeight / 2 + active.offsetHeight / 2;
   sidebar.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 }
 
+/** Refresh the Caching page live demo (headers + server stamp). */
+export async function refreshCacheDemo(): Promise<void> {
+  const root = document.querySelector<HTMLElement>("[data-docs-cache-demo]");
+  if (!root) return;
+  const headerEl = root.querySelector<HTMLElement>("[data-cache-header]");
+  const stampEl = root.querySelector<HTMLElement>("[data-cache-stamp]");
+  const statusEl = root.querySelector<HTMLElement>("[data-cache-status]");
+  const r = window.__resuma;
+  if (!r) return;
+  try {
+    const res = await fetch(location.pathname + location.search, {
+      credentials: "same-origin",
+      cache: "no-store",
+    });
+    if (headerEl) {
+      headerEl.textContent = res.headers.get("cache-control") ?? "(none)";
+    }
+    const info = await r.safeAction("docs_cache_info", []);
+    if (info.ok && stampEl) {
+      stampEl.textContent = String(info.value.stamp ?? "—");
+    }
+    if (statusEl) {
+      statusEl.textContent = `Headers refreshed (${res.status})`;
+    }
+  } catch {
+    if (statusEl) statusEl.textContent = "Refresh failed";
+  }
+}
+
+export function initCacheDemo(): void {
+  void refreshCacheDemo();
+}
+
 export function initDocsSidebar() {
-  scrollActiveSidebarLink();
-  document.addEventListener("resuma:navigate", () => {
-    requestAnimationFrame(scrollActiveSidebarLink);
-  });
+  const sync = () => {
+    updateDocsSidebarNav();
+    scrollActiveSidebarLink();
+  };
+  sync();
+  document.addEventListener("resuma:navigate", sync);
 }
 
 export function initDocsCopy() {

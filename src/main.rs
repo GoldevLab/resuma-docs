@@ -23,11 +23,11 @@ fn SiteLayout() -> View {
                     "Resuma"
                 </a>
                 <nav class="site-nav">
-                    <NavLink href="/docs" activeClass="active">"Docs"</NavLink>
-                    <NavLink href="/docs/getting_started" activeClass="active">"Tutorial"</NavLink>
+                    <NavLink href="/docs" activeClass="active" exact=true>"Docs"</NavLink>
+                    <NavLink href="/docs/getting_started" activeClass="active" exact=true>"Tutorial"</NavLink>
                     <NavLink href="/docs/flow" activeClass="active">"Flow"</NavLink>
                     <NavLink href="/docs/exec" activeClass="active">"Resuma OS"</NavLink>
-                    <NavLink href="/docs/benchmark" activeClass="active">"Benchmark"</NavLink>
+                    <NavLink href="/docs/benchmark" activeClass="active" exact=true>"Benchmark"</NavLink>
                 </nav>
                 <div class="header-actions">
                     <a href="/docs/getting_started" class="btn btn-ghost">"Get Started"</a>
@@ -67,6 +67,7 @@ fn DocsLayout() -> View {
                     const mod = await import('/static/client/docs-copy.js');
                     mod.initDocsCopy?.();
                     mod.initDocsSidebar?.();
+                    mod.initCacheDemo?.();
                     mod.initDocsFlow?.();
                 } catch (e) {
                     console.warn('[docs-copy]', e);

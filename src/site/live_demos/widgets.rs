@@ -697,25 +697,8 @@ pub fn DeployInfoWidget() -> View {
 
 #[component]
 pub fn CacheControlWidget() -> View {
-    let cache_header = signal("—".to_string());
-    let live_stamp = signal("—".to_string());
-    let status = signal(String::new());
-
-    visible_task!(
-        r#"
-        async (state, __resuma) => {
-            const res = await fetch(location.pathname + location.search, { credentials: "same-origin" });
-            state.cache_header.set(res.headers.get("cache-control") ?? "(none)");
-            const info = await __resuma.safeAction("docs_cache_info", []);
-            if (info.ok) state.live_stamp.set(info.value.stamp);
-        }
-    "#,
-        cache_header,
-        live_stamp
-    );
-
     view! {
-        <>
+        <section data-docs-cache-demo="">
             <dl class="demo-kv">
                 <div class="demo-kv__row">
                     <dt>"Loader policy"</dt>
@@ -723,37 +706,36 @@ pub fn CacheControlWidget() -> View {
                 </div>
                 <div class="demo-kv__row">
                     <dt>"Response Cache-Control"</dt>
-                    <dd><code>{cache_header}</code></dd>
+                    <dd><code data-cache-header="">"—"</code></dd>
                 </div>
                 <div class="demo-kv__row">
                     <dt>"Server stamp (now)"</dt>
-                    <dd><code>{live_stamp}</code></dd>
+                    <dd><code data-cache-stamp="">"—"</code></dd>
                 </div>
             </dl>
             <div class="demo-row">
                 <button type="button" class="btn btn-sm" onClick={js!(async () => {
-                    const res = await fetch(location.pathname + location.search, { credentials: "same-origin" });
-                    state.cache_header.set(res.headers.get("cache-control") ?? "(none)");
-                    const info = await __resuma.safeAction("docs_cache_info", []);
-                    if (info.ok) state.live_stamp.set(info.value.stamp);
-                    state.status.set("Headers refreshed (" + res.status + ")");
+                    const mod = await import("/static/client/docs-copy.js");
+                    await mod.refreshCacheDemo?.();
                 })}>"Refresh headers"</button>
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
-                    await __resuma.navigate(location.pathname + location.search);
-                    state.status.set("SPA reload — loader timestamp above should change");
+                    await __resuma.invalidate(location.pathname);
                 })}>"SPA reload"</button>
             </div>
             <p class="demo-hint">
-                "SSR timestamp is frozen until navigation. "
                 <code>"Refresh headers"</code>
-                " hits the server again; "
+                " fetches this page with "
+                <code>"cache: no-store"</code>
+                ". "
                 <code>"SPA reload"</code>
-                " re-runs "
+                " uses "
+                <code>"invalidate()"</code>
+                " to bust prefetch and re-run "
                 <code>"#[load]"</code>
-                " and remounts the page."
+                " — watch the SSR timestamp above change."
             </p>
-            <p class="demo-muted">{status}</p>
-        </>
+            <p class="demo-muted" data-cache-status=""></p>
+        </section>
     }
 }
 
