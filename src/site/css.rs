@@ -1507,42 +1507,87 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
 .exec-demo-err:not([hidden]) { display: block; }
 .exec-demo-hint { margin: 0; font-size: 0.88rem; color: var(--muted); }
 .exec-demo-dash .r-flow-dash { margin: 0; }
-.exec-flow-slot { margin-top: 1.25rem; }
+.exec-flow-slot { margin-top: 1.5rem; }
 .exec-flow-slot:not([hidden]) { display: block; }
 
-/* Flow widgets inside glass panels */
-.exec-demo-dash .r-flow-dash,
-.exec-flow-slot .r-flow-exec__panel,
-.exec-flow-slot .r-flow-graph,
-.exec-flow-slot .r-event-stream {
-  background: rgba(255, 255, 255, 0.72) !important;
-  backdrop-filter: blur(18px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.9) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow:
-    0 10px 32px rgba(15, 23, 42, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
-}
+/* Liquid glass execution panel */
 .exec-flow-slot .r-flow-exec {
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
   margin: 0;
+  padding: 1.15rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: var(--glass-shadow-lg);
 }
 @media (min-width: 900px) {
   .exec-flow-slot .r-flow-exec {
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
     align-items: start;
+    padding: 1.25rem;
+    gap: 1.25rem;
   }
 }
-.exec-flow-slot .r-flow-exec__panel h3,
-.exec-flow-slot .r-flow-graph__status {
+.exec-flow-slot .r-flow-exec__side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+.exec-demo-dash .r-flow-dash,
+.exec-flow-slot .r-flow-exec__panel {
+  background: rgba(255, 255, 255, 0.62) !important;
+  backdrop-filter: blur(18px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.88) !important;
+  border-radius: 18px !important;
+  padding: 1.15rem 1.2rem !important;
+  box-shadow:
+    0 10px 28px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+.exec-flow-slot .r-flow-graph {
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.exec-flow-slot .r-event-stream {
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+}
+.exec-flow-slot .r-flow-exec__panel h3 {
+  margin: 0 0 0.85rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
   color: var(--muted) !important;
 }
+.exec-flow-slot .r-flow-graph__status {
+  color: var(--muted) !important;
+  margin-top: 0.65rem !important;
+  line-height: 1.45 !important;
+}
+.exec-flow-slot .r-flow-graph__track {
+  padding: 0.15rem 0 !important;
+  min-height: 2.75rem !important;
+}
 .exec-flow-slot .r-flow-graph__node {
-  background: rgba(255, 255, 255, 0.65) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
   border-color: rgba(15, 23, 42, 0.08) !important;
   color: var(--text) !important;
+  border-radius: 999px !important;
+  padding: 0.4rem 0.75rem !important;
 }
 .exec-flow-slot .r-flow-graph__node--running {
   border-color: rgba(37, 99, 235, 0.35) !important;
@@ -1564,19 +1609,60 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   background: rgba(254, 226, 226, 0.7) !important;
   color: #b91c1c !important;
 }
+.exec-flow-slot .r-event-stream__viewport {
+  min-height: 12rem;
+  max-height: min(42vh, 22rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0.7rem 0.8rem;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  background: rgba(248, 250, 252, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+.exec-flow-slot .r-event-stream__viewport::-webkit-scrollbar {
+  width: 7px;
+}
+.exec-flow-slot .r-event-stream__viewport::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+}
+.exec-flow-slot .r-event-stream__viewport:has(.r-event-stream-list:empty)::before {
+  content: "Waiting for events…";
+  display: block;
+  padding: 0.35rem 0.15rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-style: italic;
+}
 .exec-flow-slot .r-event-stream-list {
-  max-height: 320px;
-  border-radius: 12px;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  background: rgba(248, 250, 252, 0.75) !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  font-family: var(--mono) !important;
+  font-size: 0.74rem !important;
+  line-height: 1.45 !important;
 }
 .exec-flow-slot .r-event-stream-list li {
   color: var(--muted) !important;
-  border-bottom-color: rgba(15, 23, 42, 0.05) !important;
-  padding: 0.4rem 0.65rem !important;
+  padding: 0.45rem 0.6rem 0.45rem 0.75rem !important;
+  margin: 0 0 0.3rem !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(15, 23, 42, 0.05) !important;
+  background: rgba(255, 255, 255, 0.62) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.05) !important;
 }
-.exec-flow-slot .r-event-stream-list li:nth-child(odd) {
-  background: rgba(255, 255, 255, 0.55) !important;
+.exec-flow-slot .r-event-stream-list li:last-child {
+  margin-bottom: 0 !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(37, 99, 235, 0.12) !important;
+  color: var(--text) !important;
 }
 .exec-flow-slot .r-worker-panel {
   margin: 0;

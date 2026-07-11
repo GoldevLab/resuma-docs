@@ -102,8 +102,9 @@ pub fn exec_showcase_demo() -> View {
                                 "</div></div>" +
                                 "<div class=\"r-flow-exec__panel\"><h3>Event stream</h3>" +
                                 "<div class=\"r-event-stream\" data-r-event-stream=\"" + graphId + "\" data-r-graph-token=\"" + token + "\">" +
-                                "<ul class=\"r-event-stream-list\">Waiting for events...</ul>" +
-                                "</div></div></aside>";
+                                "<div class=\"r-event-stream__viewport\" data-r-event-stream-viewport=\"true\">" +
+                                "<ul class=\"r-event-stream-list\"></ul>" +
+                                "</div></div></div></aside>";
                             slot.appendChild(panel);
                             slot.hidden = false;
                             flow.initFlowWidgets(slot, { flush: false });
