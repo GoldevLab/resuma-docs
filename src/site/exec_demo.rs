@@ -92,10 +92,13 @@ pub fn exec_showcase_demo() -> View {
                                 "<aside class=\"r-flow-exec__side\">" +
                                 "<div class=\"r-flow-exec__panel\"><h3>Controls</h3>" +
                                 "<div class=\"r-worker-panel\" data-r-worker-panel=\"" + graphId + "\" data-r-graph-token=\"" + token + "\">" +
-                                "<button type=\"button\" data-r-worker-pause=\"true\">Pause</button>" +
-                                "<button type=\"button\" data-r-worker-resume=\"true\">Resume</button>" +
-                                "<button type=\"button\" data-r-worker-cancel=\"true\">Cancel</button>" +
-                                "<button type=\"button\" data-r-worker-replay=\"true\">Replay</button>" +
+                                "<div class=\"r-worker-panel__actions\">" +
+                                "<button type=\"button\" class=\"btn btn-sm btn-ghost\" data-r-worker-pause=\"true\">Pause</button>" +
+                                "<button type=\"button\" class=\"btn btn-sm btn-ghost\" data-r-worker-resume=\"true\">Resume</button>" +
+                                "<button type=\"button\" class=\"btn btn-sm btn-ghost r-worker-btn--danger\" data-r-worker-cancel=\"true\">Cancel</button>" +
+                                "<button type=\"button\" class=\"btn btn-sm btn-ghost\" data-r-worker-replay=\"true\">Replay</button>" +
+                                "</div>" +
+                                "<p class=\"r-worker-panel__status\" data-r-worker-status aria-live=\"polite\"></p>" +
                                 "</div></div>" +
                                 "<div class=\"r-flow-exec__panel\"><h3>Event stream</h3>" +
                                 "<div class=\"r-event-stream\" data-r-event-stream=\"" + graphId + "\" data-r-graph-token=\"" + token + "\">" +

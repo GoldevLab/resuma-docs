@@ -2,6 +2,7 @@
 
 use std::time::Duration;
 
+use resuma::exec::cancel::run_cancellable;
 use resuma::exec::WorkerContext;
 use resuma::prelude::*;
 use resuma::worker;
@@ -52,7 +53,12 @@ pub async fn docs_showcase(
 
     for (i, msg) in steps.iter().enumerate() {
         ctx.check_cancelled()?;
-        tokio::time::sleep(Duration::from_millis(350)).await;
+        run_cancellable(&ctx.cancel_token(), async {
+            tokio::time::sleep(Duration::from_millis(750)).await;
+            Ok::<(), ResumaError>(())
+        })
+        .await?;
+        ctx.check_cancelled()?;
         ctx.log((*msg).to_string());
         ctx.progress(((i + 1) * 18) as u8);
     }

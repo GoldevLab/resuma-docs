@@ -1515,10 +1515,109 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
 .exec-flow-slot .r-flow-exec__panel,
 .exec-flow-slot .r-flow-graph,
 .exec-flow-slot .r-event-stream {
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(16px) !important;
-  border-color: rgba(255, 255, 255, 0.75) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(18px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
   border-radius: var(--radius-md) !important;
+  box-shadow:
+    0 10px 32px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+.exec-flow-slot .r-flow-exec {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+}
+@media (min-width: 900px) {
+  .exec-flow-slot .r-flow-exec {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: start;
+  }
+}
+.exec-flow-slot .r-flow-exec__panel h3,
+.exec-flow-slot .r-flow-graph__status {
+  color: var(--muted) !important;
+}
+.exec-flow-slot .r-flow-graph__node {
+  background: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  color: var(--text) !important;
+}
+.exec-flow-slot .r-flow-graph__node--running {
+  border-color: rgba(37, 99, 235, 0.35) !important;
+  background: rgba(219, 234, 254, 0.65) !important;
+  color: #1d4ed8 !important;
+}
+.exec-flow-slot .r-flow-graph__node--done {
+  border-color: rgba(5, 150, 105, 0.3) !important;
+  background: rgba(209, 250, 229, 0.65) !important;
+  color: #047857 !important;
+}
+.exec-flow-slot .r-flow-graph__node--paused {
+  border-color: rgba(217, 119, 6, 0.35) !important;
+  background: rgba(254, 243, 199, 0.7) !important;
+  color: #b45309 !important;
+}
+.exec-flow-slot .r-flow-graph__node--failed {
+  border-color: rgba(220, 38, 38, 0.3) !important;
+  background: rgba(254, 226, 226, 0.7) !important;
+  color: #b91c1c !important;
+}
+.exec-flow-slot .r-event-stream-list {
+  max-height: 320px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: rgba(248, 250, 252, 0.75) !important;
+}
+.exec-flow-slot .r-event-stream-list li {
+  color: var(--muted) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.05) !important;
+  padding: 0.4rem 0.65rem !important;
+}
+.exec-flow-slot .r-event-stream-list li:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.55) !important;
+}
+.exec-flow-slot .r-worker-panel {
+  margin: 0;
+}
+.exec-flow-slot .r-worker-panel__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+@media (min-width: 520px) {
+  .exec-flow-slot .r-worker-panel__actions {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.exec-flow-slot .r-worker-panel__actions .btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 0.8rem;
+  padding: 0.48rem 0.65rem;
+}
+.exec-flow-slot .r-worker-panel__status {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+  min-height: 1.15rem;
+}
+.exec-flow-slot .r-worker-btn--danger {
+  color: #b91c1c;
+  border-color: rgba(248, 113, 113, 0.45) !important;
+}
+.exec-flow-slot .r-worker-btn--danger:hover:not(:disabled) {
+  background: rgba(254, 242, 242, 0.85) !important;
+  color: #991b1b;
+}
+.btn:disabled,
+.exec-flow-slot .r-worker-panel .btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Live documentation demos */
