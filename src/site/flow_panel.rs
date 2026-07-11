@@ -32,5 +32,7 @@ pub async fn flow_execution_panel_html(graph_id: String, access_token: String) -
     } else {
         Some(access_token)
     };
-    Ok(render_view(&flow_execution_panel_auth(graph_id, true, token)))
+    Ok(render_view(&flow_execution_panel_auth(
+        graph_id, true, token,
+    )))
 }
