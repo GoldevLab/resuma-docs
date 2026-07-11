@@ -96,6 +96,15 @@ pub async fn docs_loader_stamp() -> String {
 }
 
 #[server]
+pub async fn docs_cache_info() -> serde_json::Value {
+    serde_json::json!({
+        "loader": "docs_cached",
+        "registered": "public, max-age=60",
+        "stamp": docs_timestamp(),
+    })
+}
+
+#[server]
 pub async fn docs_e2e_ping() -> Result<serde_json::Value> {
     Ok(serde_json::json!({
         "ok": true,
@@ -129,5 +138,8 @@ pub async fn docs_prg(
     if data.item.trim().is_empty() {
         return Err(SubmitError::new("Invalid").field("item", "Item required"));
     }
-    Ok(Redirect::to("/docs/cookbook/prg?ok=1"))
+    Ok(redirect_with_flash(
+        "/docs/cookbook/prg",
+        "Item saved — refresh won't re-submit.",
+    ))
 }

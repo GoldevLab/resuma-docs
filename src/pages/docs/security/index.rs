@@ -70,35 +70,35 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"Guides"</h2>
             <div class="template-grid">
-                <a href="/docs/security/todo" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/security/todo" class="template-pill template-pill--link">
                     <strong>"Todo example"</strong>
                     <span>"Start here — full backend reference (main + security + todo_store)"</span>
                 </a>
-                <a href="/docs/exec/security" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/security" class="template-pill template-pill--link">
                     <strong>"Exec security"</strong>
                     <span>"API keys, graph tokens, worker rate limits"</span>
                 </a>
-                <a href="/docs/security/environment" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/security/environment" class="template-pill template-pill--link">
                     <strong>"Environment variables"</strong>
                     <span>"Local vs prod · RESUMA_ENV · Fly secrets · resuma doctor"</span>
                 </a>
-                <a href="/docs/security/configure" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/security/configure" class="template-pill template-pill--link">
                     <strong>"Configure server"</strong>
                     <span>"SecurityConfig in Rust · CSP · Fly/Docker checklist"</span>
                 </a>
-                <a href="/docs/security/server_actions" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/security/server_actions" class="template-pill template-pill--link">
                     <strong>"Secure #[server] actions"</strong>
                     <span>"Validation · Result errors · action middleware"</span>
                 </a>
-                <a href="/docs/security/middleware" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/security/middleware" class="template-pill template-pill--link">
                     <strong>"Auth middleware"</strong>
                     <span>"Flow #[middleware] vs ResumaApp action pipeline"</span>
                 </a>
-                <a href="/docs/security/backend_patterns" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/security/backend_patterns" class="template-pill template-pill--link">
                     <strong>"Backend patterns"</strong>
                     <span>"Pattern mapping table"</span>
                 </a>
-                <a href="/docs/security/authorization" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/security/authorization" class="template-pill template-pill--link">
                     <strong>"Authorization & RLS"</strong>
                     <span>"Row-level checks · Postgres RLS"</span>
                 </a>

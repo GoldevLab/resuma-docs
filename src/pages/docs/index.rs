@@ -59,10 +59,10 @@ pub fn page(_req: FlowRequest) -> View {
             <h2 class="docs-section-title">"Start here"</h2>
             <div class="grid-3">
                 {doc_link_card(
-                    "/docs/migration_1_0",
-                    "Upgrading to 1.0",
-                    "semver, js! handlers, new APIs, and CLI renames from 0.4.x.",
-                    "1.0",
+                    "/docs/cli",
+                    "CLI",
+                    "Install, scaffold, dev, build — run resuma update to align deps with your CLI.",
+                    "resuma update",
                 )}
                 {doc_link_card(
                     "/docs/getting_started",

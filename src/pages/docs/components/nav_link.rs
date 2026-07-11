@@ -20,8 +20,15 @@ pub fn page(_req: FlowRequest) -> View {
 
             <h2>"How matching works"</h2>
             <p>
-                "Exact match wins. Prefix match applies when the current path starts with href followed by a slash — "
+                "By default, prefix match applies when the current path starts with "
+                <code>"href"</code> " followed by a slash — "
                 <code>"/docs"</code> " is active on " <code>"/docs/getting_started"</code> "."
+            </p>
+            <p>
+                "For sidebars and tabs, use "
+                <code>"exact"</code> " so only the precise path matches — "
+                <code>"&lt;NavLink href=\"/docs\" exact activeClass=\"active\"&gt;"</code> " is active only on "
+                <code>"/docs"</code> ", not child routes."
             </p>
             <p>
                 "If " <code>"href"</code> " has no query string, the link stays active when the URL adds query params — "

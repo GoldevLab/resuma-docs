@@ -14,11 +14,11 @@ use widgets::*;
 // ── Resuma OS ───────────────────────────────────────────────────────────────
 
 pub fn exec_overview() -> View {
-    live_demo("Resuma OS worker", exec_showcase_demo())
+    live_demo("Resuma OS — live worker", exec_showcase_demo())
 }
 
 pub fn exec_workers() -> View {
-    live_demo("#[worker] + execution graph", exec_workers_demo())
+    live_demo("Run docs_showcase worker", exec_workers_demo())
 }
 
 pub fn exec_queue() -> View {
@@ -118,7 +118,7 @@ pub fn exec_security() -> View {
 pub fn security_overview() -> View {
     live_demo(
         "Server action round-trip",
-        ServerActionWidget::render(ServerActionWidgetProps::default()),
+        SecurityServerActionWidget::render(SecurityServerActionWidgetProps::default()),
     )
 }
 
@@ -139,7 +139,7 @@ pub fn security_environment() -> View {
 pub fn security_server_actions() -> View {
     live_demo(
         "#[server] RPC",
-        ServerActionWidget::render(ServerActionWidgetProps::default()),
+        SecurityServerActionWidget::render(SecurityServerActionWidgetProps::default()),
     )
 }
 
@@ -160,11 +160,17 @@ pub fn security_authorization() -> View {
 }
 
 pub fn security_backend() -> View {
-    live_demo(
-        "Service layer + validation",
-        crate::site::todo_demo::TodoDemoWidget::render(
-            crate::site::todo_demo::TodoDemoWidgetProps::default(),
-        ),
+    live_info(
+        "Interactive demo",
+        view! {
+            <p>
+                "Row-level checks and validation live on "
+                <a href="/docs/security/authorization">"Authorization & RLS"</a>
+                " and "
+                <a href="/docs/security/todo">"Todo example"</a>
+                " — this page maps patterns to files."
+            </p>
+        },
     )
 }
 
@@ -418,39 +424,20 @@ pub fn flow_errors() -> View {
 }
 
 pub fn flow_caching() -> View {
-    live_info(
+    let cached = match try_use_load::<DocsCachedData>("docs_cached") {
+        Ok(d) => d,
+        Err(_) => DocsCachedData {
+            value: "Loader unavailable outside Flow scope".into(),
+            timestamp: String::new(),
+        },
+    };
+    live_demo(
         "Cache-Control on #[load]",
         view! {
             <>
-                <p>
-                    "Set "
-                    <code>"#[load(cache = \"public, max-age=60\")]"</code>
-                    " on loaders — the live timestamp demo is on "
-                    <a href="/docs/flow/loaders">"Loaders"</a>
-                    "."
-                </p>
-                <p class="demo-muted">"For SPA invalidation after mutations, see " <a href="/docs/cookbook/loader_invalidation">"Loader invalidation"</a> "."</p>
-            </>
-        },
-    )
-}
-
-pub fn flow_streaming() -> View {
-    live_info(
-        "Deferred #[load(stream)]",
-        view! {
-            <>
-                <p>
-                    "Enable "
-                    <code>"FlowApp::streaming(true)"</code>
-                    " and return "
-                    <code>"LoadValue::Pending"</code>
-                    " with "
-                    <code>"stream_slot(name)"</code>
-                    " — try the live skeleton on "
-                    <a href="/docs/cookbook/streaming_loaders">"Streaming loaders"</a>
-                    "."
-                </p>
+                <p class="demo-output">{"SSR loader value: "}{cached.value.clone()}</p>
+                <p class="demo-muted">{"SSR loaded at: "}{cached.timestamp.clone()}</p>
+                {CacheControlWidget::render(CacheControlWidgetProps::default())}
             </>
         },
     )
@@ -464,15 +451,6 @@ pub fn flow_prefetch() -> View {
                 <p>"Hover a NavLink — route HTML prefetches before click."</p>
                 <NavLink href="/docs/flow/routing" activeClass="active">"Hover me →"</NavLink>
             </>
-        },
-    )
-}
-
-pub fn flow_pwa() -> View {
-    live_info(
-        "PWA manifest",
-        view! {
-            <p>"Configure via " <code>"FlowApp::with_pwa"</code> " — this docs site ships a web manifest."</p>
         },
     )
 }
@@ -645,14 +623,24 @@ pub fn streaming_loader_panel() -> View {
     }
 }
 
-pub fn cookbook_prg() -> View {
+pub fn cookbook_prg(req: &FlowRequest) -> View {
+    let flash = flash_message(req);
     live_demo(
         "PRG submit",
         view! {
-            <Form submit={crate::site::demo_actions::docs_prg}>
-                <label>"Item" <input name="item" type="text" required=true /></label>
-                <button type="submit" class="btn btn-sm">"Submit → redirect"</button>
-            </Form>
+            <>
+                {if let Some(msg) = flash {
+                    view! {
+                        <p class="demo-alert demo-alert--success" role="status">"✓ " {msg}</p>
+                    }
+                } else {
+                    View::empty()
+                }}
+                <Form submit={crate::site::demo_actions::docs_prg}>
+                    <label>"Item" <input name="item" type="text" required=true placeholder="e.g. Widget" /></label>
+                    <button type="submit" class="btn btn-sm">"Submit → redirect"</button>
+                </Form>
+            </>
         },
     )
 }

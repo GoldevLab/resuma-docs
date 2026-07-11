@@ -92,7 +92,6 @@ impl FlowPageRegistry for PagesRegistry {
             "docs::integrations::validator" => {
                 Some(super::docs::integrations::validator::page(req))
             }
-            "docs::migration_1_0" => Some(super::docs::migration_1_0::page(req)),
             "docs::package" => Some(super::docs::package::page(req)),
             "docs::project_structure" => Some(super::docs::project_structure::page(req)),
             "docs::reactivity" => Some(super::docs::reactivity::page(req)),

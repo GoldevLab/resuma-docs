@@ -1,6 +1,6 @@
 /** Run docs_showcase + mount flow execution panel (keeps page handlers under inline size). */
 
-type DemoKey = "flow-ui" | "exec";
+type DemoKey = "exec";
 
 type DemoIds = {
   topic: string;
@@ -13,15 +13,6 @@ type DemoIds = {
 };
 
 const DEMOS: Record<DemoKey, DemoIds> = {
-  "flow-ui": {
-    topic: "flow-ui-topic",
-    blurb: "flow-ui-blurb",
-    err: "flow-ui-err",
-    slot: "flow-ui-slot",
-    btn: "flow-ui-start-btn",
-    guide: "flow-ui",
-    placeholder: "flow-ui-flow-placeholder",
-  },
   exec: {
     topic: "exec-topic",
     blurb: "exec-blurb",
@@ -132,7 +123,10 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
 
     flow.disconnectFlowWidgets(slot);
     if (oldGraphId) flow.teardownGraph(oldGraphId);
+    slot.hidden = true;
     slot.innerHTML = "";
+    delete slot.dataset.docsExecPanel;
+
     slot.dataset.docsExecPanel = "1";
     slot.innerHTML = panelHtml;
     slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
@@ -140,7 +134,6 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
     flow.initFlowWidgets(slot, { flush: false });
     flow.syncFlowControls(slot);
     window.setTimeout(() => flow.syncFlowControls(slot), 600);
-    window.setTimeout(() => flow.syncFlowControls(slot), 2500);
     setGuideStep(
       ids.guide,
       3,

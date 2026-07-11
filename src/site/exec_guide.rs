@@ -7,22 +7,22 @@ pub fn worker_try_it_guide(guide_id: &str) -> View {
     let id = guide_id.to_string();
     view! {
         <div class="exec-demo-guide" data-guide={id.clone()} role="region" aria-label="How to use this demo">
-            <p class="exec-demo-guide__title">"How to try Pause / Resume / Cancel"</p>
+            <p class="exec-demo-guide__title">"How to use this demo"</p>
             <ol class="exec-demo-guide__steps">
                 <li class="is-active" data-step="1">
                     <span class="exec-demo-guide__num" aria-hidden="true">"1"</span>
                     <span class="exec-demo-guide__text">
                         "Click "
                         <strong>"Run worker"</strong>
-                        " — a real graph starts (~25 seconds)."
+                        " — a ~25s graph starts; the execution panel appears below."
                     </span>
                 </li>
                 <li data-step="2">
                     <span class="exec-demo-guide__num" aria-hidden="true">"2"</span>
                     <span class="exec-demo-guide__text">
-                        "Watch the panel below: under "
+                        "In the panel, open "
                         <strong>"Controls"</strong>
-                        ", wait until status says "
+                        " and wait until status is "
                         <strong>"Running"</strong>
                         "."
                     </span>
@@ -34,7 +34,7 @@ pub fn worker_try_it_guide(guide_id: &str) -> View {
                         <strong>"Running"</strong>
                         ", try "
                         <strong>"Pause"</strong>
-                        " (stops at next step), "
+                        ", "
                         <strong>"Resume"</strong>
                         ", or "
                         <strong>"Cancel"</strong>
@@ -44,11 +44,9 @@ pub fn worker_try_it_guide(guide_id: &str) -> View {
                 <li data-step="4">
                     <span class="exec-demo-guide__num" aria-hidden="true">"4"</span>
                     <span class="exec-demo-guide__text">
-                        "When status shows "
+                        "When status is "
                         <strong>"done"</strong>
-                        ", controls turn off — click "
-                        <strong>"Run worker"</strong>
-                        " again to retry."
+                        ", run again to start a fresh graph (the event stream clears)."
                     </span>
                 </li>
             </ol>

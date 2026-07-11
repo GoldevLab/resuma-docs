@@ -69,35 +69,35 @@ FlowApp::new()
 
             <h2>"Guides"</h2>
             <div class="template-grid">
-                <a href="/docs/exec/workers" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/workers" class="template-pill template-pill--link">
                     <strong>"Workers"</strong>
                     <span>"#[worker], lifecycle, WorkerContext"</span>
                 </a>
-                <a href="/docs/exec/queue" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/queue" class="template-pill template-pill--link">
                     <strong>"Queue"</strong>
                     <span>"Enqueue, claim, multi-process"</span>
                 </a>
-                <a href="/docs/exec/scheduler" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/scheduler" class="template-pill template-pill--link">
                     <strong>"Scheduler"</strong>
                     <span>"Cron jobs on disk"</span>
                 </a>
-                <a href="/docs/exec/webhooks" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/webhooks" class="template-pill template-pill--link">
                     <strong>"Webhooks"</strong>
                     <span>"graph.done / failed / paused"</span>
                 </a>
-                <a href="/docs/exec/tools" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/tools" class="template-pill template-pill--link">
                     <strong>"Tools & planner"</strong>
                     <span>"fetch, ai, map-reduce"</span>
                 </a>
-                <a href="/docs/exec/flow_ui" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/flow_ui" class="template-pill template-pill--link">
                     <strong>"Flow UI"</strong>
                     <span>"resuma-flow dashboard widgets"</span>
                 </a>
-                <a href="/docs/exec/ops" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/ops" class="template-pill template-pill--link">
                     <strong>"Ops & deploy"</strong>
                     <span>"Production template, env vars"</span>
                 </a>
-                <a href="/docs/exec/security" class="template-pill" style="text-decoration: none;">
+                <a href="/docs/exec/security" class="template-pill template-pill--link">
                     <strong>"Exec security"</strong>
                     <span>"API keys, tokens, rate limits"</span>
                 </a>

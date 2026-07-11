@@ -5,9 +5,10 @@ pub fn page(_req: FlowRequest) -> View {
     view! {
         <>
             <h1>"Streaming"</h1>
-            <p class="lead">"Deferred #[load(stream)] handlers let SSR flush the shell immediately while slow data streams in."</p>
-
-            {crate::site::demos::flow_streaming()}
+            <p class="lead">
+                "Deferred " <code>"#[load(stream)]"</code> " handlers let SSR flush the shell immediately while slow data streams in. "
+                "Live demo: " <a href="/docs/cookbook/streaming_loaders">"Streaming loaders cookbook"</a> "."
+            </p>
 
             <h2>"Stream loader"</h2>
             {code_block(r#"#[load(stream)]

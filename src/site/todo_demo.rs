@@ -134,6 +134,7 @@ pub fn TodoDemoWidget() -> View {
     let user = signal("guest".to_string());
     let is_admin = signal(false);
     let status = signal(String::new());
+    let error = signal(String::new());
 
     visible_task!(
         r#"
@@ -144,23 +145,26 @@ pub fn TodoDemoWidget() -> View {
                 state.user.set(res.value.user);
                 state.is_admin.set(res.value.is_admin);
                 state.status.set("");
+                state.error.set("");
             } else {
-                state.status.set(res.error);
+                state.error.set(res.error);
             }
         }
     "#,
         items,
         user,
         is_admin,
-        status
+        status,
+        error
     );
 
     view! {
         <div class="todo-demo">
             <p class="demo-muted">
-                "Real "
-                <code>"#[server]"</code>
-                " + action middleware — switch user (cookie), add tasks, try toggling another user's task."
+                "Switch user (cookie), add tasks, toggle another user's task for "
+                <code>"403 Forbidden"</code> ", or "
+                <code>"Fail validation"</code> " for "
+                <code>"422"</code> "."
             </p>
             <div class="todo-demo-users">
                 <span class="todo-demo-users__label">"Signed in as:"</span>
@@ -173,33 +177,36 @@ pub fn TodoDemoWidget() -> View {
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
                     document.cookie = "resuma_demo_user=guest; path=/; SameSite=Lax";
                     const res = await __resuma.safeAction("docs_todo_list", []);
-                    if (!res.ok) { state.status.set(res.error); return; }
+                    if (!res.ok) { state.error.set(res.error); return; }
                     state.items.set(res.value.items);
                     state.user.set(res.value.user);
                     state.is_admin.set(res.value.is_admin);
-                    state.status.set("Switched to " + res.value.user);
+                    state.error.set("");
+                    state.status.set("guest — sees only own tasks");
                 })}>"guest"</button>
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
                     document.cookie = "resuma_demo_user=alice; path=/; SameSite=Lax";
                     const res = await __resuma.safeAction("docs_todo_list", []);
-                    if (!res.ok) { state.status.set(res.error); return; }
+                    if (!res.ok) { state.error.set(res.error); return; }
                     state.items.set(res.value.items);
                     state.user.set(res.value.user);
                     state.is_admin.set(res.value.is_admin);
-                    state.status.set("Switched to " + res.value.user);
+                    state.error.set("");
+                    state.status.set("alice — admin, sees all tasks");
                 })}>"alice"</button>
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
                     document.cookie = "resuma_demo_user=bob; path=/; SameSite=Lax";
                     const res = await __resuma.safeAction("docs_todo_list", []);
-                    if (!res.ok) { state.status.set(res.error); return; }
+                    if (!res.ok) { state.error.set(res.error); return; }
                     state.items.set(res.value.items);
                     state.user.set(res.value.user);
                     state.is_admin.set(res.value.is_admin);
-                    state.status.set("Switched to " + res.value.user);
+                    state.error.set("");
+                    state.status.set("bob — regular user");
                 })}>"bob"</button>
             </div>
-            <div class="demo-row">
-                <input id="todo-title" type="text" placeholder="New task" />
+            <div class="demo-row todo-demo-add-row">
+                <input id="todo-title" type="text" placeholder="New task" aria-describedby="todo-demo-error" />
                 <button
                     type="button"
                     class="btn btn-sm btn-primary"
@@ -208,12 +215,16 @@ pub fn TodoDemoWidget() -> View {
                         const title = input?.value ?? "";
                         const res = await __resuma.safeAction("docs_todo_add", [title]);
                         if (!res.ok) {
-                            state.status.set(res.error);
+                            state.error.set(res.error);
+                            state.status.set("");
+                            input?.classList.add("input-error");
                             return;
                         }
-                        state.status.set("");
+                        state.error.set("");
+                        state.status.set("Task added");
                         state.items.set(res.value.items);
                         state.user.set(res.value.user);
+                        input?.classList.remove("input-error");
                         if (input) input.value = "";
                     })}
                 >
@@ -222,9 +233,17 @@ pub fn TodoDemoWidget() -> View {
                 <button
                     type="button"
                     class="btn btn-sm btn-ghost"
+                    title="POST empty title — expect 422 Invalid request"
                     onClick={js!(async () => {
                         const res = await __resuma.safeAction("docs_todo_add", [""]);
-                        state.status.set(res.ok ? "unexpected ok" : res.error);
+                        if (res.ok) {
+                            state.error.set("unexpected ok");
+                            state.status.set("");
+                            return;
+                        }
+                        state.error.set(res.error);
+                        state.status.set("");
+                        document.getElementById("todo-title")?.classList.add("input-error");
                     })}
                 >
                     "Fail validation"
@@ -239,9 +258,11 @@ pub fn TodoDemoWidget() -> View {
                             onClick={js!(async () => {
                                 const res = await __resuma.safeAction("docs_todo_toggle", [item.id]);
                                 if (!res.ok) {
-                                    state.status.set(res.error);
+                                    state.error.set(res.error);
+                                    state.status.set("");
                                     return;
                                 }
+                                state.error.set("");
                                 state.status.set("");
                                 state.items.set(res.value.items);
                             })}
@@ -253,7 +274,12 @@ pub fn TodoDemoWidget() -> View {
                     </li>
                 </For>
             </ul>
-            <p class="demo-error" role="alert">{status}</p>
+            <p id="todo-demo-error" class="demo-alert demo-alert--error" role="alert">{error}</p>
+            <p class="demo-status">{status}</p>
+            <p class="demo-hint">
+                "Production (" <code>"RESUMA_ENV=production"</code> "): validation returns "
+                <code>"Invalid request"</code> " — not internal field names."
+            </p>
         </div>
     }
 }

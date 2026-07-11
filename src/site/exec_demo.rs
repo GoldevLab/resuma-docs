@@ -27,81 +27,70 @@ pub async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> 
 fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
     let status = resuma::exec::exec_status();
     let show_dashboard = mode == ExecDemoMode::Overview;
-    let grid_class = if show_dashboard {
-        "exec-demo-grid"
-    } else {
-        "exec-demo-grid exec-demo-grid--single"
-    };
-    let (title, lead) = match mode {
-        ExecDemoMode::Overview => (
-            "Resuma OS — live worker",
-            view! {
-                <p class="exec-demo-lead">
-                    "A real "
-                    <code>"#[worker]"</code>
-                    " runs on this server: durable graph, SSE event stream, pause/resume/cancel. "
-                    "No Redis — self-hosted execution in the same binary as your app."
-                </p>
-            },
-        ),
-        ExecDemoMode::Workers => (
-            "Run docs_showcase worker",
-            view! {
-                <p class="exec-demo-lead">
-                    "Starts a real "
-                    <code>"#[worker]"</code>
-                    " graph on this server — watch logs, progress, pause/resume/cancel, and the final result payload."
-                </p>
-            },
-        ),
+    let lead = match mode {
+        ExecDemoMode::Overview => view! {
+            <p class="exec-demo-lead">
+                "A real "
+                <code>"#[worker]"</code>
+                " runs on this server: durable graph, SSE event stream, pause/resume/cancel. "
+                "No Redis — self-hosted execution in the same binary as your app."
+            </p>
+        },
+        ExecDemoMode::Workers => view! {
+            <p class="exec-demo-lead">
+                "Starts "
+                <code>"docs_showcase"</code>
+                " on this server — watch logs, progress, pause/resume/cancel, and the final result."
+            </p>
+        },
     };
 
     view! {
-        <section class="exec-demo" aria-labelledby="exec-demo-title">
+        <section class="exec-demo" aria-label="Resuma OS worker demo">
             {flow_styles_link()}
-            <div class="exec-demo-intro">
-                <h3 id="exec-demo-title">{title.to_string()}</h3>
-                {lead}
+            {lead}
+            <div class="exec-demo-controls">
+                <label class="exec-demo-label" for="exec-topic">
+                    "Topic"
+                    <input id="exec-topic" type="text" name="exec_topic" value="Resuma OS" />
+                </label>
+                <label class="exec-demo-label" for="exec-blurb">
+                    "Text to analyze"
+                    <textarea id="exec-blurb" name="exec_blurb" rows="3">"Durable workers with checkpointed graphs, queue recovery, and an ops dashboard — all in Rust."</textarea>
+                </label>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="exec-start-btn"
+                    onClick={js!(async () => {
+                        const m = await import("/static/client/docs-flow-worker.js");
+                        await m.runDocsFlowWorker("exec");
+                    })}
+                >
+                    "Run worker"
+                </button>
+                <p id="exec-err" class="exec-demo-err" role="alert" hidden></p>
             </div>
-            <div class={grid_class.to_string()}>
-                <div class="exec-demo-controls">
-                    <label class="exec-demo-label" for="exec-topic">
-                        "Topic"
-                        <input id="exec-topic" type="text" name="exec_topic" value="Resuma OS" />
-                    </label>
-                    <label class="exec-demo-label" for="exec-blurb">
-                        "Text to analyze"
-                        <textarea id="exec-blurb" name="exec_blurb" rows="3">"Durable workers with checkpointed graphs, queue recovery, and an ops dashboard — all in Rust."</textarea>
-                    </label>
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="exec-start-btn"
-                        onClick={js!(async () => {
-                            const m = await import("/static/client/docs-flow-worker.js");
-                            await m.runDocsFlowWorker("exec");
-                        })}
-                    >
-                        "Run worker"
-                    </button>
-                    <p id="exec-err" class="exec-demo-err" role="alert" hidden></p>
-                    {crate::site::exec_guide::worker_try_it_guide("exec")}
-                    <p class="exec-demo-hint">
-                        <a href="/docs/exec">"Resuma OS docs →"</a>
-                    </p>
-                </div>
-                {if show_dashboard {
-                    view! {
-                        <div class="exec-demo-dash">
-                            {flow_dashboard_poll(4000, Some(status))}
-                        </div>
-                    }
-                } else {
-                    view! { <span hidden aria-hidden="true"></span> }
-                }}
-            </div>
+            {crate::site::exec_guide::worker_try_it_guide("exec")}
             {crate::site::exec_guide::worker_panel_placeholder("exec-flow-placeholder")}
             <div id="exec-flow-slot" class="exec-flow-slot" data-docs-exec-panel hidden></div>
+            {if show_dashboard {
+                view! {
+                    <div class="exec-demo-dash">
+                        <h4 class="exec-demo-dash__title">"Ops snapshot"</h4>
+                        <p class="demo-muted exec-demo-dash__hint">
+                            "From "
+                            <code>"flow_dashboard_poll"</code>
+                            " — same data as "
+                            <code>"GET /_resuma/status"</code>
+                            "."
+                        </p>
+                        {flow_dashboard_poll(4000, Some(status))}
+                    </div>
+                }
+            } else {
+                view! { <span hidden aria-hidden="true"></span> }
+            }}
         </section>
     }
 }

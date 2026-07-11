@@ -96,6 +96,7 @@ pub fn island_demo() -> View {
 #[component]
 pub fn ServerActionWidget() -> View {
     let result = signal(String::new());
+    let error = signal(String::new());
     view! {
         <>
             <p class="demo-muted">
@@ -110,30 +111,105 @@ pub fn ServerActionWidget() -> View {
             <div class="demo-row">
                 <button type="button" class="btn btn-sm" onClick={js!(async () => {
                     const res = await __resuma.safeAction("docs_echo", ["Hello from docs"]);
-                    state.result.set(res.ok ? res.value : res.error);
+                    if (res.ok) {
+                        state.result.set(res.value);
+                        state.error.set("");
+                    } else {
+                        state.error.set(res.error);
+                        state.result.set("");
+                    }
                 })}>"docs_echo"</button>
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
                     const res = await __resuma.safeAction("docs_add", [2, 40]);
-                    state.result.set(res.ok ? "2 + 40 = " + res.value : res.error);
+                    if (res.ok) {
+                        state.result.set("2 + 40 = " + res.value);
+                        state.error.set("");
+                    } else {
+                        state.error.set(res.error);
+                        state.result.set("");
+                    }
                 })}>"docs_add(2,40)"</button>
             </div>
             <p class="demo-output">{result}</p>
+            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+        </>
+    }
+}
+
+#[component]
+pub fn SecurityServerActionWidget() -> View {
+    let result = signal(String::new());
+    let error = signal(String::new());
+    view! {
+        <>
+            <p class="demo-muted">
+                "Same RPC as above, plus a validation failure (422) via "
+                <code>"docs_todo_add"</code>
+                "."
+            </p>
+            <div class="demo-row">
+                <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_echo", ["Hello from docs"]);
+                    if (res.ok) {
+                        state.result.set(res.value);
+                        state.error.set("");
+                    } else {
+                        state.error.set(res.error);
+                        state.result.set("");
+                    }
+                })}>"docs_echo"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_add", [2, 40]);
+                    if (res.ok) {
+                        state.result.set("2 + 40 = " + res.value);
+                        state.error.set("");
+                    } else {
+                        state.error.set(res.error);
+                        state.result.set("");
+                    }
+                })}>"docs_add(2,40)"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_todo_add", [""]);
+                    if (res.ok) {
+                        state.error.set("unexpected ok");
+                        state.result.set("");
+                    } else {
+                        state.error.set(res.error);
+                        state.result.set("");
+                    }
+                })}>"Fail validation"</button>
+            </div>
+            <p class="demo-output">{result}</p>
+            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
         </>
     }
 }
 
 #[component]
 pub fn WhoAmIWidget() -> View {
-    let payload = signal(String::new());
+    let user_id = signal("—".to_string());
+    let roles = signal(String::new());
+    let authenticated = signal(false);
+    let error = signal(String::new());
+
     visible_task!(
         r#"
         async (state, __resuma) => {
             const res = await __resuma.safeAction("docs_whoami", []);
-            state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+            if (!res.ok) { state.error.set(res.error); return; }
+            state.error.set("");
+            state.user_id.set(res.value.user_id ?? "—");
+            const r = res.value.roles;
+            state.roles.set(Array.isArray(r) ? r.join(", ") : String(r ?? ""));
+            state.authenticated.set(!!res.value.authenticated);
         }
     "#,
-        payload
+        user_id,
+        roles,
+        authenticated,
+        error
     );
+
     view! {
         <>
             <p class="demo-muted">
@@ -147,63 +223,136 @@ pub fn WhoAmIWidget() -> View {
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
                     document.cookie = "resuma_demo_user=guest; path=/; SameSite=Lax";
                     const res = await __resuma.safeAction("docs_whoami", []);
-                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                    if (!res.ok) { state.error.set(res.error); return; }
+                    state.error.set("");
+                    state.user_id.set(res.value.user_id ?? "—");
+                    const r = res.value.roles;
+                    state.roles.set(Array.isArray(r) ? r.join(", ") : String(r ?? ""));
+                    state.authenticated.set(!!res.value.authenticated);
                 })}>"guest"</button>
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
                     document.cookie = "resuma_demo_user=alice; path=/; SameSite=Lax";
                     const res = await __resuma.safeAction("docs_whoami", []);
-                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                    if (!res.ok) { state.error.set(res.error); return; }
+                    state.error.set("");
+                    state.user_id.set(res.value.user_id ?? "—");
+                    const r = res.value.roles;
+                    state.roles.set(Array.isArray(r) ? r.join(", ") : String(r ?? ""));
+                    state.authenticated.set(!!res.value.authenticated);
                 })}>"alice"</button>
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
                     document.cookie = "resuma_demo_user=bob; path=/; SameSite=Lax";
                     const res = await __resuma.safeAction("docs_whoami", []);
-                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                    if (!res.ok) { state.error.set(res.error); return; }
+                    state.error.set("");
+                    state.user_id.set(res.value.user_id ?? "—");
+                    const r = res.value.roles;
+                    state.roles.set(Array.isArray(r) ? r.join(", ") : String(r ?? ""));
+                    state.authenticated.set(!!res.value.authenticated);
                 })}>"bob"</button>
-                <button
-                    type="button"
-                    class="btn btn-sm"
-                    onClick={js!(async () => {
-                        const res = await __resuma.safeAction("docs_whoami", []);
-                        state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
-                    })}
-                >
-                    "Refresh"
-                </button>
+                <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_whoami", []);
+                    if (!res.ok) { state.error.set(res.error); return; }
+                    state.error.set("");
+                    state.user_id.set(res.value.user_id ?? "—");
+                    const r = res.value.roles;
+                    state.roles.set(Array.isArray(r) ? r.join(", ") : String(r ?? ""));
+                    state.authenticated.set(!!res.value.authenticated);
+                })}>"Refresh"</button>
             </div>
-            <pre class="code demo-output">{payload}</pre>
+            <dl class="demo-kv">
+                <div class="demo-kv__row">
+                    <dt>"user_id"</dt>
+                    <dd><code>{user_id}</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt>"roles"</dt>
+                    <dd><code>{roles}</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt>"authenticated"</dt>
+                    <dd>
+                        <Show when={authenticated.get()}><code>"true"</code></Show>
+                        <Show when={!authenticated.get()}><code>"false"</code></Show>
+                    </dd>
+                </div>
+            </dl>
+            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
         </>
     }
 }
 
 #[component]
 pub fn SecurityEnvWidget() -> View {
-    let payload = signal(String::new());
+    let resuma_env = signal("—".to_string());
+    let trust_proxy = signal("—".to_string());
+    let rate_backend = signal("—".to_string());
+    let csrf = signal("—".to_string());
+    let origin_check = signal("—".to_string());
+    let error = signal(String::new());
+
     visible_task!(
         r#"
         async (state, __resuma) => {
             const res = await __resuma.safeAction("docs_runtime_security", []);
-            state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+            if (!res.ok) { state.error.set(res.error); return; }
+            state.error.set("");
+            const v = res.value;
+            state.resuma_env.set(v.resuma_env ?? "—");
+            state.trust_proxy.set(v.trust_proxy || "—");
+            state.rate_backend.set(v.rate_backend ?? "—");
+            state.csrf.set(v.csrf ?? "—");
+            state.origin_check.set(v.origin_check ?? "—");
         }
     "#,
-        payload
+        resuma_env,
+        trust_proxy,
+        rate_backend,
+        csrf,
+        origin_check,
+        error
     );
+
     view! {
         <>
             <p class="demo-muted">
                 "Live snapshot from this server process (no secrets) — compare with "
                 <code>"resuma doctor"</code>"."
             </p>
-            <button
-                type="button"
-                class="btn btn-sm"
-                onClick={js!(async () => {
-                    const res = await __resuma.safeAction("docs_runtime_security", []);
-                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
-                })}
-            >
-                "Refresh"
-            </button>
-            <pre class="code demo-output">{payload}</pre>
+            <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                const res = await __resuma.safeAction("docs_runtime_security", []);
+                if (!res.ok) { state.error.set(res.error); return; }
+                state.error.set("");
+                const v = res.value;
+                state.resuma_env.set(v.resuma_env ?? "—");
+                state.trust_proxy.set(v.trust_proxy || "—");
+                state.rate_backend.set(v.rate_backend ?? "—");
+                state.csrf.set(v.csrf ?? "—");
+                state.origin_check.set(v.origin_check ?? "—");
+            })}>"Refresh"</button>
+            <dl class="demo-kv">
+                <div class="demo-kv__row">
+                    <dt><code>"RESUMA_ENV"</code></dt>
+                    <dd><code>{resuma_env}</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt><code>"RESUMA_TRUST_PROXY"</code></dt>
+                    <dd><code>{trust_proxy}</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt>"rate backend"</dt>
+                    <dd><code>{rate_backend}</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt>"CSRF"</dt>
+                    <dd><code>{csrf}</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt>"origin check"</dt>
+                    <dd><code>{origin_check}</code></dd>
+                </div>
+            </dl>
+            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
         </>
     }
 }
@@ -415,18 +564,52 @@ pub fn PortalWidget() -> View {
 
 #[component]
 pub fn ThemeWidget() -> View {
-    let theme = Theme {
+    let dark = signal(true);
+
+    let dark_theme = Theme {
         mode: "dark".into(),
         primary: "#712cf9".into(),
         background: "#0b1020".into(),
         foreground: "#e6e8ee".into(),
     };
-    provide_theme(theme.clone());
+    let light_theme = Theme {
+        mode: "light".into(),
+        primary: "#4f46e5".into(),
+        background: "#f4f7fb".into(),
+        foreground: "#0f172a".into(),
+    };
+
+    provide_theme(dark_theme.clone());
+
     view! {
-        <div class="demo-theme-panel" style={theme_css_vars(&theme)}>
-            <p>"Theme via provide_theme"</p>
-            <button type="button" class="btn btn-sm btn-themed">"Themed button"</button>
-        </div>
+        <>
+            <Show
+                when={dark}
+                fallback={view! {
+                    <div class="demo-theme-panel" style={theme_css_vars(&light_theme)}>
+                        <p>"Mode: " <strong>"light"</strong> " — panel uses " <code>"theme_css_vars"</code></p>
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-themed"
+                            onClick={dark.set(true)}
+                        >
+                            "Switch to dark"
+                        </button>
+                    </div>
+                }}
+            >
+                <div class="demo-theme-panel" style={theme_css_vars(&dark_theme)}>
+                    <p>"Mode: " <strong>"dark"</strong> " — panel uses " <code>"theme_css_vars"</code></p>
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-themed"
+                        onClick={dark.set(false)}
+                    >
+                        "Switch to light"
+                    </button>
+                </div>
+            </Show>
+        </>
     }
 }
 
@@ -508,6 +691,68 @@ pub fn DeployInfoWidget() -> View {
                 state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
             })}>"Refresh"</button>
             <pre class="code demo-output">{payload}</pre>
+        </>
+    }
+}
+
+#[component]
+pub fn CacheControlWidget() -> View {
+    let cache_header = signal("—".to_string());
+    let live_stamp = signal("—".to_string());
+    let status = signal(String::new());
+
+    visible_task!(
+        r#"
+        async (state, __resuma) => {
+            const res = await fetch(location.pathname + location.search, { credentials: "same-origin" });
+            state.cache_header.set(res.headers.get("cache-control") ?? "(none)");
+            const info = await __resuma.safeAction("docs_cache_info", []);
+            if (info.ok) state.live_stamp.set(info.value.stamp);
+        }
+    "#,
+        cache_header,
+        live_stamp
+    );
+
+    view! {
+        <>
+            <dl class="demo-kv">
+                <div class="demo-kv__row">
+                    <dt>"Loader policy"</dt>
+                    <dd><code>"#[load(cache = \"public, max-age=60\")]"</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt>"Response Cache-Control"</dt>
+                    <dd><code>{cache_header}</code></dd>
+                </div>
+                <div class="demo-kv__row">
+                    <dt>"Server stamp (now)"</dt>
+                    <dd><code>{live_stamp}</code></dd>
+                </div>
+            </dl>
+            <div class="demo-row">
+                <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                    const res = await fetch(location.pathname + location.search, { credentials: "same-origin" });
+                    state.cache_header.set(res.headers.get("cache-control") ?? "(none)");
+                    const info = await __resuma.safeAction("docs_cache_info", []);
+                    if (info.ok) state.live_stamp.set(info.value.stamp);
+                    state.status.set("Headers refreshed (" + res.status + ")");
+                })}>"Refresh headers"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    await __resuma.navigate(location.pathname + location.search);
+                    state.status.set("SPA reload — loader timestamp above should change");
+                })}>"SPA reload"</button>
+            </div>
+            <p class="demo-hint">
+                "SSR timestamp is frozen until navigation. "
+                <code>"Refresh headers"</code>
+                " hits the server again; "
+                <code>"SPA reload"</code>
+                " re-runs "
+                <code>"#[load]"</code>
+                " and remounts the page."
+            </p>
+            <p class="demo-muted">{status}</p>
         </>
     }
 }

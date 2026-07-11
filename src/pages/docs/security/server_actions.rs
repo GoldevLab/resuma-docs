@@ -53,9 +53,9 @@ fn action_pipeline(req: FlowRequest) -> ... {
 
             <h2>"6. Handle errors in the UI"</h2>
             <p>
-                "Prefer " <code>"__resuma.safeAction"</code> " in " <code>"js!"</code> " handlers — it returns "
-                <code>"{ ok, value }"</code> " or " <code>"{ ok: false, error }"</code> " without throwing. See "
-                <a href="/docs/components/error_boundary">"Error boundaries"</a>"."
+                "Prefer " <code>"__resuma.safeAction"</code> " in " <code>"js!"</code> " handlers — it parses the JSON "
+                <code>"error"</code> " field even on HTTP 422/403. In production, messages are sanitized (e.g. "
+                <code>"Invalid request"</code> "). Try " <strong>"Fail validation"</strong> " in the live demo above."
             </p>
             {code_block(r#"onClick={js!(async (_event, state, __resuma) => {
     const res = await __resuma.safeAction("add_todo", [title]);

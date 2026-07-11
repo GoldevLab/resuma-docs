@@ -66,6 +66,7 @@ fn DocsLayout() -> View {
                 try {
                     const mod = await import('/static/client/docs-copy.js');
                     mod.initDocsCopy?.();
+                    mod.initDocsSidebar?.();
                     mod.initDocsFlow?.();
                 } catch (e) {
                     console.warn('[docs-copy]', e);

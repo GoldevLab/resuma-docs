@@ -2,21 +2,26 @@
  * Copy buttons for docs pages — main content only (not sidebar/header).
  */
 
-/** Mount Flow widgets (ops dashboard, etc.) inside docs content. */
+/** Mount Flow widgets outside dynamically injected exec panels (SSR dashboard only). */
 export async function initDocsFlow() {
-  const scope = document.querySelector<HTMLElement>('.docs-main');
+  const scope = document.querySelector<HTMLElement>(".docs-main");
   if (!scope) return;
-  const hasDashboard = scope.querySelector('[data-r-flow-dashboard]');
-  const hasStaticGraph = Array.from(scope.querySelectorAll<HTMLElement>("[data-r-flow-graph]")).some(
-    (el) => !el.closest("[data-docs-exec-panel]"),
+  const hasDashboard = scope.querySelector(
+    "[data-r-flow-dashboard]:not([data-docs-exec-panel] [data-r-flow-dashboard])",
   );
+  const hasStaticGraph = Array.from(
+    scope.querySelectorAll<HTMLElement>("[data-r-flow-graph]"),
+  ).some((el) => !el.closest("[data-docs-exec-panel]"));
   if (!hasDashboard && !hasStaticGraph) return;
   try {
     if (window.__resumaCoreReady) await window.__resumaCoreReady;
-    const mod = await import('/_resuma/flow.js');
-    mod.initFlowWidgets(scope, { flush: false });
+    const mod = await import("/_resuma/flow.js");
+    mod.initFlowWidgets(scope, {
+      flush: false,
+      exclude: "[data-docs-exec-panel]",
+    });
   } catch (e) {
-    console.warn('[docs-flow]', e);
+    console.warn("[docs-flow]", e);
   }
 }
 
@@ -40,8 +45,7 @@ async function copyText(text: string, btn: HTMLButtonElement) {
     const ta = document.createElement("textarea");
     ta.value = value;
     ta.setAttribute("readonly", "");
-    ta.style.position = "fixed";
-    ta.style.left = "-9999px";
+    ta.className = "docs-copy-fallback";
     document.body.appendChild(ta);
     ta.select();
     try {
@@ -89,6 +93,21 @@ function teardown(main: HTMLElement) {
   main.querySelectorAll(".docs-section-head").forEach((wrapper) => {
     const h2 = wrapper.querySelector("h2");
     if (h2) wrapper.replaceWith(h2);
+  });
+}
+
+function scrollActiveSidebarLink() {
+  const sidebar = document.querySelector<HTMLElement>(".docs-sidebar-scroll");
+  const active = sidebar?.querySelector<HTMLElement>(".docs-nav-link--active");
+  if (!sidebar || !active) return;
+  const top = active.offsetTop - sidebar.clientHeight / 2 + active.offsetHeight / 2;
+  sidebar.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+}
+
+export function initDocsSidebar() {
+  scrollActiveSidebarLink();
+  document.addEventListener("resuma:navigate", () => {
+    requestAnimationFrame(scrollActiveSidebarLink);
   });
 }
 

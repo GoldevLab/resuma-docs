@@ -11,8 +11,6 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"include_bytes!"</code> "."
             </p>
 
-            {crate::site::demos::flow_pwa()}
-
             <h2>"PWA (on by default)"</h2>
             <p>
                 <code>"FlowApp::into_router"</code> " enables PWA from page title/description and precaches static routes. "
@@ -73,6 +71,10 @@ pub fn page(_req: FlowRequest) -> View {
             <p>
                 "Demonstrates query-driven " <code>"#[load]"</code> " with "
                 <a href="/docs/flow/query_params">"loader_refresh_input"</a> "."
+            </p>
+            <p>
+                "This docs site: "
+                <a href="/manifest.webmanifest" target="_blank">"/manifest.webmanifest"</a>
             </p>
         </>
     }

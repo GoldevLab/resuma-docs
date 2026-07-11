@@ -19,11 +19,6 @@ pub const ENTRIES: &[DocEntry] = &[
         keywords: "install cli scaffold tutorial template production",
     },
     DocEntry {
-        title: "Upgrading to 1.0",
-        href: "/docs/migration_1_0",
-        keywords: "migration upgrade semver 0.4 breaking changes safeAction",
-    },
-    DocEntry {
         title: "Benchmark",
         href: "/docs/benchmark",
         keywords: "bundle size gzip loader core qwik leptos next react",

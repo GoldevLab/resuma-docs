@@ -1,13 +1,13 @@
 use crate::site::code_block;
 use resuma::prelude::*;
 
-pub fn page(_req: FlowRequest) -> View {
+pub fn page(req: FlowRequest) -> View {
     view! {
         <>
             <h1>"PRG pattern"</h1>
             <p class="lead">"Post/Redirect/Get — avoid duplicate form submissions after " <code>"#[submit]"</code>"."</p>
 
-            {crate::site::demos::cookbook_prg()}
+            {crate::site::demos::cookbook_prg(&req)}
 
             <h2>"Why"</h2>
             <p>"After a successful POST, redirect to a GET URL so refresh does not re-submit the form."</p>
@@ -18,6 +18,9 @@ async fn create_item(form: ItemForm, _req: &FlowRequest) -> Result<Redirect, Sub
     db::insert(&form).await.map_err(|_| SubmitError::new("Failed"))?;
     Ok(redirect("/items"))
 }
+
+// Flash message on the target page (query param `flash=…`):
+Ok(redirect_with_flash("/items", "Item created"))
 
 // Or any serializable struct with a `redirect` field:
 #[data]
@@ -37,9 +40,15 @@ async fn create_alt(form: ItemForm, _req: &FlowRequest) -> Result<CreateResult, 
 
             <h2>"Flash messages"</h2>
             <p>
-                "Redirect with a query flag — see "
-                <a href="/docs/flow/query_params">"Query params"</a> " — e.g. "
-                <code>"redirect(\"/items?created=1\")"</code> "."
+                "Use "
+                <code>"redirect_with_flash(path, message)"</code>
+                " — the target page reads it with "
+                <code>"flash_message(&req)"</code>
+                ". See also "
+                <a href="/docs/flow/query_params">"Query params"</a>
+                " for manual flags like "
+                <code>"?created=1"</code>
+                "."
             </p>
         </>
     }

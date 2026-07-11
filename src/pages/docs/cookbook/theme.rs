@@ -48,12 +48,13 @@ fn ThemedButton() -> View {
             <p><a href="/docs/flow/pwa">"PWA & static files"</a>"."</p>
 
             <h2>"Toggle mode"</h2>
+            <p>"Use " <code>"&lt;Show when={dark}&gt;"</code> " with two " <code>"theme_css_vars"</code> " panels — try the live demo above."</p>
             {code_block(r#"let dark = signal(true);
 
 view! {
-    <button onClick={dark.update(|d| *d = !*d)}>
-        "Toggle theme"
-    </button>
+    <Show when={dark} fallback={light_panel}>
+        <div class="app" style={theme_css_vars(&dark_theme)}>...</div>
+    </Show>
 }"#)}
         </>
     }

@@ -21,7 +21,21 @@ async fn docs_index(_req: &FlowRequest) -> DocsData {
 }"#)}
 
             <h2>"How it works"</h2>
-            <p>"The cache string is applied as a Cache-Control response header on the page response when the loader completes. Use short max-age for frequently changing data, longer for static-ish content."</p>
+            <p>
+                "When a page calls a cached loader, Resuma merges its "
+                <code>"cache"</code>
+                " hint into the HTML response "
+                <code>"Cache-Control"</code>
+                " header. Use short "
+                <code>"max-age"</code>
+                " for frequently changing data, longer for static-ish content."
+            </p>
+            <p>
+                <strong>"Interactive apps"</strong>
+                " (forms, CSRF cookie) override public caching to "
+                <code>"private, no-store"</code>
+                " on the HTML response — see the live demo above. The loader attribute still documents intent and applies on routes without session cookies."
+            </p>
 
             <h2>"Private caching"</h2>
             {code_block(r#"#[load(cache = "private, max-age=300")]
