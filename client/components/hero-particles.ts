@@ -14,9 +14,9 @@ import { WebGLRenderer } from 'three';
 import { bootClientComponent, prefersReducedMotion, type ClientCleanup } from '../resuma-client';
 
 const COUNT = 3200;
-const PURPLE = new Color('#712cf9');
-const BLUE = new Color('#0550ae');
-const SOFT = new Color('#e9d5ff');
+const PEARL = new Color('#f8fafc');
+const SILVER = new Color('#cbd5e1');
+const SOFT = new Color('#e2e8f0');
 
 function initHeroParticles(root: HTMLElement): ClientCleanup | void {
   if (prefersReducedMotion()) return;
@@ -37,9 +37,9 @@ function initHeroParticles(root: HTMLElement): ClientCleanup | void {
     positions[i3 + 2] = (Math.random() - 0.5) * 6;
 
     const mix = Math.random();
-    const c = PURPLE.clone()
-      .lerp(BLUE, mix * 0.85)
-      .lerp(SOFT, Math.random() * 0.25);
+    const c = PEARL.clone()
+      .lerp(SILVER, mix * 0.65)
+      .lerp(SOFT, Math.random() * 0.35);
     colors[i3] = c.r;
     colors[i3 + 1] = c.g;
     colors[i3 + 2] = c.b;
@@ -57,7 +57,7 @@ function initHeroParticles(root: HTMLElement): ClientCleanup | void {
     size: 0.045,
     vertexColors: true,
     transparent: true,
-    opacity: 0.72,
+    opacity: 0.45,
     blending: AdditiveBlending,
     depthWrite: false,
     sizeAttenuation: true,

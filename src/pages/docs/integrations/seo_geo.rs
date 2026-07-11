@@ -9,7 +9,7 @@ pub fn page(_req: FlowRequest) -> View {
             {crate::site::demos::integrations_generic("SEO & GEO", "resuma add seo")}
 
             <h2>"SeoKit"</h2>
-            <pre style="background:#0b1020;padding:1rem;border-radius:8px;font-size:.85rem">{r#"use resuma::prelude::*;
+            <pre class="code">{r#"use resuma::prelude::*;
 
 let kit = SeoKit::new("My App", "https://example.com")
     .with_locale("es_VE")

@@ -68,7 +68,16 @@ pub fn exec_showcase_demo() -> View {
                                 return;
                             }
                             const prev = slot.querySelector("[data-r-flow-execution]");
-                            if (prev) prev.dispatchEvent(new Event("resuma:disconnect"));
+                            if (window.__resumaCoreReady) await window.__resumaCoreReady;
+                            let flow;
+                            try {
+                                flow = await import("/_resuma/flow.js");
+                            } catch (e) {
+                                errEl.textContent = "Could not load Flow widgets: " + String(e);
+                                errEl.hidden = false;
+                                return;
+                            }
+                            if (prev) flow.disconnectFlowWidgets(prev);
                             slot.innerHTML = "";
                             const panel = document.createElement("div");
                             panel.className = "r-flow-exec";
@@ -94,14 +103,7 @@ pub fn exec_showcase_demo() -> View {
                                 "</div></div></aside>";
                             slot.appendChild(panel);
                             slot.hidden = false;
-                            if (window.__resumaCoreReady) await window.__resumaCoreReady;
-                            try {
-                                const flow = await import("/_resuma/flow.js");
-                                flow.initFlowWidgets(slot, { flush: false });
-                            } catch (e) {
-                                errEl.textContent = "Could not load Flow widgets: " + String(e);
-                                errEl.hidden = false;
-                            }
+                            flow.initFlowWidgets(slot, { flush: false });
                         })}
                     >
                         "Run worker"
