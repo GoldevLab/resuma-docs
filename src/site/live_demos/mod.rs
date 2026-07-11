@@ -5,7 +5,7 @@ mod widgets;
 use crate::site::demo_actions::{DocsCachedData, DocsSearchData};
 use crate::site::demo_actions::use_docs_delayed_load;
 use crate::site::demo_shell::{live_demo, live_info};
-use crate::site::exec_demo::exec_showcase_demo;
+use crate::site::exec_demo::{exec_flow_ui_demo, exec_showcase_demo, exec_workers_demo};
 use crate::site::server_demo::server_function_demo;
 use resuma::prelude::*;
 use widgets::*;
@@ -17,7 +17,7 @@ pub fn exec_overview() -> View {
 }
 
 pub fn exec_workers() -> View {
-    live_demo("#[worker] + execution graph", exec_showcase_demo())
+    live_demo("#[worker] + execution graph", exec_workers_demo())
 }
 
 pub fn exec_queue() -> View {
@@ -66,7 +66,7 @@ pub fn exec_tools() -> View {
 }
 
 pub fn exec_flow_ui() -> View {
-    live_demo("Flow execution UI", exec_showcase_demo())
+    live_demo("flow_execution_auth", exec_flow_ui_demo())
 }
 
 pub fn exec_ops() -> View {

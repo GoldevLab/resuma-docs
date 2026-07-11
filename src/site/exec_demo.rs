@@ -1,8 +1,19 @@
-//! Live Resuma OS worker demo on the docs homepage.
+//! Live Resuma OS worker demo — variants per docs page.
 
 use resuma::prelude::*;
-use resuma_flow::{flow_dashboard_poll, flow_styles};
+use resuma::ssr::render_view;
+use resuma_flow::{flow_dashboard_poll, flow_execution_auth, flow_styles};
 use serde_json::{json, Value};
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum ExecDemoMode {
+    /// `/docs/exec` — worker + ops dashboard.
+    Overview,
+    /// `/docs/exec/workers` — focus on `#[worker]` lifecycle (no ops dashboard).
+    Workers,
+    /// `/docs/exec/flow_ui` — server-rendered `flow_execution_auth` panel.
+    FlowUi,
+}
 
 #[server]
 async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> {
@@ -15,24 +26,67 @@ async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> {
     }))
 }
 
-/// Interactive worker + live execution graph (Resuma OS).
-#[component]
-fn ExecShowcaseDemo() -> View {
-    let status = resuma::exec::exec_status();
+#[server]
+async fn flow_execution_panel_html(graph_id: String, access_token: String) -> Result<String> {
+    let token = if access_token.is_empty() {
+        None
+    } else {
+        Some(access_token)
+    };
+    Ok(render_view(&flow_execution_auth(graph_id, true, token)))
+}
 
-    view! {
-        <section class="exec-demo" aria-labelledby="exec-demo-title">
-            {flow_styles()}
-            <div class="exec-demo-intro">
-                <h3 id="exec-demo-title">"Resuma OS — live worker"</h3>
+/// Interactive worker + live execution graph (Resuma OS).
+fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
+    let status = resuma::exec::exec_status();
+    let show_dashboard = mode == ExecDemoMode::Overview;
+    let grid_class = if show_dashboard {
+        "exec-demo-grid"
+    } else {
+        "exec-demo-grid exec-demo-grid--single"
+    };
+    let (title, lead) = match mode {
+        ExecDemoMode::Overview => (
+            "Resuma OS — live worker",
+            view! {
                 <p class="exec-demo-lead">
                     "A real "
                     <code>"#[worker]"</code>
                     " runs on this server: durable graph, SSE event stream, pause/resume/cancel. "
                     "No Redis — self-hosted execution in the same binary as your app."
                 </p>
+            },
+        ),
+        ExecDemoMode::Workers => (
+            "Run docs_showcase worker",
+            view! {
+                <p class="exec-demo-lead">
+                    "Starts a real "
+                    <code>"#[worker]"</code>
+                    " graph on this server — watch logs, progress, pause/resume/cancel, and the final result payload."
+                </p>
+            },
+        ),
+        ExecDemoMode::FlowUi => (
+            "flow_execution_auth panel",
+            view! {
+                <p class="exec-demo-lead">
+                    "After Run worker, the panel below is SSR HTML from "
+                    <code>"resuma_flow::flow_execution_auth"</code>
+                    " (graph, controls, event stream) — same widgets documented on this page."
+                </p>
+            },
+        ),
+    };
+
+    view! {
+        <section class="exec-demo" aria-labelledby="exec-demo-title">
+            {flow_styles()}
+            <div class="exec-demo-intro">
+                <h3 id="exec-demo-title">{title.to_string()}</h3>
+                {lead}
             </div>
-            <div class="exec-demo-grid">
+            <div class={grid_class.to_string()}>
                 <div class="exec-demo-controls">
                     <label class="exec-demo-label" for="exec-topic">
                         "Topic"
@@ -80,33 +134,13 @@ fn ExecShowcaseDemo() -> View {
                             }
                             if (prev) flow.disconnectFlowWidgets(prev);
                             slot.innerHTML = "";
-                            const panel = document.createElement("div");
-                            panel.className = "r-flow-exec";
-                            panel.setAttribute("data-r-flow-execution", graphId);
-                            panel.innerHTML =
-                                "<div class=\"r-flow-exec__panel\">" +
-                                "<h3>Execution graph</h3>" +
-                                "<div class=\"r-flow-graph\" data-r-flow-graph=\"" + graphId + "\" data-r-flow-graph-live=\"true\" data-r-graph-token=\"" + token + "\">" +
-                                "<div class=\"r-flow-graph__track\" data-r-flow-graph-track=\"true\">...</div>" +
-                                "<p class=\"r-flow-graph__status\" data-r-flow-graph-status=\"true\">Loading graph...</p>" +
-                                "</div></div>" +
-                                "<aside class=\"r-flow-exec__side\">" +
-                                "<div class=\"r-flow-exec__panel\"><h3>Controls</h3>" +
-                                "<div class=\"r-worker-panel\" data-r-worker-panel=\"" + graphId + "\" data-r-graph-token=\"" + token + "\">" +
-                                "<div class=\"r-worker-panel__actions\">" +
-                                "<button type=\"button\" class=\"btn btn-ghost btn-sm\" data-r-worker-pause=\"true\">Pause</button>" +
-                                "<button type=\"button\" class=\"btn btn-ghost btn-sm\" data-r-worker-resume=\"true\">Resume</button>" +
-                                "<button type=\"button\" class=\"btn btn-ghost btn-sm r-worker-cancel\" data-r-worker-cancel=\"true\">Cancel</button>" +
-                                "<button type=\"button\" class=\"btn btn-ghost btn-sm\" data-r-worker-replay=\"true\">Replay</button>" +
-                                "</div>" +
-                                "<p class=\"r-worker-panel__status\" data-r-worker-status aria-live=\"polite\"></p>" +
-                                "</div></div>" +
-                                "<div class=\"r-flow-exec__panel\"><h3>Event stream</h3>" +
-                                "<div class=\"r-event-stream\" data-r-event-stream=\"" + graphId + "\" data-r-graph-token=\"" + token + "\">" +
-                                "<div class=\"r-event-stream__viewport\" data-r-event-stream-viewport=\"true\">" +
-                                "<ul class=\"r-event-stream-list\"></ul>" +
-                                "</div></div></div></aside>";
-                            slot.appendChild(panel);
+                            const panelRes = await __resuma.safeAction("flow_execution_panel_html", [graphId, token]);
+                            if (!panelRes.ok) {
+                                errEl.textContent = panelRes.error;
+                                errEl.hidden = false;
+                                return;
+                            }
+                            slot.innerHTML = panelRes.value;
                             slot.hidden = false;
                             flow.initFlowWidgets(slot, { flush: false });
                         })}
@@ -118,17 +152,36 @@ fn ExecShowcaseDemo() -> View {
                         <a href="/docs/exec">"Resuma OS docs →"</a>
                     </p>
                 </div>
-                <div class="exec-demo-dash">
-                    {flow_dashboard_poll(4000, Some(status))}
-                </div>
+                {if show_dashboard {
+                    view! {
+                        <div class="exec-demo-dash">
+                            {flow_dashboard_poll(4000, Some(status))}
+                        </div>
+                    }
+                } else {
+                    view! { <span hidden aria-hidden="true"></span> }
+                }}
             </div>
             <div id="exec-flow-slot" class="exec-flow-slot" hidden></div>
         </section>
     }
 }
 
-/// Public entry — resumable boundary so the large Run-worker handler loads from
-/// `/_resuma/handler/ExecShowcaseDemo.js` instead of the shared `__page__` chunk.
+fn exec_showcase_demo_mode(mode: ExecDemoMode) -> View {
+    exec_showcase_demo_view(mode)
+}
+
+/// Overview — worker + ops dashboard.
 pub fn exec_showcase_demo() -> View {
-    view! { <ExecShowcaseDemo /> }
+    exec_showcase_demo_mode(ExecDemoMode::Overview)
+}
+
+/// Workers page — worker lifecycle without ops dashboard.
+pub fn exec_workers_demo() -> View {
+    exec_showcase_demo_mode(ExecDemoMode::Workers)
+}
+
+/// Flow UI page — highlights server-rendered resuma-flow widgets.
+pub fn exec_flow_ui_demo() -> View {
+    exec_showcase_demo_mode(ExecDemoMode::FlowUi)
 }

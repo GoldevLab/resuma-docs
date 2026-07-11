@@ -1532,6 +1532,7 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
 .exec-demo-intro h3 { margin: 0 0 0.35rem; font-size: 1.15rem; color: var(--text); }
 .exec-demo-lead { margin: 0 0 1rem; color: var(--muted); font-size: 0.95rem; max-width: 52rem; }
 .exec-demo-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+.exec-demo-grid--single { max-width: 28rem; }
 @media (min-width: 960px) {
   .exec-demo-grid { grid-template-columns: minmax(16rem, 22rem) 1fr; align-items: start; }
 }
