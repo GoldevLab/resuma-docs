@@ -1580,6 +1580,89 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
 }
 .exec-demo-err:not([hidden]) { display: block; }
 .exec-demo-hint { margin: 0; font-size: 0.88rem; color: var(--muted); }
+.exec-demo-guide {
+  margin: 0.25rem 0 0;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.22);
+}
+.exec-demo-guide__title {
+  margin: 0 0 0.65rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.exec-demo-guide__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.exec-demo-guide__steps li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.exec-demo-guide__num {
+  flex: 0 0 1.35rem;
+  height: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(148, 163, 184, 0.25);
+  color: var(--muted);
+}
+.exec-demo-guide__steps li.is-active {
+  color: var(--text);
+}
+.exec-demo-guide__steps li.is-active .exec-demo-guide__num {
+  background: var(--accent);
+  color: #fff;
+}
+.exec-demo-guide__steps li.is-done {
+  opacity: 0.72;
+}
+.exec-demo-guide__steps li.is-done .exec-demo-guide__num {
+  background: rgba(34, 197, 94, 0.2);
+  color: #15803d;
+}
+.exec-demo-guide__status {
+  margin: 0.75rem 0 0;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(99, 102, 241, 0.15);
+  font-size: 0.84rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+.exec-flow-placeholder {
+  margin-top: 1.25rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: var(--radius-lg);
+  border: 2px dashed rgba(148, 163, 184, 0.45);
+  background: rgba(248, 250, 252, 0.55);
+  text-align: center;
+}
+.exec-flow-placeholder__title {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.exec-flow-placeholder__text {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.exec-flow-placeholder[hidden] { display: none; }
 .exec-demo-dash .r-flow-dash { margin: 0; }
 .exec-flow-slot { margin-top: 1.5rem; }
 .exec-flow-slot:not([hidden]) { display: block; }

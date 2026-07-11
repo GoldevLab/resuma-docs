@@ -58,14 +58,9 @@ pub fn flow_ui_demo() -> View {
                         "Run worker"
                     </button>
                     <p id="flow-ui-err" class="exec-demo-err" role="alert" hidden></p>
-                    <p class="demo-muted exec-demo-hint">
-                        "Click "
-                        <strong>"Pause"</strong>
-                        " or "
-                        <strong>"Cancel"</strong>
-                        " while Running (~25s). Buttons disable when the graph finishes."
-                    </p>
+                    {crate::site::exec_guide::worker_try_it_guide("flow-ui")}
                 </div>
+                {crate::site::exec_guide::worker_panel_placeholder("flow-ui-flow-placeholder")}
                 <div id="flow-ui-slot" class="exec-flow-slot" hidden></div>
             </div>
         </div>

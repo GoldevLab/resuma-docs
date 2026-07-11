@@ -8,6 +8,8 @@ type DemoIds = {
   err: string;
   slot: string;
   btn: string;
+  guide: string;
+  placeholder: string;
 };
 
 const DEMOS: Record<DemoKey, DemoIds> = {
@@ -17,6 +19,8 @@ const DEMOS: Record<DemoKey, DemoIds> = {
     err: "flow-ui-err",
     slot: "flow-ui-slot",
     btn: "flow-ui-start-btn",
+    guide: "flow-ui",
+    placeholder: "flow-ui-flow-placeholder",
   },
   exec: {
     topic: "exec-topic",
@@ -24,6 +28,8 @@ const DEMOS: Record<DemoKey, DemoIds> = {
     err: "exec-err",
     slot: "exec-flow-slot",
     btn: "exec-start-btn",
+    guide: "exec",
+    placeholder: "exec-flow-placeholder",
   },
 };
 
@@ -40,6 +46,24 @@ declare global {
     __resuma?: ResumaGlobal;
     __resumaCoreReady?: Promise<void>;
   }
+}
+
+function setGuideStep(guideId: string, step: number, status?: string) {
+  const root = document.querySelector<HTMLElement>(`[data-guide="${guideId}"]`);
+  if (!root) return;
+  root.querySelectorAll<HTMLElement>("[data-step]").forEach((el) => {
+    const n = Number(el.dataset.step);
+    el.classList.toggle("is-active", n === step);
+    el.classList.toggle("is-done", n < step);
+  });
+  const statusEl = root.querySelector<HTMLElement>("[data-guide-status]");
+  if (statusEl && status) statusEl.textContent = status;
+}
+
+function showPlaceholder(id: string, visible: boolean) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.hidden = !visible;
 }
 
 export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
@@ -62,11 +86,15 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
 
   errEl.hidden = true;
   btn.disabled = true;
+  setGuideStep(ids.guide, 2, "Starting worker — panel loading…");
+  showPlaceholder(ids.placeholder, false);
   try {
     const res = await __resuma.safeAction("run_docs_flow_worker", [topic, blurb]);
     if (!res.ok) {
       errEl.textContent = res.error;
       errEl.hidden = false;
+      setGuideStep(ids.guide, 1, "Ready — start with step 1.");
+      showPlaceholder(ids.placeholder, true);
       return;
     }
 
@@ -74,10 +102,11 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
     if (!panelHtml) {
       errEl.textContent = "Worker started but no panel HTML was returned.";
       errEl.hidden = false;
+      setGuideStep(ids.guide, 1, "Ready — start with step 1.");
+      showPlaceholder(ids.placeholder, true);
       return;
     }
 
-    const prev = slot.querySelector("[data-r-flow-execution]");
     if (window.__resumaCoreReady) await window.__resumaCoreReady;
 
     let flow: {
@@ -89,16 +118,22 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
     } catch (e) {
       errEl.textContent = "Could not load Flow widgets: " + String(e);
       errEl.hidden = false;
+      setGuideStep(ids.guide, 1, "Ready — start with step 1.");
+      showPlaceholder(ids.placeholder, true);
       return;
     }
 
-    if (prev) flow.disconnectFlowWidgets(slot);
+    flow.disconnectFlowWidgets(slot);
     slot.innerHTML = "";
-    slot.hidden = true;
     slot.innerHTML = panelHtml;
     slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
     slot.hidden = false;
     flow.initFlowWidgets(slot, { flush: false });
+    setGuideStep(
+      ids.guide,
+      3,
+      "Panel live — under Controls, click Pause or Cancel while status is Running.",
+    );
   } finally {
     btn.disabled = false;
   }
