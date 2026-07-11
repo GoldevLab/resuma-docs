@@ -6,7 +6,7 @@ use serde_json::json;
 
 #[server]
 async fn docs_scheduler_list() -> Result<ScheduleListResponse> {
-    Ok(scheduler::list_response()?)
+    scheduler::list_response()
 }
 
 #[server]
