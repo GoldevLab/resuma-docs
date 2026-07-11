@@ -55,7 +55,7 @@ pub async fn docs_showcase(
         ctx.check_cancelled()?;
         run_cancellable(&ctx.cancel_token(), async {
             // Long enough for Pause / Cancel in the live demo UI.
-            tokio::time::sleep(Duration::from_millis(2_000)).await;
+            tokio::time::sleep(Duration::from_millis(3_000)).await;
             Ok::<(), ResumaError>(())
         })
         .await?;

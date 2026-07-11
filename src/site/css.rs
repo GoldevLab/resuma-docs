@@ -1784,4 +1784,12 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   border-color: rgba(255, 255, 255, 0.4);
 }
 #modals { position: relative; z-index: 999; }
+.r-visible-task-marker {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
 </style>"#;
