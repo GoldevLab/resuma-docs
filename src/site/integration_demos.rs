@@ -93,7 +93,9 @@ async fn docs_scaffold_preview(name: String) -> Result<Vec<String>> {
             "assets/input.css".into(),
             "build.rs — tailwind compile hook".into(),
         ],
-        _ => vec![format!("resuma add {name} — scaffolds integration boilerplate")],
+        _ => vec![format!(
+            "resuma add {name} — scaffolds integration boilerplate"
+        )],
     };
     Ok(files)
 }
@@ -136,8 +138,14 @@ async fn docs_ai_prompt(prompt: String) -> Result<String> {
 #[server]
 async fn docs_i18n_translate(lang: String) -> Result<serde_json::Value> {
     let (title, lead) = match lang.as_str() {
-        "es" => ("Documentación de Resuma", "Framework SSR en Rust — sin hidratación"),
-        "fr" => ("Documentation Resuma", "Framework SSR Rust — sans hydratation"),
+        "es" => (
+            "Documentación de Resuma",
+            "Framework SSR en Rust — sin hidratación",
+        ),
+        "fr" => (
+            "Documentation Resuma",
+            "Framework SSR Rust — sans hydratation",
+        ),
         _ => ("Resuma Documentation", "Rust SSR framework — no hydration"),
     };
     Ok(serde_json::json!({ "lang": lang, "title": title, "lead": lead }))
