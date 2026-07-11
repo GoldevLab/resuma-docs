@@ -3,6 +3,7 @@
 mod pages;
 mod site;
 
+use axum::routing::post;
 use pages::PagesRegistry;
 use resuma::current_request;
 use resuma::prelude::*;
@@ -86,6 +87,10 @@ async fn main() -> std::io::Result<()> {
         .client_asset(
             "hero-particles",
             include_bytes!("../static/client/hero-particles.js"),
+        )
+        .route(
+            "/_resuma/demo/webhook-inbox",
+            post(site::inbox_handler),
         )
         .streaming(false)
         .not_found(not_found_page)

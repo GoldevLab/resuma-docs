@@ -11,7 +11,10 @@ mod pwa;
 mod seo;
 mod server_demo;
 mod sidebar;
+mod webhook_demo;
 mod workers;
+
+pub use webhook_demo::inbox_handler;
 
 pub use css::SITE_CSS;
 pub use demo_shell::live_info;

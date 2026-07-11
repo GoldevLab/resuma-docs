@@ -1785,6 +1785,20 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   border-color: rgba(255, 255, 255, 0.4);
 }
 #modals { position: relative; z-index: 999; }
+.webhook-demo-output {
+  margin-top: 0.75rem;
+  max-height: 14rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+.webhook-demo-status {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
 .r-visible-task-marker {
   position: absolute;
   width: 1px;

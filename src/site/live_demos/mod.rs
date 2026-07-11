@@ -45,10 +45,19 @@ pub fn exec_scheduler() -> View {
 }
 
 pub fn exec_webhooks() -> View {
-    live_info(
+    live_demo(
         "Webhooks",
         view! {
-            <p>"Configure outbound hooks at " <code>"GET|POST /_resuma/webhooks"</code> " — fires on graph lifecycle events."</p>
+            <>
+                <p>
+                    "Configure outbound hooks at "
+                    <code>"GET|POST /_resuma/webhooks"</code>
+                    " — fires on graph lifecycle events."
+                </p>
+                {crate::site::webhook_demo::WebhookDemoWidget::render(
+                    crate::site::webhook_demo::WebhookDemoWidgetProps::default(),
+                )}
+            </>
         },
     )
 }
