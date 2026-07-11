@@ -20,11 +20,20 @@ use_task(move || {
 });"#)}
 
             <h2>"use_visible_task"</h2>
-            <p>"Registers a client-only task in the resumability payload. The runtime executes the JS body after the component becomes visible."</p>
-            {code_block(r##"use_visible_task(r#"
-    const el = document.querySelector('[data-chart]');
-    if (el) initChart(el);
-"#);"##)}
+            <p>
+                "Registers a client-only task in the resumability payload. The runtime executes the JS body after the component becomes visible. "
+                "When the body uses " <code>"state.my_signal"</code> ", pass each signal to " <code>"visible_task!"</code> " so the client wires captures."
+            </p>
+            {code_block(r##"let armed = signal(false);
+
+visible_task!(
+    r#"
+    async (state, __resuma) => {
+        state.armed.set(true);
+    }
+"#,
+    armed
+);"##)}
 
             <h2>"use_debounce"</h2>
             <p>"Debounce signal-driven callbacks — see the " <a href="/docs/cookbook/debouncer">"Debouncer cookbook"</a> " for a full search example."</p>

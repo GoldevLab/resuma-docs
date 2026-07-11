@@ -101,18 +101,6 @@ async fn docs_scaffold_preview(name: String) -> Result<Vec<String>> {
 }
 
 #[server]
-async fn docs_seo_snapshot() -> Result<serde_json::Value> {
-    let url = super::seo::site_url();
-    Ok(serde_json::json!({
-        "title": super::seo::site_title(),
-        "description": super::seo::site_description(),
-        "site_url": url,
-        "json_ld_types": ["Organization", "WebSite", "SoftwareApplication"],
-        "json_ld_bytes": super::seo::json_ld(&url).len(),
-    }))
-}
-
-#[server]
 async fn docs_og_preview() -> Result<serde_json::Value> {
     let base = super::seo::site_url().trim_end_matches('/').to_string();
     Ok(serde_json::json!({
@@ -121,18 +109,6 @@ async fn docs_og_preview() -> Result<serde_json::Value> {
         "og:image": format!("{base}/og.svg"),
         "twitter:card": "summary_large_image",
     }))
-}
-
-#[server]
-async fn docs_ai_prompt(prompt: String) -> Result<String> {
-    let prompt = prompt.trim();
-    if prompt.is_empty() {
-        return Err(ResumaError::validation("prompt required"));
-    }
-    tokio::time::sleep(std::time::Duration::from_millis(350)).await;
-    Ok(format!(
-        "Stub assistant reply for “{prompt}” — wire your provider in #[server] (OpenAI, Anthropic, local LLM)."
-    ))
 }
 
 #[server]
@@ -162,7 +138,9 @@ pub fn SqlxDemoWidget() -> View {
             state.output.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
             state.status.set(res.ok ? "ok" : "error");
         }
-    "#
+    "#,
+        output,
+        status
     );
     view! {
         <>
@@ -187,7 +165,8 @@ pub fn TursoDemoWidget() -> View {
             const res = await __resuma.safeAction("docs_mock_turso_list", []);
             state.output.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
         }
-    "#
+    "#,
+        output
     );
     view! {
         <>
@@ -210,7 +189,8 @@ pub fn SupabaseDemoWidget() -> View {
             const res = await __resuma.safeAction("docs_mock_supabase_list", []);
             state.output.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
         }
-    "#
+    "#,
+        output
     );
     view! {
         <>
@@ -220,21 +200,21 @@ pub fn SupabaseDemoWidget() -> View {
                 " cookie, then refresh."
             </p>
             <div class="demo-row todo-demo-user-row">
-                {todo_security::demo_users().iter().map(|&name| {
-                    view! {
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-ghost"
-                            onClick={js!(async () => {
-                                document.cookie = "resuma_demo_user=" + name + "; path=/; SameSite=Lax";
-                                const res = await __resuma.safeAction("docs_mock_supabase_list", []);
-                                state.output.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
-                            })}
-                        >
-                            {name.to_string()}
-                        </button>
-                    }
-                }).collect::<Vec<_>>()}
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=guest; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_mock_supabase_list", []);
+                    state.output.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"guest"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=alice; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_mock_supabase_list", []);
+                    state.output.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"alice"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=bob; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_mock_supabase_list", []);
+                    state.output.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"bob"</button>
                 <button
                     type="button"
                     class="btn btn-sm"
@@ -258,20 +238,22 @@ pub fn ScaffoldDemoWidget() -> View {
         <>
             <p class="demo-muted">"Preview files " <code>"resuma add &lt;integration&gt;"</code> " would scaffold."</p>
             <div class="demo-row">
-                {["sqlx", "turso", "auth", "tailwind"].iter().map(|name| {
-                    view! {
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-ghost"
-                            onClick={js!(async () => {
-                                const res = await __resuma.safeAction("docs_scaffold_preview", [name]);
-                                state.output.set(res.ok ? res.value.join("\n") : res.error);
-                            })}
-                        >
-                            {name.to_string()}
-                        </button>
-                    }
-                }).collect::<Vec<_>>()}
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_scaffold_preview", ["sqlx"]);
+                    state.output.set(res.ok ? res.value.join("\n") : res.error);
+                })}>"sqlx"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_scaffold_preview", ["turso"]);
+                    state.output.set(res.ok ? res.value.join("\n") : res.error);
+                })}>"turso"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_scaffold_preview", ["auth"]);
+                    state.output.set(res.ok ? res.value.join("\n") : res.error);
+                })}>"auth"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_scaffold_preview", ["tailwind"]);
+                    state.output.set(res.ok ? res.value.join("\n") : res.error);
+                })}>"tailwind"</button>
             </div>
             <pre class="code demo-output">{output}</pre>
         </>
@@ -285,20 +267,18 @@ pub fn I18nDemoWidget() -> View {
         <>
             <p class="demo-muted">"Server-side locale strings via " <code>"#[server]"</code> " — swap lang, refresh copy."</p>
             <div class="demo-row">
-                {["en", "es", "fr"].iter().map(|lang| {
-                    view! {
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-ghost"
-                            onClick={js!(async () => {
-                                const res = await __resuma.safeAction("docs_i18n_translate", [lang]);
-                                state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
-                            })}
-                        >
-                            {lang.to_string()}
-                        </button>
-                    }
-                }).collect::<Vec<_>>()}
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_i18n_translate", ["en"]);
+                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"en"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_i18n_translate", ["es"]);
+                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"es"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_i18n_translate", ["fr"]);
+                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"fr"</button>
             </div>
             <pre class="code demo-output">{payload}</pre>
         </>
@@ -347,67 +327,14 @@ pub fn OgImageDemoWidget() -> View {
             const res = await __resuma.safeAction("docs_og_preview", []);
             state.meta.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
         }
-    "#
+    "#,
+        meta
     );
     view! {
         <>
             <p class="demo-muted">"Live OG tags this site emits — image at " <code>"/og.svg"</code>"."</p>
             <a href="/og.svg" target="_blank" class="btn btn-sm btn-ghost">"Open og.svg"</a>
             <pre class="code demo-output">{meta}</pre>
-        </>
-    }
-}
-
-#[component]
-pub fn SeoGeoDemoWidget() -> View {
-    let meta = signal(String::new());
-    visible_task!(
-        r#"
-        async (state, __resuma) => {
-            const res = await __resuma.safeAction("docs_seo_snapshot", []);
-            state.meta.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
-        }
-    "#
-    );
-    view! {
-        <>
-            <p class="demo-muted">"JSON-LD + meta from " <code>"FlowApp::with_json_ld"</code> " on this docs site."</p>
-            <pre class="code demo-output">{meta}</pre>
-        </>
-    }
-}
-
-#[component]
-pub fn AiAssistantDemoWidget() -> View {
-    let reply = signal(String::new());
-    let status = signal(String::new());
-    view! {
-        <>
-            <p class="demo-muted">"Stub " <code>"#[server]"</code> " completion — replace with your LLM provider."</p>
-            <div class="demo-row">
-                <input id="ai-prompt" type="text" placeholder="Ask about Resuma…" />
-                <button
-                    type="button"
-                    class="btn btn-sm btn-primary"
-                    onClick={js!(async () => {
-                        const input = document.getElementById("ai-prompt");
-                        const q = input?.value ?? "";
-                        state.status.set("Thinking…");
-                        const res = await __resuma.safeAction("docs_ai_prompt", [q]);
-                        if (!res.ok) {
-                            state.status.set(res.error);
-                            state.reply.set("");
-                            return;
-                        }
-                        state.status.set("");
-                        state.reply.set(res.value);
-                    })}
-                >
-                    "Send"
-                </button>
-            </div>
-            <p class="demo-muted">{status}</p>
-            <p class="demo-output">{reply}</p>
         </>
     }
 }

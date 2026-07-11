@@ -6,8 +6,6 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"SEO, GEO & Analytics"</h1>
             <p class="lead">"Production-grade metadata inspired by real apps (ACUPATAS): Open Graph, JSON-LD, Meta Pixel, and AI crawler policies."</p>
 
-            {crate::site::demos::integrations_seo_geo()}
-
             <h2>"SeoKit"</h2>
             <pre class="code">{r#"use resuma::prelude::*;
 
@@ -32,9 +30,14 @@ FlowApp::new()
 
             <h2>"Serve robots.txt & llms.txt"</h2>
             <p>"With " <code>".with_seo_kit(kit)"</code> ", Resuma serves " <code>"/robots.txt"</code> " and " <code>"/llms.txt"</code> " automatically (GPTBot rules, sitemap hint, LLM summary). Override by registering your own page at those paths."</p>
-
-            <h2>"Reactive Show"</h2>
-            <p>"Use " <code>"<Show when={logged_in.get()}>"</code> " or " <code>"when={logged_in}"</code> " — both branches stay in the DOM and toggle on the client."</p>
+            <p>
+                "On this docs site: "
+                <a href="/robots.txt" target="_blank">"/robots.txt"</a>
+                " · "
+                <a href="/llms.txt" target="_blank">"/llms.txt"</a>
+                " · "
+                <a href="/docs/integrations/og_image">"OG Image"</a>
+            </p>
         </>
     }
 }

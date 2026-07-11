@@ -558,24 +558,6 @@ pub fn integrations_og_image() -> View {
     )
 }
 
-pub fn integrations_seo_geo() -> View {
-    live_demo(
-        "SEO / JSON-LD",
-        crate::site::integration_demos::SeoGeoDemoWidget::render(
-            crate::site::integration_demos::SeoGeoDemoWidgetProps::default(),
-        ),
-    )
-}
-
-pub fn integrations_ai() -> View {
-    live_demo(
-        "AI stub completion",
-        crate::site::integration_demos::AiAssistantDemoWidget::render(
-            crate::site::integration_demos::AiAssistantDemoWidgetProps::default(),
-        ),
-    )
-}
-
 pub fn integrations_e2e() -> View {
     live_demo(
         "E2E ping",

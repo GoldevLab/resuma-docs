@@ -131,7 +131,8 @@ pub fn WhoAmIWidget() -> View {
             const res = await __resuma.safeAction("docs_whoami", []);
             state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
         }
-    "#
+    "#,
+        payload
     );
     view! {
         <>
@@ -143,21 +144,21 @@ pub fn WhoAmIWidget() -> View {
                 " — switch user cookie and refresh."
             </p>
             <div class="demo-row todo-demo-user-row">
-                {crate::site::todo_security::demo_users().iter().map(|&name| {
-                    view! {
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-ghost"
-                            onClick={js!(async () => {
-                                document.cookie = "resuma_demo_user=" + name + "; path=/; SameSite=Lax";
-                                const res = await __resuma.safeAction("docs_whoami", []);
-                                state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
-                            })}
-                        >
-                            {name.to_string()}
-                        </button>
-                    }
-                }).collect::<Vec<_>>()}
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=guest; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_whoami", []);
+                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"guest"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=alice; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_whoami", []);
+                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"alice"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=bob; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_whoami", []);
+                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}>"bob"</button>
                 <button
                     type="button"
                     class="btn btn-sm"
@@ -183,7 +184,8 @@ pub fn SecurityEnvWidget() -> View {
             const res = await __resuma.safeAction("docs_runtime_security", []);
             state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
         }
-    "#
+    "#,
+        payload
     );
     view! {
         <>
@@ -304,10 +306,11 @@ pub fn VisibleTaskWidget() -> View {
     let armed = signal(false);
     visible_task!(
         r#"
-        async (state) => {
+        async (state, __resuma) => {
             state.armed.set(true);
         }
-    "#
+    "#,
+        armed
     );
     view! {
         <>
@@ -452,7 +455,8 @@ pub fn LoaderInvalidationWidget() -> View {
             const res = await __resuma.safeAction("docs_loader_stamp", []);
             if (res.ok) state.stamp.set(res.value);
         }
-    "#
+    "#,
+        stamp
     );
     view! {
         <>
@@ -493,7 +497,8 @@ pub fn DeployInfoWidget() -> View {
             const res = await __resuma.safeAction("docs_deploy_info", []);
             state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
         }
-    "#
+    "#,
+        payload
     );
     view! {
         <>

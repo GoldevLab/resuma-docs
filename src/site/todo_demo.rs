@@ -148,7 +148,11 @@ pub fn TodoDemoWidget() -> View {
                 state.status.set(res.error);
             }
         }
-    "#
+    "#,
+        items,
+        user,
+        is_admin,
+        status
     );
 
     view! {
@@ -166,28 +170,33 @@ pub fn TodoDemoWidget() -> View {
                 </Show>
             </div>
             <div class="demo-row todo-demo-user-row">
-                {todo_security::demo_users().iter().map(|&name| {
-                    view! {
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-ghost"
-                            onClick={js!(async () => {
-                                document.cookie = "resuma_demo_user=" + name + "; path=/; SameSite=Lax";
-                                const res = await __resuma.safeAction("docs_todo_list", []);
-                                if (!res.ok) {
-                                    state.status.set(res.error);
-                                    return;
-                                }
-                                state.items.set(res.value.items);
-                                state.user.set(res.value.user);
-                                state.is_admin.set(res.value.is_admin);
-                                state.status.set("Switched to " + res.value.user);
-                            })}
-                        >
-                            {name.to_string()}
-                        </button>
-                    }
-                }).collect::<Vec<_>>()}
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=guest; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_todo_list", []);
+                    if (!res.ok) { state.status.set(res.error); return; }
+                    state.items.set(res.value.items);
+                    state.user.set(res.value.user);
+                    state.is_admin.set(res.value.is_admin);
+                    state.status.set("Switched to " + res.value.user);
+                })}>"guest"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=alice; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_todo_list", []);
+                    if (!res.ok) { state.status.set(res.error); return; }
+                    state.items.set(res.value.items);
+                    state.user.set(res.value.user);
+                    state.is_admin.set(res.value.is_admin);
+                    state.status.set("Switched to " + res.value.user);
+                })}>"alice"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    document.cookie = "resuma_demo_user=bob; path=/; SameSite=Lax";
+                    const res = await __resuma.safeAction("docs_todo_list", []);
+                    if (!res.ok) { state.status.set(res.error); return; }
+                    state.items.set(res.value.items);
+                    state.user.set(res.value.user);
+                    state.is_admin.set(res.value.is_admin);
+                    state.status.set("Switched to " + res.value.user);
+                })}>"bob"</button>
             </div>
             <div class="demo-row">
                 <input id="todo-title" type="text" placeholder="New task" />
