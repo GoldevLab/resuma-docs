@@ -1312,9 +1312,68 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   text-decoration: none;
 }
 
-.docs-main { min-width: 0; max-width: 48rem; }
+.docs-main { min-width: 0; max-width: 48rem; position: relative; }
+.docs-copy-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1rem;
+  position: sticky;
+  top: 0.75rem;
+  z-index: 5;
+}
+.docs-copy-toolbar .btn {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--glass-shadow);
+}
+.docs-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 2rem 0 0.65rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.65);
+}
+.docs-section-head:first-of-type {
+  border-top: 0;
+  margin-top: 1.25rem;
+}
+.docs-section-head h2 {
+  margin: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+  flex: 1;
+  min-width: 0;
+}
+.docs-copy-section {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  font-size: 0.78rem !important;
+  padding: 0.28rem 0.55rem !important;
+  opacity: 0.85;
+}
+.docs-copy-section:hover { opacity: 1; }
+.live-demo-header .docs-copy-live {
+  margin-left: auto;
+  flex-shrink: 0;
+}
 .docs-main:has(.docs-hub) { max-width: 52rem; }
 .docs-main h1 { font-size: 2rem; margin: 0 0 0.5rem; letter-spacing: -0.03em; color: var(--text); }
+.stream-skeleton {
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px dashed var(--border-glass);
+  color: var(--text-muted);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.todo-demo-list { list-style: none; padding: 0; margin: 0.75rem 0 0; }
+.todo-demo-item { display: flex; align-items: center; gap: 0.5rem; margin: 0.35rem 0; }
+.todo-demo-done span { text-decoration: line-through; opacity: 0.7; }
+.scheduler-demo-out, .queue-demo-out { white-space: pre-wrap; min-height: 2.5rem; }
 .docs-main h2 {
   font-size: 1.25rem;
   margin: 2rem 0 0.65rem;

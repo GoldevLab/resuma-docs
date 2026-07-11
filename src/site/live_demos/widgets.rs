@@ -156,13 +156,71 @@ pub fn nav_link_widget() -> View {
 #[component]
 pub fn GreetFormWidget() -> View {
     let result = signal(String::new());
+    visible_task!(r#"
+        async () => {
+            const form = document.getElementById("docs-greet-form");
+            const out = document.getElementById("docs-greet-out");
+            if (!form || !out) return;
+            const onSubmit = async (ev) => {
+                if (ev.target !== form) return;
+                ev.preventDefault();
+                const fd = new FormData(form);
+                const body = {};
+                fd.forEach((v, k) => { body[k] = String(v); });
+                const params = new URLSearchParams(body);
+                try {
+                    const res = await fetch(form.action, {
+                        method: "POST",
+                        credentials: "same-origin",
+                        headers: {
+                            "content-type": "application/x-www-form-urlencoded",
+                            accept: "application/json",
+                        },
+                        body: params.toString(),
+                    });
+                    const data = await res.json();
+                    if (!res.ok || data.ok === false) {
+                        const fields = data.field_errors ?? {};
+                        out.textContent = Object.values(fields).join(" · ") || data.error || "Submit failed";
+                        return;
+                    }
+                    out.textContent = data.value?.message ?? JSON.stringify(data.value);
+                } catch (e) {
+                    out.textContent = String(e);
+                }
+            };
+            form.addEventListener("submit", onSubmit);
+            return () => form.removeEventListener("submit", onSubmit);
+        }
+    "#);
     view! {
         <>
-            <Form submit={crate::site::demo_actions::docs_greet}>
+            <Form submit={crate::site::demo_actions::docs_greet} id="docs-greet-form">
                 <label>"Name" <input name="name" type="text" required=true /></label>
                 <button type="submit" class="btn btn-sm">"Greet via #[submit]"</button>
             </Form>
-            <p class="demo-output">{result}</p>
+            <p id="docs-greet-out" class="demo-output">{result}</p>
+        </>
+    }
+}
+
+#[component]
+pub fn VisibleTaskWidget() -> View {
+    let armed = signal(false);
+    visible_task!(r#"
+        async (state) => {
+            state.armed.set(true);
+        }
+    "#);
+    view! {
+        <>
+            <p class="demo-muted">"This panel uses " <code>"visible_task!"</code> " — the message below appears when the demo scrolls into view."</p>
+            <Show
+                when={armed.get()}
+                fallback={view! { <p class="demo-output">"Waiting for viewport…"</p> }}
+            >
+                <p class="demo-output">"Visible task ran — deferred client work is active."</p>
+            </Show>
         </>
     }
 }

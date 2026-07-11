@@ -3,6 +3,7 @@
 mod widgets;
 
 use crate::site::demo_actions::{DocsCachedData, DocsSearchData};
+use crate::site::demo_actions::use_docs_delayed_load;
 use crate::site::demo_shell::{live_demo, live_info};
 use crate::site::exec_demo::exec_showcase_demo;
 use crate::site::server_demo::server_function_demo;
@@ -20,27 +21,20 @@ pub fn exec_workers() -> View {
 }
 
 pub fn exec_queue() -> View {
-    live_info(
-        "Queue API",
-        view! {
-            <>
-                {exec_showcase_demo()}
-                <p>"Enqueue durable jobs with " <code>"POST /_resuma/queue/{name}"</code></p>
-                <p class="demo-muted">"The live worker above uses the same disk-backed queue store as production apps."</p>
-            </>
-        },
+    live_demo(
+        "Enqueue + stats",
+        crate::site::queue_demo::QueueDemoWidget::render(
+            crate::site::queue_demo::QueueDemoWidgetProps::default(),
+        ),
     )
 }
 
 pub fn exec_scheduler() -> View {
-    live_info(
+    live_demo(
         "Cron scheduler",
-        view! {
-            <>
-                <p>"Register jobs via " <code>"GET|POST /_resuma/scheduler"</code></p>
-                {ServerActionWidget::render(ServerActionWidgetProps::default())}
-            </>
-        },
+        crate::site::scheduler_demo::SchedulerDemoWidget::render(
+            crate::site::scheduler_demo::SchedulerDemoWidgetProps::default(),
+        ),
     )
 }
 
@@ -151,8 +145,10 @@ pub fn security_backend() -> View {
 
 pub fn security_todo() -> View {
     live_demo(
-        "Interactive counter (todo pattern)",
-        CounterWidget::render(CounterWidgetProps::default()),
+        "Server-backed todos",
+        crate::site::todo_demo::TodoDemoWidget::render(
+            crate::site::todo_demo::TodoDemoWidgetProps::default(),
+        ),
     )
 }
 
@@ -247,6 +243,18 @@ pub fn components_form() -> View {
     )
 }
 
+pub fn flow_submits() -> View {
+    live_demo(
+        "#[submit] handler",
+        view! {
+            <>
+                <p class="demo-muted">"Same " <code>"docs_greet"</code> " handler — focus here is the submit endpoint and JSON response."</p>
+                {GreetFormWidget::render(GreetFormWidgetProps::default())}
+            </>
+        },
+    )
+}
+
 pub fn components_store() -> View {
     live_demo(
         "use_store",
@@ -259,19 +267,21 @@ pub fn components_context() -> View {
 }
 
 pub fn components_tasks() -> View {
-    live_info(
-        "Visible tasks",
-        view! {
-            <p>"Defer work until viewport via " <code>"use_visible_task"</code> " — scroll this panel into view to mount."</p>
-            {CounterWidget::render(CounterWidgetProps::default())}
-        },
+    live_demo(
+        "visible_task!",
+        VisibleTaskWidget::render(VisibleTaskWidgetProps::default()),
     )
 }
 
 pub fn components_testing() -> View {
-    live_demo(
-        "Testable signal",
-        CounterWidget::render(CounterWidgetProps::default()),
+    live_info(
+        "Testing strategy",
+        view! {
+            <>
+                <p>"Unit-test signals and stores in Rust. Integration-test " <code>"#[server]"</code> " and " <code>"#[load]"</code> " via axum " <code>"TestServer"</code> ". Snapshot SSR HTML for regressions."</p>
+                <p><a href="/docs/integrations/e2e">"E2E testing →"</a> " Playwright specs for full browser flows."</p>
+            </>
+        },
     )
 }
 
@@ -359,13 +369,6 @@ pub fn flow_loaders() -> View {
     )
 }
 
-pub fn flow_submits() -> View {
-    live_demo(
-        "#[submit]",
-        GreetFormWidget::render(GreetFormWidgetProps::default()),
-    )
-}
-
 pub fn flow_middleware() -> View {
     live_info(
         "Middleware",
@@ -390,14 +393,40 @@ pub fn flow_errors() -> View {
 }
 
 pub fn flow_caching() -> View {
-    flow_loaders()
+    live_info(
+        "Cache-Control on #[load]",
+        view! {
+            <>
+                <p>
+                    "Set "
+                    <code>"#[load(cache = \"public, max-age=60\")]"</code>
+                    " on loaders — the live timestamp demo is on "
+                    <a href="/docs/flow/loaders">"Loaders"</a>
+                    "."
+                </p>
+                <p class="demo-muted">"For SPA invalidation after mutations, see " <a href="/docs/cookbook/loader_invalidation">"Loader invalidation"</a> "."</p>
+            </>
+        },
+    )
 }
 
 pub fn flow_streaming() -> View {
     live_info(
-        "Streaming loaders",
+        "Deferred #[load(stream)]",
         view! {
-            <p>"Use " <code>"#[load(stream)]"</code> " — HTML streams while loader runs. See cookbook streaming loaders."</p>
+            <>
+                <p>
+                    "Enable "
+                    <code>"FlowApp::streaming(true)"</code>
+                    " and return "
+                    <code>"LoadValue::Pending"</code>
+                    " with "
+                    <code>"stream_slot(name)"</code>
+                    " — try the live skeleton on "
+                    <a href="/docs/cookbook/streaming_loaders">"Streaming loaders"</a>
+                    "."
+                </p>
+            </>
         },
     )
 }
@@ -429,10 +458,7 @@ pub fn integrations_overview() -> View {
     live_info(
         "CLI extensions",
         view! {
-            <>
-                <p><code>"resuma add sqlx|turso|tailwind|…"</code></p>
-                {ServerActionWidget::render(ServerActionWidgetProps::default())}
-            </>
+            <p><code>"resuma add sqlx|turso|tailwind|auth|…"</code> " — scaffolds integration boilerplate. Each integration page documents the command and setup steps."</p>
         },
     )
 }
@@ -441,10 +467,7 @@ pub fn integrations_generic(title: &str, cmd: &str) -> View {
     live_info(
         title,
         view! {
-            <>
-                <p><code>{cmd.to_string()}</code></p>
-                {CounterWidget::render(CounterWidgetProps::default())}
-            </>
+            <p><code>{cmd.to_string()}</code></p>
         },
     )
 }
@@ -492,12 +515,44 @@ pub fn cookbook_theme() -> View {
 }
 
 pub fn cookbook_streaming_loaders() -> View {
-    live_info(
-        "Streaming loaders",
-        view! {
-            <p><code>"#[load(stream)]"</code> " defers HTML chunk until loader completes."</p>
+    streaming_loader_panel()
+}
+
+/// Live `#[load(stream)]` panel — used on the cookbook streaming page.
+pub fn streaming_loader_panel() -> View {
+    match use_docs_delayed_load() {
+        LoadValue::Pending => view! {
+            <section class="live-demo" aria-label="Live demo">
+                <div class="live-demo-header">
+                    <span class="live-demo-badge">"LIVE"</span>
+                    <h2 class="live-demo-title">"Streaming loader"</h2>
+                </div>
+                <div class="live-demo-body">
+                    <p class="demo-muted">"Shell rendered immediately — deferred chunk below (~600ms)."</p>
+                    <div class="stream-skeleton" aria-busy="true">"Loading streamed data…"</div>
+                    {stream_slot("docs_delayed")}
+                </div>
+            </section>
         },
-    )
+        LoadValue::Ok(msg) => view! {
+            <section class="live-demo" aria-label="Live demo">
+                <div class="live-demo-header">
+                    <span class="live-demo-badge">"LIVE"</span>
+                    <h2 class="live-demo-title">"Streaming loader"</h2>
+                </div>
+                <div class="live-demo-body">
+                    <p class="demo-output">{msg.clone()}</p>
+                </div>
+            </section>
+        },
+        LoadValue::Err(e) => view! {
+            <section class="live-demo live-demo-info" aria-label="Live demo">
+                <div class="live-demo-body">
+                    <p class="demo-error">{e.message.clone()}</p>
+                </div>
+            </section>
+        },
+    }
 }
 
 pub fn cookbook_prg() -> View {
@@ -555,10 +610,7 @@ pub fn reference_package() -> View {
     live_info(
         "Install",
         view! {
-            <>
-                <p><code>"cargo add resuma@1.2.0"</code></p>
-                {ServerActionWidget::render(ServerActionWidgetProps::default())}
-            </>
+            <p><code>"cargo add resuma@1.2.0"</code> " · " <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a></p>
         },
     )
 }
@@ -580,10 +632,7 @@ pub fn reference_api() -> View {
     live_info(
         "docs.rs",
         view! {
-            <>
-                <p><a href="https://docs.rs/resuma/1.2.0" target="_blank">"docs.rs/resuma"</a></p>
-                {CounterWidget::render(CounterWidgetProps::default())}
-            </>
+            <p><a href="https://docs.rs/resuma/1.2.0" target="_blank">"docs.rs/resuma"</a> " — full Rust API reference."</p>
         },
     )
 }

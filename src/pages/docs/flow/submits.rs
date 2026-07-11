@@ -10,29 +10,28 @@ pub fn page(_req: FlowRequest) -> View {
             {crate::site::demos::flow_submits()}
 
             <h2>"Define a submit handler"</h2>
+            <p>"The live demo above uses " <code>"docs_greet"</code> " — same pattern as below."</p>
             {code_block(r#"#[data]
-struct ContactForm {
-    email: String,
-    message: String,
+struct GreetForm {
+    name: String,
 }
 
 #[submit]
-async fn contact(form: ContactForm, _req: &FlowRequest)
-    -> Result<ContactResult, SubmitError>
+async fn docs_greet(form: GreetForm, _req: &FlowRequest)
+    -> Result<GreetResult, SubmitError>
 {
-    if form.email.is_empty() {
+    if form.name.trim().is_empty() {
         return Err(SubmitError::new("Fix errors")
-            .field("email", "Required"));
+            .field("name", "Required"));
     }
-    Ok(ContactResult { ok: true })
+    Ok(GreetResult { message: format!("Hello, {}!", form.name.trim()) })
 }"#)}
 
             <h2>"Wire to Form"</h2>
             {code_block(r#"view! {
-    <Form submit={contact}>
-        <input name="email" type="email" />
-        <textarea name="message"></textarea>
-        <button type="submit">"Send"</button>
+    <Form submit={docs_greet}>
+        <input name="name" type="text" required />
+        <button type="submit">"Greet"</button>
     </Form>
 }"#)}
 

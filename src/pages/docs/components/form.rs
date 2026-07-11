@@ -10,22 +10,26 @@ pub fn page(_req: FlowRequest) -> View {
             {crate::site::demos::components_form()}
 
             <h2>"Basic form"</h2>
-            {code_block(r#"#[submit]
-async fn contact(form: ContactForm, _req: &FlowRequest)
-    -> Result<ContactResult, SubmitError>
+            {code_block(r#"#[data]
+struct GreetForm {
+    name: String,
+}
+
+#[submit]
+async fn greet(form: GreetForm, _req: &FlowRequest)
+    -> Result<GreetResult, SubmitError>
 {
-    if form.email.is_empty() {
+    if form.name.trim().is_empty() {
         return Err(SubmitError::new("Fix errors")
-            .field("email", "Required"));
+            .field("name", "Required"));
     }
-    Ok(ContactResult { ok: true })
+    Ok(GreetResult { message: format!("Hello, {}!", form.name) })
 }
 
 view! {
-    <Form submit={contact}>
-        <input name="email" type="email" />
-        <input name="name" type="text" />
-        <button type="submit">"Send"</button>
+    <Form submit={greet}>
+        <input name="name" type="text" required />
+        <button type="submit">"Greet"</button>
     </Form>
 }"#)}
 

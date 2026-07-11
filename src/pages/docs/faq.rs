@@ -71,12 +71,6 @@ pub fn page(_req: FlowRequest) -> View {
                 "for the framework itself. See "
                 <a href="/docs/integrations/sqlx">"SQLx integration"</a> "."
             </p>
-
-            <h2>"Do I need Redis or Cloudflare Workers for background jobs?"</h2>
-            <p>
-                "No. " <strong>"Resuma OS"</strong> " (" <code>"resuma::exec"</code> ") provides disk-backed queues, cron scheduler, durable graphs, and webhooks — "
-                "multi-process safe on a shared volume. See " <a href="/docs/exec">"/docs/exec"</a> "."
-            </p>
         </>
     }
 }
