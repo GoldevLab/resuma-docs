@@ -14,9 +14,12 @@ primary_region = 'iad'
   HOST = '0.0.0.0'
   PORT = '3000'
   RESUMA_PAGES_ROOT = '/app/pages'
+  RESUMA_DATA_DIR = '/app/.resuma'
   SITE_URL = 'https://resuma-docs.fly.dev'
   RESUMA_ENV = 'production'
   RESUMA_TRUST_PROXY = '1'
+  # Fly edge proxies use the fdaa::/16 private network — required by resuma 1.2+.
+  RESUMA_TRUSTED_PROXY_CIDRS = 'fdaa::/16'
 
 [http_service]
   internal_port = 3000

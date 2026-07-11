@@ -16,12 +16,10 @@ mod workers;
 pub use css::SITE_CSS;
 pub use demo_shell::live_info;
 pub use docs_search::search;
-pub use exec_demo::exec_showcase_demo;
 pub use hero_bg::hero_particles_mount;
 pub use live_demos as demos;
 pub use pwa::config as pwa_config;
 pub use seo::{json_ld, site_description, site_title, site_url};
-pub use server_demo::server_function_demo;
 pub use sidebar::doc_sidebar;
 
 use resuma::prelude::*;
@@ -135,6 +133,45 @@ pub fn doc_link_card(href: &str, title: &str, body: &str, tag: &str) -> View {
             <p>{body.to_string()}</p>
             <span class="doc-card-arrow">"→"</span>
         </a>
+    }
+}
+
+/// Horizontal bar for landing-page framework size comparisons (width = relative %).
+pub fn speed_bar(framework: &str, size: &str, width_pct: u8, highlight: bool) -> View {
+    let class = if highlight {
+        "speed-bar speed-bar-highlight"
+    } else {
+        "speed-bar"
+    };
+    let w = width_pct.min(100);
+    view! {
+        <div class={class}>
+            <div class="speed-bar-head">
+                <span class="speed-bar-name">{framework.to_string()}</span>
+                <span class="speed-bar-size">{size.to_string()}</span>
+            </div>
+            <div class="speed-bar-track" aria-hidden="true">
+                <div class="speed-bar-fill" style={format!("width: {w}%")}></div>
+            </div>
+        </div>
+    }
+}
+
+/// Layer in the “what ships to the browser” stack on the landing page.
+pub fn payload_layer(label: &str, size: &str, detail: &str, accent: bool) -> View {
+    let class = if accent {
+        "payload-layer payload-layer-accent"
+    } else {
+        "payload-layer"
+    };
+    view! {
+        <article class={class}>
+            <div class="payload-layer-top">
+                <strong>{label.to_string()}</strong>
+                <span class="payload-layer-size">{size.to_string()}</span>
+            </div>
+            <p>{detail.to_string()}</p>
+        </article>
     }
 }
 

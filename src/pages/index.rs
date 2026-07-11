@@ -1,8 +1,8 @@
 use resuma::prelude::*;
 
 use crate::site::{
-    bench_row_full, code_block, compare_column, exec_showcase_demo, feature_card,
-    hero_particles_mount, metric_item, pillar_card, pipeline_step, server_function_demo,
+    bench_row_full, code_block, compare_column, doc_link_card, feature_card, hero_particles_mount,
+    metric_item, payload_layer, pillar_card, pipeline_step, speed_bar,
 };
 
 pub fn page(_req: FlowRequest) -> View {
@@ -16,27 +16,29 @@ pub fn page(_req: FlowRequest) -> View {
                     <div>
                         <span class="hero-badge">
                             <span class="hero-badge-dot"></span>
-                            "v1.0.2 · Rust web framework"
+                            "v1.2.0 · Rust web framework"
                         </span>
-        <h1>
-                            "Build "
-                            <span class="accent">"instantly-interactive"</span>
-                            " web apps in Rust"
+                        <h1>
+                            "The "
+                            <span class="accent">"lightest"</span>
+                            " path to instant interactivity in Rust"
                         </h1>
-                        <p class="hero-tagline">"Ship HTML. Resume interactivity — never rehydrate."</p>
+                        <p class="hero-tagline">"907 bytes to resume. Zero bytes on static pages."</p>
                         <p class="hero-lead">
-                            "Build your whole app in Rust — UI, server functions, and forms on web standards. "
-                            "Components run once on the server; signals drive targeted DOM updates without re-rendering the tree. "
-                            "907 B loader, progressive enhancement, no WASM hydration."
+                            "Resuma renders your UI once on the server, serialises signal state into HTML, "
+                            "and lazy-loads only the handlers you touch. No WASM hydration. No component re-execution. "
+                            "Full-stack Flow, server actions, and Resuma OS — one crate."
                         </p>
                         <div class="hero-actions">
                             <a href="/docs/getting_started" class="btn btn-primary">"Get Started"</a>
-                            <a href="/docs" class="btn btn-ghost">"Read the Docs"</a>
-                            <a href="/docs/benchmark" class="btn btn-ghost">"Benchmark"</a>
-                            <a href="https://docs.rs/resuma/1.0.2" class="btn btn-ghost" target="_blank">"docs.rs"</a>
+                            <a href="/docs/benchmark" class="btn btn-ghost">"See the numbers"</a>
+                            <a href="/docs" class="btn btn-ghost">"Docs with live demos"</a>
                         </div>
                         <p class="hero-note">
-                            "Install: " <code>"cargo install resuma"</code> " · " <code>"resuma install skill"</code> " for Cursor/Codex"
+                            <code>"cargo install resuma"</code>
+                            " · "
+                            <code>"resuma new my-app --template todo"</code>
+                            " · no Node.js for app development"
                         </p>
                     </div>
                     <div class="hero-panel">
@@ -44,84 +46,106 @@ pub fn page(_req: FlowRequest) -> View {
                             <div class="hero-panel-dots">
                                 <span></span><span></span><span></span>
                             </div>
-                            <span class="hero-panel-label">"counter.rs"</span>
+                            <span class="hero-panel-label">"what ships (gzip)"</span>
                         </div>
-                        <div class="hero-panel-body">
-                            {code_block(r#"#[component]
-fn Counter() {
-    let count = signal(0);
-    view! {
-        <button onClick={count.update(|c| *c += 1)}>
-            "Count: " {count}
-        </button>
-    }
-}
-// Handler lazy-loads from /_resuma/handler/Counter.js"#)}
+                        <div class="hero-panel-body hero-payload-preview">
+                            <div class="hero-payload-row hero-payload-row-zero">
+                                <span>"Static page"</span>
+                                <strong>"0 B JS"</strong>
+                            </div>
+                            <div class="hero-payload-row hero-payload-row-accent">
+                                <span>"Interactive page — loader"</span>
+                                <strong>"907 B"</strong>
+                            </div>
+                            <div class="hero-payload-row">
+                                <span>"First click — handler chunk"</span>
+                                <strong>"5.08 KiB"</strong>
+                            </div>
+                            <div class="hero-payload-row hero-payload-row-muted">
+                                <span>"Next.js counter (default scaffold)"</span>
+                                <strong>"142 KiB"</strong>
+                            </div>
                             <p class="hero-panel-caption">
-                                <strong>"No hydration."</strong>
-                                " rs2js translates the closure; the runtime resumes signal state on first click."
+                                <strong>"156× smaller"</strong>
+                                " initial payload than a default Next.js app — measured on the same counter UX."
                             </p>
                         </div>
                     </div>
                 </section>
 
                 <div class="metrics-bar">
-                    {metric_item("907 B", "initial JS (gzip)")}
-                    {metric_item("5.08 KiB", "first interaction")}
+                    {metric_item("907 B", "loader (gzip)")}
                     {metric_item("0 B", "static pages")}
-                    {metric_item("Resuma OS", "workers + queue")}
+                    {metric_item("5.08 KiB", "first interaction")}
+                    {metric_item("~3 KiB", "runtime core")}
                     {metric_item("1", "cargo dependency")}
                 </div>
             </div>
 
-            <section class="section section-alt">
-                <p class="section-eyebrow">"Resuma OS"</p>
-                <h2 class="section-title">"Durable workers — live on this page"</h2>
-                <p class="section-sub">
-                    "The same execution layer as production templates: "
-                    <code>"#[worker]"</code>
-                    ", graph checkpoints, SSE events, and pause/cancel — no external orchestrator."
-                </p>
-                {exec_showcase_demo()}
-            </section>
-
-            <section class="section section-alt">
-                <p class="section-eyebrow">"Try it"</p>
-                <h2 class="section-title">"Server functions — no page reload"</h2>
-                <p class="section-sub">
-                    "Like Leptos server functions: Rust guaranteed to run on the server, callable from the browser. "
-                    "Errors surface in the UI without refreshing."
-                </p>
-                {server_function_demo()}
-            </section>
-
-            <section class="section">
-                <p class="section-eyebrow">"Positioning"</p>
-                <h2 class="section-title">"Resuma vs resumable peers"</h2>
-                <p class="section-sub">"Three ways to ship interactive UI after the first paint — Rust-native resumability compared to Qwik and WASM hydration."</p>
-                <div class="compare-3">
-                    {compare_column(
-                        "Qwik",
-                        "Resumable JS — tiny preloader, lazy chunks on interaction. Closest mental model to Resuma.",
-                        false,
-                    )}
-                    {compare_column(
-                        "Leptos",
-                        "Rust SSR + WASM hydration and optional islands.",
-                        false,
-                    )}
-                    {compare_column(
-                        "Resuma",
-                        "Rust SSR + resumability + lazy JS handlers — no WASM by default.",
-                        true,
-                    )}
+            <section class="section zero-strip">
+                <div class="zero-strip-inner">
+                    <p class="zero-strip-eyebrow">"Zero-cost static"</p>
+                    <h2 class="zero-strip-title">"Marketing pages ship no JavaScript"</h2>
+                    <p class="zero-strip-body">
+                        "Docs, blogs, and landing sections without signals or handlers compile to pure HTML. "
+                        "No runtime. No hydration tax. Deploy to the edge and forget about bundle budgets."
+                    </p>
+                    <a href="/docs/flow/pages" class="btn btn-ghost">"Static vs interactive pages →"</a>
                 </div>
             </section>
 
             <section class="section section-alt">
+                <p class="section-eyebrow">"Payload anatomy"</p>
+                <h2 class="section-title">"Every byte has a job"</h2>
+                <p class="section-sub">
+                    "Hydration frameworks ship the whole app up front. Resuma ships HTML plus a resumability "
+                    "payload — handlers and core load only when needed."
+                </p>
+                <div class="payload-stack">
+                    {payload_layer(
+                        "SSR HTML + signal state",
+                        "Server",
+                        "View tree, data-r-on:* hooks, and <script type=\"resuma/state\"> — ready before any JS runs.",
+                        false,
+                    )}
+                    {payload_layer(
+                        "Loader",
+                        "907 B gzip",
+                        "Bootstraps signals from the serialised payload. Enough for static-looking pages to feel alive.",
+                        true,
+                    )}
+                    {payload_layer(
+                        "Core runtime",
+                        "~3 KiB gzip",
+                        "Fine-grained DOM updates, Show/For, effects — fetched on first interaction or prefetch.",
+                        false,
+                    )}
+                    {payload_layer(
+                        "Handler chunks",
+                        "Per component",
+                        "onClick and friends live in /_resuma/handler/{Component}.js — pay only for what users touch.",
+                        false,
+                    )}
+                </div>
+            </section>
+
+            <section class="section">
                 <p class="section-eyebrow">"Measured"</p>
-                <h2 class="section-title">"Counter page benchmark (gzip)"</h2>
-                <p class="section-sub">"Same UX across frameworks: SSR heading + one increment button. Gzip transfer sizes from production build artifacts (May 2026)."</p>
+                <h2 class="section-title">"Counter page — initial load (gzip)"</h2>
+                <p class="section-sub">
+                    "Same UX everywhere: SSR heading + one increment button. "
+                    "Bar width is relative to Next.js (142 KiB). "
+                    <a href="/docs/benchmark">"Full methodology →"</a>
+                </p>
+                <div class="speed-chart">
+                    {speed_bar("Resuma", "907 B", 1, true)}
+                    {speed_bar("Qwik", "1.96 KiB", 1, false)}
+                    {speed_bar("SolidStart", "16.75 KiB", 12, false)}
+                    {speed_bar("SvelteKit", "27.71 KiB", 19, false)}
+                    {speed_bar("React (Vite)", "57.99 KiB", 41, false)}
+                    {speed_bar("Leptos", "79.02 KiB", 56, false)}
+                    {speed_bar("Next.js", "142.43 KiB", 100, false)}
+                </div>
                 <div class="bench-wrap">
                     <table class="bench">
                         <thead>
@@ -147,21 +171,89 @@ fn Counter() {
                 </div>
                 <p class="bench-note">
                     "Hydration frameworks load the same JS on page load — initial and first click match. "
-                    "Next.js uses the default " <code>"create-next-app"</code> " scaffold (~142 KiB). "
                     "Resuma static pages ship " <strong>"0 B"</strong> " client JS. "
-                    <a href="/docs/benchmark">"Methodology & external validation"</a> " · "
                     <code>"node benchmark/run.mjs"</code>
                 </p>
             </section>
 
+            <section class="section section-alt">
+                <p class="section-eyebrow">"Try it in the docs"</p>
+                <h2 class="section-title">"Live demos — inside the documentation"</h2>
+                <p class="section-sub">
+                    "Interactive examples run on every docs page: workers, signals, forms, and server functions. "
+                    "The homepage stays lean — open a guide and click."
+                </p>
+                <div class="docs-try-grid">
+                    {doc_link_card(
+                        "/docs/exec/workers",
+                        "Resuma OS workers",
+                        "Run a real #[worker], watch the execution graph, pause and cancel.",
+                        "LIVE",
+                    )}
+                    {doc_link_card(
+                        "/docs/components/signals",
+                        "Signals & reactivity",
+                        "Increment a counter — fine-grained updates, no full re-render.",
+                        "LIVE",
+                    )}
+                    {doc_link_card(
+                        "/docs/components/server",
+                        "Server functions",
+                        "Call Rust from the browser without a page reload.",
+                        "LIVE",
+                    )}
+                    {doc_link_card(
+                        "/docs/components/form",
+                        "Forms & #[submit]",
+                        "Progressive enhancement — works as HTML POST before JS loads.",
+                        "LIVE",
+                    )}
+                    {doc_link_card(
+                        "/docs/components/show",
+                        "Control flow",
+                        "Show, For, Match — conditional UI with lazy boundaries.",
+                        "LIVE",
+                    )}
+                    {doc_link_card(
+                        "/docs/flow/loaders",
+                        "Loaders & streaming",
+                        "#[load] data fetching with cache headers and streaming SSR.",
+                        "LIVE",
+                    )}
+                </div>
+            </section>
+
             <section class="section">
+                <p class="section-eyebrow">"Positioning"</p>
+                <h2 class="section-title">"Resumability, not hydration"</h2>
+                <p class="section-sub">"Three ways to ship interactive UI after the first paint."</p>
+                <div class="compare-3">
+                    {compare_column(
+                        "Qwik",
+                        "Resumable JS — tiny preloader, lazy chunks on interaction. Closest mental model to Resuma.",
+                        false,
+                    )}
+                    {compare_column(
+                        "Leptos",
+                        "Rust SSR + WASM hydration and optional islands.",
+                        false,
+                    )}
+                    {compare_column(
+                        "Resuma",
+                        "Rust SSR + resumability + lazy JS handlers — no WASM by default.",
+                        true,
+                    )}
+                </div>
+            </section>
+
+            <section class="section section-alt">
                 <p class="section-eyebrow">"Performance model"</p>
                 <h2 class="section-title">"Interactive from the first click"</h2>
-                <p class="section-sub">"Resumability means the client never re-runs your component tree. State and handlers are already in the HTML — the tiny runtime wires them up lazily."</p>
+                <p class="section-sub">"The client never re-runs your component tree. State and handlers are already in the HTML."</p>
                 <div class="pillars">
+                    {pillar_card("⚡", "Ultralight by design", "907 B loader, ~3 KiB core, per-handler chunks — not a monolithic client bundle.")}
                     {pillar_card("🦀", "Full Rust stack", "#[server] RPC, #[submit] forms, and #[load] data — axum-native, no adapter boilerplate.")}
                     {pillar_card("📋", "Progressive enhancement", "<Form submit> works as plain HTML POST before JS loads; runtime enhances in place.")}
-                    {pillar_card("🎯", "Targeted updates", "Signals update bound DOM nodes only — no full component re-render on the client.")}
                     {pillar_card("🧩", "Resumable by default", "Every #[component] is a lazy boundary. Handlers externalise to /_resuma/handler/{Component}.js.")}
                 </div>
             </section>
@@ -173,16 +265,16 @@ fn Counter() {
                 <div class="pipeline">
                     {pipeline_step("1", "SSR renders once", "Rust walks the View tree, emits HTML + data-r-on:* attributes, and serialises signals into <script type=\"resuma/state\">.")}
                     {pipeline_step("2", "Payload travels light", "Handler sources move to lazy chunks. computed! / effect! / debounce! replay on the client via rs2js.")}
-                    {pipeline_step("3", "Browser resumes", "Loader (907 B gzip) bootstraps signals. Core loads on first interaction. Handlers fetch on demand — or prefetch in viewport.")}
+                    {pipeline_step("3", "Browser resumes", "Loader bootstraps signals. Core loads on first interaction. Handlers fetch on demand — or prefetch in viewport.")}
                 </div>
             </section>
 
-            <section class="section">
+            <section class="section section-alt">
                 <div class="showcase">
                     <div class="showcase-copy">
                         <p class="section-eyebrow">"Components"</p>
                         <h3>"Write UI once — on the server"</h3>
-                        <p>"Use view! with JSX-like syntax, fine-grained signals, and onClick handlers that compile to lazy JavaScript. No WASM bundle. No client-side component re-execution."</p>
+                        <p>"view! with JSX-like syntax, fine-grained signals, and onClick handlers that compile to lazy JavaScript."</p>
                         <ul class="showcase-list">
                             <li>"signal for reactive state"</li>
                             <li>"computed! / effect! for client replay"</li>
@@ -193,18 +285,45 @@ fn Counter() {
                     <div class="showcase-code">
                         <div class="code-window">
                             {code_block(r#"#[component]
-fn SearchBar() {
-    let q = signal(String::new());
-    let len = computed!([q], move || q.get().len());
-
+fn Counter() {
+    let count = signal(0);
     view! {
-        <input
-            value={q}
-            onInput={move |e| q.set(e.value)}
-            placeholder="Filter…"
-        />
-        <p>{format!("{} chars", len.get())}</p>
+        <button onClick={count.update(|c| *c += 1)}>
+            "Count: " {count}
+        </button>
     }
+}
+// Handler lazy-loads from /_resuma/handler/Counter.js"#)}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="showcase showcase-reverse">
+                    <div class="showcase-copy">
+                        <p class="section-eyebrow">"Resuma OS"</p>
+                        <h3>"Durable workers — self-hosted"</h3>
+                        <p>"#[worker] functions, disk-backed queues, cron scheduler, and an ops dashboard. No Redis, no external orchestrator — same binary as your app."</p>
+                        <ul class="showcase-list">
+                            <li>"Execution graphs with SSE event streams"</li>
+                            <li>"Pause, resume, cancel from the Flow UI"</li>
+                            <li>"Queue recovery and checkpointed state"</li>
+                        </ul>
+                        <a href="/docs/exec/workers" class="btn btn-ghost">"Run the live worker demo →"</a>
+                    </div>
+                    <div class="showcase-code">
+                        <div class="code-window">
+                            {code_block(r#"#[worker(intent = "enrich page")]
+async fn enrich(input: Input, ctx: WorkerContext) -> Result<Value> {
+    ctx.log("fetching");
+    let page = ctx.tool("fetch", json!({ "url": input.url })).await?;
+    ctx.progress(50);
+    let summary = ctx.tool("ai", json!({
+        "prompt": "Extract key facts",
+        "data": page
+    })).await?;
+    Ok(summary)
 }"#)}
                         </div>
                     </div>
@@ -212,44 +331,6 @@ fn SearchBar() {
             </section>
 
             <section class="section section-alt">
-                <div class="showcase showcase-reverse">
-                    <div class="showcase-copy">
-                        <p class="section-eyebrow">"Server actions"</p>
-                        <h3>"Call Rust from the browser"</h3>
-                        <p>"#[server] registers JSON-RPC at /_resuma/action/:name. Invoke from translated handlers or js!{} — CSRF-protected, typed, no manual API wiring."</p>
-                        <ul class="showcase-list">
-                            <li>"Async Rust functions as RPC endpoints"</li>
-                            <li>"Forms via #[submit] and progressive enhancement"</li>
-                            <li>"Security defaults: CSRF, headers, rate limits"</li>
-                        </ul>
-                        <a href="/docs/components/server" class="btn btn-ghost">"Server actions →"</a>
-                    </div>
-                    <div class="showcase-code">
-                        <div class="code-window">
-                            {code_block(r#"#[server]
-async fn search(q: String) -> Vec<String> {
-    db::search(&q).await
-}
-
-#[component]
-fn LiveSearch() {
-    let query = signal(String::new());
-    view! {
-        <input onInput={ js! {
-            state.query.set(event.target.value);
-            const r = await __resuma.action(
-                'search', [event.target.value]
-            );
-            state.results.set(r);
-        }} />
-    }
-}"#)}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
                 <p class="section-eyebrow">"Why Resuma?"</p>
                 <h2 class="section-title">"Everything you need for modern SSR"</h2>
                 <p class="section-sub">"Resumable SSR in Rust — one install, progressive enhancement, full-stack Flow when you need it."</p>
@@ -263,7 +344,7 @@ fn LiveSearch() {
                 </div>
             </section>
 
-            <section class="section section-alt">
+            <section class="section">
                 <p class="section-eyebrow">"One package"</p>
                 <h2 class="section-title">"Resuma¹ + Flow²"</h2>
                 <p class="section-sub">"Two layers, one dependency. Core stays stable; Flow adds routing, data loading, and forms."</p>
@@ -328,7 +409,7 @@ fn LiveSearch() {
             <section class="cta-section">
                 <div class="cta-banner">
                     <h2>"Start building in 60 seconds"</h2>
-                    <p>"Install the CLI, scaffold a project, and serve instantly-interactive Rust UI — no Node.js required for app development."</p>
+                    <p>"Install the CLI, scaffold a project, and ship instantly-interactive Rust UI — ultralight by default."</p>
                     <a href="/docs/getting_started" class="btn btn-primary">"Read the tutorial"</a>
                     <div class="cta-install">"cargo install resuma && resuma new my-app --template todo"</div>
                 </div>
