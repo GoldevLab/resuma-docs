@@ -1,7 +1,7 @@
 //! Live resuma-flow widget demo — ops dashboard + execution panel.
 
 use resuma::prelude::*;
-use resuma_flow::{flow_dashboard_poll, flow_styles};
+use resuma_flow::{flow_dashboard_poll, flow_styles_link};
 
 /// Interactive Flow UI panel for `/docs/exec/flow_ui`.
 pub fn flow_ui_demo() -> View {
@@ -9,7 +9,7 @@ pub fn flow_ui_demo() -> View {
 
     view! {
         <div class="flow-ui-demo">
-            {flow_styles()}
+            {flow_styles_link()}
             <p class="demo-muted">
                 "Real "
                 <code>"resuma-flow"</code>

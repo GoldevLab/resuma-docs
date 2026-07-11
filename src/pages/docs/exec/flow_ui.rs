@@ -33,12 +33,13 @@ fn OpsPage(initial: ExecStatus) -> View {
 }"#)}
 
             <h2>"Live graph + controls"</h2>
-            {code_block(r#"use resuma_flow::{flow_execution_auth, flow_styles};
+            {code_block(r#"use resuma_flow::{flow_execution_panel_auth, flow_styles_link};
 
 // access_token from StartWorkerResponse — scopes SSE + pause/resume/cancel
+// Pair flow_styles_link() in layout with panel_auth for dynamic injection.
 view! {
-    {flow_styles()}
-    {flow_execution_auth(&graph_id, true, Some(access_token))}
+    {flow_styles_link()}
+    {flow_execution_panel_auth(&graph_id, true, Some(access_token))}
 }"#)}
 
             <h2>"Components"</h2>
@@ -49,6 +50,8 @@ view! {
                     <tr><td><code>"flow_graph_auth"</code></td><td>"Node status pills + live refresh"</td></tr>
                     <tr><td><code>"event_stream_auth"</code></td><td>"SSE event timeline"</td></tr>
                     <tr><td><code>"worker_panel_auth"</code></td><td>"Pause / Resume / Cancel / Replay"</td></tr>
+                    <tr><td><code>"flow_execution_panel_auth"</code></td><td>"Panel without inline styles (dynamic HTML + flow.css)"</td></tr>
+                    <tr><td><code>"flow_styles_link"</code></td><td>"Link to GET /_resuma/flow.css (CSP-safe)"</td></tr>
                     <tr><td><code>"flow_ops_page"</code></td><td>"All-in-one ops layout"</td></tr>
                 </tbody>
             </table>
