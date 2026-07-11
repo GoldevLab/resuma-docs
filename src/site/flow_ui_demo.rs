@@ -61,7 +61,7 @@ pub fn flow_ui_demo() -> View {
                     {crate::site::exec_guide::worker_try_it_guide("flow-ui")}
                 </div>
                 {crate::site::exec_guide::worker_panel_placeholder("flow-ui-flow-placeholder")}
-                <div id="flow-ui-slot" class="exec-flow-slot" hidden></div>
+                <div id="flow-ui-slot" class="exec-flow-slot" data-docs-exec-panel hidden></div>
             </div>
         </div>
     }

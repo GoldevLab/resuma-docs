@@ -1,76 +1,152 @@
-//! Minimal server-backed todo demo for the security todo reference page.
+//! Server-backed todo demo — session, validation, and row-level checks.
 
 use resuma::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::sync::{Mutex, OnceLock};
 
+use super::todo_security;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DocsTodoItem {
     pub id: u64,
+    pub owner_id: String,
     pub title: String,
     pub done: bool,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DocsTodoList {
+    pub user: String,
+    pub is_admin: bool,
+    pub items: Vec<DocsTodoItem>,
 }
 
 static TODOS: OnceLock<Mutex<Vec<DocsTodoItem>>> = OnceLock::new();
 
 fn todos() -> &'static Mutex<Vec<DocsTodoItem>> {
-    TODOS.get_or_init(|| Mutex::new(Vec::new()))
+    TODOS.get_or_init(|| {
+        Mutex::new(vec![
+            DocsTodoItem {
+                id: 1,
+                owner_id: "alice".into(),
+                title: "Review security middleware".into(),
+                done: true,
+            },
+            DocsTodoItem {
+                id: 2,
+                owner_id: "guest".into(),
+                title: "Add a task — owned by current user".into(),
+                done: false,
+            },
+            DocsTodoItem {
+                id: 3,
+                owner_id: "bob".into(),
+                title: "Bob's task — guest cannot toggle".into(),
+                done: false,
+            },
+        ])
+    })
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct DocsTodoList {
-    pub items: Vec<DocsTodoItem>,
-}
-
-#[server]
-async fn docs_todo_list() -> Result<DocsTodoList> {
-    let items = todos().lock().unwrap().clone();
-    Ok(DocsTodoList { items })
-}
-
-#[server]
-async fn docs_todo_add(title: String) -> Result<DocsTodoList> {
-    let title = title.trim().to_string();
-    if title.is_empty() {
-        return Err(ResumaError::validation("title required"));
+fn list_for(req: &FlowRequest) -> DocsTodoList {
+    let user = todo_security::session_user(req);
+    let is_admin = todo_security::admin_users().iter().any(|a| a == &user);
+    let guard = todos().lock().unwrap();
+    let items: Vec<_> = todo_security::list_visible(&guard, req, |t| &t.owner_id)
+        .into_iter()
+        .cloned()
+        .collect();
+    DocsTodoList {
+        user,
+        is_admin,
+        items,
     }
+}
+
+#[server]
+async fn docs_todo_list(req: &FlowRequest) -> Result<DocsTodoList> {
+    Ok(list_for(req))
+}
+
+#[server]
+async fn docs_todo_add(title: String, req: &FlowRequest) -> Result<DocsTodoList> {
+    let title = todo_security::normalize_title(&title)?;
+    let owner = todo_security::session_user(req);
     let mut guard = todos().lock().unwrap();
     let id = guard.iter().map(|t| t.id).max().unwrap_or(0) + 1;
     guard.push(DocsTodoItem {
         id,
+        owner_id: owner,
         title,
         done: false,
     });
-    Ok(DocsTodoList {
-        items: guard.clone(),
-    })
+    drop(guard);
+    Ok(list_for(req))
 }
 
 #[server]
-async fn docs_todo_toggle(id: u64) -> Result<DocsTodoList> {
+async fn docs_todo_toggle(id: u64, req: &FlowRequest) -> Result<DocsTodoList> {
     let mut guard = todos().lock().unwrap();
-    let item = guard
-        .iter_mut()
+    let owner = guard
+        .iter()
         .find(|t| t.id == id)
+        .map(|t| t.owner_id.clone())
         .ok_or_else(|| ResumaError::validation("todo not found"))?;
-    item.done = !item.done;
-    Ok(DocsTodoList {
-        items: guard.clone(),
-    })
+    todo_security::assert_owner(&owner, req)?;
+    if let Some(item) = guard.iter_mut().find(|t| t.id == id) {
+        item.done = !item.done;
+    }
+    drop(guard);
+    Ok(list_for(req))
 }
 
-/// Server-backed todo list — auth/validation patterns from the security todo guide.
+#[server]
+async fn docs_whoami(req: &FlowRequest) -> Result<serde_json::Value> {
+    Ok(serde_json::json!({
+        "user_id": req.user_id(),
+        "roles": req.extension("roles"),
+        "authenticated": req.extension("authenticated"),
+    }))
+}
+
+#[server]
+async fn docs_runtime_security() -> Result<serde_json::Value> {
+    let env = std::env::var("RESUMA_ENV").unwrap_or_else(|_| "development".into());
+    Ok(serde_json::json!({
+        "resuma_env": env,
+        "trust_proxy": std::env::var("RESUMA_TRUST_PROXY").unwrap_or_default(),
+        "rate_backend": std::env::var("RESUMA_RATE_BACKEND").unwrap_or_else(|_| {
+            if matches!(env.as_str(), "production" | "prod") {
+                "disk (auto)".into()
+            } else {
+                "memory (default)".into()
+            }
+        }),
+        "csrf": "on (default)",
+        "origin_check": "on (default)",
+    }))
+}
+
+/// Server-backed todo list with guest / alice / bob session demo.
 #[component]
 pub fn TodoDemoWidget() -> View {
     let items = signal(Vec::<DocsTodoItem>::new());
+    let user = signal("guest".to_string());
+    let is_admin = signal(false);
     let status = signal(String::new());
 
     visible_task!(
         r#"
         async (state, __resuma) => {
             const res = await __resuma.safeAction("docs_todo_list", []);
-            if (res.ok) state.items.set(res.value.items);
-            else state.status.set(res.error);
+            if (res.ok) {
+                state.items.set(res.value.items);
+                state.user.set(res.value.user);
+                state.is_admin.set(res.value.is_admin);
+                state.status.set("");
+            } else {
+                state.status.set(res.error);
+            }
         }
     "#
     );
@@ -78,10 +154,41 @@ pub fn TodoDemoWidget() -> View {
     view! {
         <div class="todo-demo">
             <p class="demo-muted">
-                "In-memory todo list via "
+                "Real "
                 <code>"#[server]"</code>
-                " — illustrates guarded mutations (see page for production patterns)."
+                " + action middleware — switch user (cookie), add tasks, try toggling another user's task."
             </p>
+            <div class="todo-demo-users">
+                <span class="todo-demo-users__label">"Signed in as:"</span>
+                <strong class="todo-demo-users__current">{user}</strong>
+                <Show when={is_admin}>
+                    <span class="todo-demo-users__badge">"admin"</span>
+                </Show>
+            </div>
+            <div class="demo-row todo-demo-user-row">
+                {todo_security::demo_users().iter().map(|&name| {
+                    view! {
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-ghost"
+                            onClick={js!(async () => {
+                                document.cookie = "resuma_demo_user=" + name + "; path=/; SameSite=Lax";
+                                const res = await __resuma.safeAction("docs_todo_list", []);
+                                if (!res.ok) {
+                                    state.status.set(res.error);
+                                    return;
+                                }
+                                state.items.set(res.value.items);
+                                state.user.set(res.value.user);
+                                state.is_admin.set(res.value.is_admin);
+                                state.status.set("Switched to " + res.value.user);
+                            })}
+                        >
+                            {name.to_string()}
+                        </button>
+                    }
+                }).collect::<Vec<_>>()}
+            </div>
             <div class="demo-row">
                 <input id="todo-title" type="text" placeholder="New task" />
                 <button
@@ -97,10 +204,21 @@ pub fn TodoDemoWidget() -> View {
                         }
                         state.status.set("");
                         state.items.set(res.value.items);
+                        state.user.set(res.value.user);
                         if (input) input.value = "";
                     })}
                 >
                     "Add"
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-sm btn-ghost"
+                    onClick={js!(async () => {
+                        const res = await __resuma.safeAction("docs_todo_add", [""]);
+                        state.status.set(res.ok ? "unexpected ok" : res.error);
+                    })}
+                >
+                    "Fail validation"
                 </button>
             </div>
             <ul class="todo-demo-list">
@@ -111,11 +229,17 @@ pub fn TodoDemoWidget() -> View {
                             class="btn btn-sm btn-ghost"
                             onClick={js!(async () => {
                                 const res = await __resuma.safeAction("docs_todo_toggle", [item.id]);
-                                if (res.ok) state.items.set(res.value.items);
+                                if (!res.ok) {
+                                    state.status.set(res.error);
+                                    return;
+                                }
+                                state.status.set("");
+                                state.items.set(res.value.items);
                             })}
                         >
                             {if item.done { "Undo" } else { "Done" }}
                         </button>
+                        <span class="todo-demo-owner">{item.owner_id.clone()}</span>
                         <span>{item.title.clone()}</span>
                     </li>
                 </For>

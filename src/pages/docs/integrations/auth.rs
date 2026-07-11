@@ -10,7 +10,7 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"FlowRequest"</code> " extensions and gate loaders and submits."
             </p>
 
-            {crate::site::demos::integrations_generic("Auth", "resuma add auth")}
+            {crate::site::demos::integrations_auth()}
 
             <h2>"Pattern"</h2>
             <ul>

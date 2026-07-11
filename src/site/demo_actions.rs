@@ -3,6 +3,15 @@
 use resuma::prelude::*;
 use serde::{Deserialize, Serialize};
 
+pub fn docs_timestamp() -> String {
+    use std::time::{SystemTime, UNIX_EPOCH};
+    let secs = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_secs())
+        .unwrap_or(0);
+    format!("unix:{secs}")
+}
+
 #[server]
 pub async fn docs_echo(msg: String) -> String {
     format!("Echo: {msg}")
@@ -81,6 +90,32 @@ pub async fn docs_delayed(_req: &FlowRequest) -> String {
     "Streamed after ~600ms delay".into()
 }
 
+#[server]
+pub async fn docs_loader_stamp() -> String {
+    docs_timestamp()
+}
+
+#[server]
+pub async fn docs_e2e_ping() -> Result<serde_json::Value> {
+    Ok(serde_json::json!({
+        "ok": true,
+        "service": "resuma-docs",
+        "timestamp": docs_timestamp(),
+    }))
+}
+
+#[server]
+pub async fn docs_deploy_info() -> Result<serde_json::Value> {
+    let env = std::env::var("RESUMA_ENV").unwrap_or_else(|_| "development".into());
+    Ok(serde_json::json!({
+        "resuma_env": env,
+        "trust_proxy": std::env::var("RESUMA_TRUST_PROXY").unwrap_or_default(),
+        "site_url": std::env::var("SITE_URL").unwrap_or_else(|_| "https://resuma-docs.fly.dev".into()),
+        "addr": std::env::var("RESUMA_ADDR").unwrap_or_else(|_| "127.0.0.1:3000".into()),
+        "container_hint": "docker run -p 3000:3000 -e RESUMA_ENV=production resuma-docs",
+    }))
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DocsPrgForm {
     pub item: String,
@@ -95,13 +130,4 @@ pub async fn docs_prg(
         return Err(SubmitError::new("Invalid").field("item", "Item required"));
     }
     Ok(Redirect::to("/docs/cookbook/prg?ok=1"))
-}
-
-fn docs_timestamp() -> String {
-    use std::time::{SystemTime, UNIX_EPOCH};
-    let secs = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .map(|d| d.as_secs())
-        .unwrap_or(0);
-    format!("unix:{secs}")
 }

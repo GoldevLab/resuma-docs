@@ -89,6 +89,8 @@ fn DocsLayout() -> View {
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    site::install_security_middleware();
+
     let pages_root = std::env::var("RESUMA_PAGES_ROOT")
         .map(std::path::PathBuf::from)
         .unwrap_or_else(|_| std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("src/pages"));

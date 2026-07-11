@@ -123,11 +123,16 @@ pub fn security_overview() -> View {
 }
 
 pub fn security_configure() -> View {
-    live_info(
-        "SecurityConfig",
-        view! {
-            <p>"Set CSRF, origin checks, and rate limits in " <code>"FlowServeOptions::security"</code></p>
-        },
+    live_demo(
+        "SecurityConfig snapshot",
+        SecurityEnvWidget::render(SecurityEnvWidgetProps::default()),
+    )
+}
+
+pub fn security_environment() -> View {
+    live_demo(
+        "Runtime env (this server)",
+        SecurityEnvWidget::render(SecurityEnvWidgetProps::default()),
     )
 }
 
@@ -139,30 +144,27 @@ pub fn security_server_actions() -> View {
 }
 
 pub fn security_middleware() -> View {
-    live_info(
-        "Auth middleware",
-        view! {
-            <p>"Wrap routes with " <code>"#[middleware]"</code> " — every request to this docs site runs through Flow middleware."</p>
-            <NavLink href="/docs" activeClass="active">"Docs home"</NavLink>
-        },
+    live_demo(
+        "Action middleware session",
+        WhoAmIWidget::render(WhoAmIWidgetProps::default()),
     )
 }
 
 pub fn security_authorization() -> View {
-    live_info(
-        "Authorization patterns",
-        view! {
-            <p>"Combine " <code>"FlowRequest"</code> " user id with row-level checks in server actions."</p>
-        },
+    live_demo(
+        "Row-level checks (403)",
+        crate::site::todo_demo::TodoDemoWidget::render(
+            crate::site::todo_demo::TodoDemoWidgetProps::default(),
+        ),
     )
 }
 
 pub fn security_backend() -> View {
-    live_info(
-        "Backend patterns",
-        view! {
-            <p>"Store per-user data under " <code>"RESUMA_DATA_DIR"</code> " with file locks — see Todo example."</p>
-        },
+    live_demo(
+        "Service layer + validation",
+        crate::site::todo_demo::TodoDemoWidget::render(
+            crate::site::todo_demo::TodoDemoWidgetProps::default(),
+        ),
     )
 }
 
@@ -478,20 +480,108 @@ pub fn flow_pwa() -> View {
 // ── Integrations ────────────────────────────────────────────────────────────
 
 pub fn integrations_overview() -> View {
-    live_info(
-        "CLI extensions",
-        view! {
-            <p><code>"resuma add sqlx|turso|tailwind|auth|…"</code> " — scaffolds integration boilerplate. Each integration page documents the command and setup steps."</p>
-        },
+    live_demo(
+        "CLI scaffold preview",
+        crate::site::integration_demos::ScaffoldDemoWidget::render(
+            crate::site::integration_demos::ScaffoldDemoWidgetProps::default(),
+        ),
     )
 }
 
-pub fn integrations_generic(title: &str, cmd: &str) -> View {
-    live_info(
-        title,
-        view! {
-            <p><code>{cmd.to_string()}</code></p>
-        },
+pub fn integrations_sqlx() -> View {
+    live_demo(
+        "Mock SQLx query",
+        crate::site::integration_demos::SqlxDemoWidget::render(
+            crate::site::integration_demos::SqlxDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_turso() -> View {
+    live_demo(
+        "Mock Turso / libSQL",
+        crate::site::integration_demos::TursoDemoWidget::render(
+            crate::site::integration_demos::TursoDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_supabase() -> View {
+    live_demo(
+        "Mock Supabase RLS",
+        crate::site::integration_demos::SupabaseDemoWidget::render(
+            crate::site::integration_demos::SupabaseDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_auth() -> View {
+    live_demo(
+        "Session middleware",
+        WhoAmIWidget::render(WhoAmIWidgetProps::default()),
+    )
+}
+
+pub fn integrations_validator() -> View {
+    live_demo(
+        "Submit validation",
+        crate::site::integration_demos::ValidationDemoWidget::render(
+            crate::site::integration_demos::ValidationDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_i18n() -> View {
+    live_demo(
+        "Locale strings",
+        crate::site::integration_demos::I18nDemoWidget::render(
+            crate::site::integration_demos::I18nDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_tailwind() -> View {
+    live_demo(
+        "Utility classes",
+        crate::site::integration_demos::TailwindDemoWidget::render(
+            crate::site::integration_demos::TailwindDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_og_image() -> View {
+    live_demo(
+        "OG meta tags",
+        crate::site::integration_demos::OgImageDemoWidget::render(
+            crate::site::integration_demos::OgImageDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_seo_geo() -> View {
+    live_demo(
+        "SEO / JSON-LD",
+        crate::site::integration_demos::SeoGeoDemoWidget::render(
+            crate::site::integration_demos::SeoGeoDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_ai() -> View {
+    live_demo(
+        "AI stub completion",
+        crate::site::integration_demos::AiAssistantDemoWidget::render(
+            crate::site::integration_demos::AiAssistantDemoWidgetProps::default(),
+        ),
+    )
+}
+
+pub fn integrations_e2e() -> View {
+    live_demo(
+        "E2E ping",
+        crate::site::integration_demos::E2eDemoWidget::render(
+            crate::site::integration_demos::E2eDemoWidgetProps::default(),
+        ),
     )
 }
 
@@ -519,14 +609,9 @@ pub fn cookbook_portals() -> View {
 }
 
 pub fn cookbook_view_transitions() -> View {
-    live_info(
+    live_demo(
         "View transitions",
-        view! {
-            <>
-                <p>"Navigate with " <code>"data-r-vt"</code> " for CSS view transitions."</p>
-                <NavLink href="/docs/cookbook/theme" activeClass="active" data-r-vt="slide">"Navigate →"</NavLink>
-            </>
-        },
+        ViewTransitionsWidget::render(ViewTransitionsWidgetProps::default()),
     )
 }
 
@@ -591,25 +676,16 @@ pub fn cookbook_prg() -> View {
 }
 
 pub fn cookbook_loader_invalidation() -> View {
-    live_info(
+    live_demo(
         "invalidate()",
-        view! {
-            <>
-                <p>"Call " <code>"__resuma.invalidate(href)"</code> " to bust SPA prefetch cache."</p>
-                <button type="button" class="btn btn-sm" onClick={js! {
-                    __resuma.invalidate("/docs/flow/loaders");
-                }}>"Invalidate loaders page"</button>
-            </>
-        },
+        LoaderInvalidationWidget::render(LoaderInvalidationWidgetProps::default()),
     )
 }
 
 pub fn cookbook_docker() -> View {
-    live_info(
-        "Docker deploy",
-        view! {
-            <p><code>"docker build -t myapp . && docker run -p 3000:3000 myapp"</code></p>
-        },
+    live_demo(
+        "Deploy runtime",
+        DeployInfoWidget::render(DeployInfoWidgetProps::default()),
     )
 }
 

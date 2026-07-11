@@ -10,7 +10,7 @@ pub fn page(_req: FlowRequest) -> View {
                 "Use it inside " <code>"#[load]"</code> ", " <code>"#[submit]"</code> ", and " <code>"#[server]"</code> " — all server-only."
             </p>
 
-            {crate::site::demos::integrations_generic("SQLx", "resuma add sqlx")}
+            {crate::site::demos::integrations_sqlx()}
 
             <h2>"Why SQLx for Resuma"</h2>
             <ul>

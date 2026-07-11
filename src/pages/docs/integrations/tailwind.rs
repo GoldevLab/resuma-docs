@@ -7,7 +7,7 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Tailwind CSS"</h1>
             <p class="lead">"Utility-first CSS with a build step in your Resuma app."</p>
 
-            {crate::site::demos::integrations_generic("Tailwind", "resuma add tailwind")}
+            {crate::site::demos::integrations_tailwind()}
 
             <h2>"Option A: Standalone CSS file"</h2>
             {code_block(r#"# Build tailwind.css in dev/CI (npm)

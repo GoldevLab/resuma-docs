@@ -98,17 +98,110 @@ pub fn ServerActionWidget() -> View {
     let result = signal(String::new());
     view! {
         <>
+            <p class="demo-muted">
+                "Real "
+                <code>"#[server]"</code>
+                " RPC via "
+                <code>"__resuma.safeAction"</code>
+                " — errors return "
+                <code>"{ ok: false, error }"</code>
+                " instead of throwing."
+            </p>
             <div class="demo-row">
-                <button type="button" class="btn btn-sm" onClick={js! {
-                    const r = await __resuma.action("docs_echo", ["Hello from docs"]);
-                    state.result.set(r);
-                }}>"docs_echo"</button>
-                <button type="button" class="btn btn-sm btn-ghost" onClick={js! {
-                    const sum = await __resuma.action("docs_add", [2, 40]);
-                    state.result.set("2 + 40 = " + sum);
-                }}>"docs_add(2,40)"</button>
+                <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_echo", ["Hello from docs"]);
+                    state.result.set(res.ok ? res.value : res.error);
+                })}>"docs_echo"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_add", [2, 40]);
+                    state.result.set(res.ok ? "2 + 40 = " + res.value : res.error);
+                })}>"docs_add(2,40)"</button>
             </div>
             <p class="demo-output">{result}</p>
+        </>
+    }
+}
+
+#[component]
+pub fn WhoAmIWidget() -> View {
+    let payload = signal(String::new());
+    visible_task!(
+        r#"
+        async (state, __resuma) => {
+            const res = await __resuma.safeAction("docs_whoami", []);
+            state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+        }
+    "#
+    );
+    view! {
+        <>
+            <p class="demo-muted">
+                "Every "
+                <code>"#[server]"</code>
+                " action runs through "
+                <code>"set_action_middleware"</code>
+                " — switch user cookie and refresh."
+            </p>
+            <div class="demo-row todo-demo-user-row">
+                {crate::site::todo_security::demo_users().iter().map(|&name| {
+                    view! {
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-ghost"
+                            onClick={js!(async () => {
+                                document.cookie = "resuma_demo_user=" + name + "; path=/; SameSite=Lax";
+                                const res = await __resuma.safeAction("docs_whoami", []);
+                                state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                            })}
+                        >
+                            {name.to_string()}
+                        </button>
+                    }
+                }).collect::<Vec<_>>()}
+                <button
+                    type="button"
+                    class="btn btn-sm"
+                    onClick={js!(async () => {
+                        const res = await __resuma.safeAction("docs_whoami", []);
+                        state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                    })}
+                >
+                    "Refresh"
+                </button>
+            </div>
+            <pre class="code demo-output">{payload}</pre>
+        </>
+    }
+}
+
+#[component]
+pub fn SecurityEnvWidget() -> View {
+    let payload = signal(String::new());
+    visible_task!(
+        r#"
+        async (state, __resuma) => {
+            const res = await __resuma.safeAction("docs_runtime_security", []);
+            state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+        }
+    "#
+    );
+    view! {
+        <>
+            <p class="demo-muted">
+                "Live snapshot from this server process (no secrets) — compare with "
+                <code>"resuma doctor"</code>"."
+            </p>
+            <button
+                type="button"
+                class="btn btn-sm"
+                onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_runtime_security", []);
+                    state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+                })}
+            >
+                "Refresh"
+            </button>
+            <pre class="code demo-output">{payload}</pre>
         </>
     }
 }
@@ -345,6 +438,85 @@ pub fn ReactivityWidget() -> View {
         <>
             <p class="demo-output">"n = " {n} " → doubled = " {doubled}</p>
             <button type="button" class="btn btn-sm" onClick={n.update(|v| *v += 1)}>"Bump n"</button>
+        </>
+    }
+}
+
+#[component]
+pub fn LoaderInvalidationWidget() -> View {
+    let stamp = signal(String::new());
+    let status = signal(String::new());
+    visible_task!(
+        r#"
+        async (state, __resuma) => {
+            const res = await __resuma.safeAction("docs_loader_stamp", []);
+            if (res.ok) state.stamp.set(res.value);
+        }
+    "#
+    );
+    view! {
+        <>
+            <p class="demo-muted">
+                "Server stamp via "
+                <code>"#[server]"</code>
+                " — invalidate SPA prefetch cache, then refresh."
+            </p>
+            <p class="demo-output">"Stamp: " {stamp}</p>
+            <div class="demo-row">
+                <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                    const res = await __resuma.safeAction("docs_loader_stamp", []);
+                    state.stamp.set(res.ok ? res.value : res.error);
+                    state.status.set(res.ok ? "Refreshed via action" : res.error);
+                })}>"Refresh stamp"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    await __resuma.invalidate("/docs/flow/loaders");
+                    state.status.set("Invalidated /docs/flow/loaders prefetch");
+                })}>"Invalidate loaders"</button>
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    await __resuma.invalidate();
+                    const res = await __resuma.safeAction("docs_loader_stamp", []);
+                    state.stamp.set(res.ok ? res.value : res.error);
+                    state.status.set("Invalidated current route + refreshed");
+                })}>"Invalidate + refresh"</button>
+            </div>
+            <p class="demo-muted">{status}</p>
+        </>
+    }
+}
+
+#[component]
+pub fn DeployInfoWidget() -> View {
+    let payload = signal(String::new());
+    visible_task!(
+        r#"
+        async (state, __resuma) => {
+            const res = await __resuma.safeAction("docs_deploy_info", []);
+            state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+        }
+    "#
+    );
+    view! {
+        <>
+            <p class="demo-muted">"Live process env — same vars you set in Docker / Fly " <code>"fly.toml"</code>"."</p>
+            <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                const res = await __resuma.safeAction("docs_deploy_info", []);
+                state.payload.set(res.ok ? JSON.stringify(res.value, null, 2) : res.error);
+            })}>"Refresh"</button>
+            <pre class="code demo-output">{payload}</pre>
+        </>
+    }
+}
+
+#[component]
+pub fn ViewTransitionsWidget() -> View {
+    view! {
+        <>
+            <p class="demo-muted">"Click navigate — route transition uses " <code>"data-r-vt"</code> " (slide)."</p>
+            <div class="demo-row">
+                <NavLink href="/docs/cookbook/theme" activeClass="active" data-r-vt="slide">"→ Theme"</NavLink>
+                <NavLink href="/docs/cookbook/portals" activeClass="active" data-r-vt="slide">"→ Portals"</NavLink>
+                <NavLink href="/docs/cookbook/debouncer" activeClass="active" data-r-vt="slide">"→ Debouncer"</NavLink>
+            </div>
         </>
     }
 }

@@ -101,7 +101,7 @@ fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
                 }}
             </div>
             {crate::site::exec_guide::worker_panel_placeholder("exec-flow-placeholder")}
-            <div id="exec-flow-slot" class="exec-flow-slot" hidden></div>
+            <div id="exec-flow-slot" class="exec-flow-slot" data-docs-exec-panel hidden></div>
         </section>
     }
 }

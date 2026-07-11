@@ -1370,9 +1370,40 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   color: var(--text-muted);
   animation: pulse 1.2s ease-in-out infinite;
 }
+.todo-demo-users { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.35rem 0; }
+.todo-demo-users__label { color: var(--text-muted); font-size: 0.88rem; }
+.todo-demo-users__current { font-family: var(--font-mono, ui-monospace, monospace); }
+.todo-demo-users__badge {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(113, 44, 249, 0.18);
+  color: #c4b5fd;
+}
+.todo-demo-user-row { flex-wrap: wrap; gap: 0.35rem; }
+.todo-demo-owner {
+  font-size: 0.75rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--text-muted);
+  min-width: 3rem;
+}
 .todo-demo-list { list-style: none; padding: 0; margin: 0.75rem 0 0; }
 .todo-demo-item { display: flex; align-items: center; gap: 0.5rem; margin: 0.35rem 0; }
-.todo-demo-done span { text-decoration: line-through; opacity: 0.7; }
+.todo-demo-done span:last-child { text-decoration: line-through; opacity: 0.7; }
+.tw-demo-card {
+  margin-top: 0.75rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.65rem;
+  color: #fff;
+  max-width: 28rem;
+}
+.tw-demo-purple { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+.tw-demo-emerald { background: linear-gradient(135deg, #059669, #10b981); }
+.tw-demo-rose { background: linear-gradient(135deg, #e11d48, #f43f5e); }
+.tw-demo-title { margin: 0 0 0.35rem; font-weight: 700; font-size: 0.95rem; font-family: var(--font-mono, ui-monospace, monospace); }
+.tw-demo-body { margin: 0; font-size: 0.88rem; opacity: 0.92; }
 .scheduler-demo-out, .queue-demo-out, .tools-demo-out { white-space: pre-wrap; min-height: 2.5rem; }
 
 .flow-ui-demo { display: flex; flex-direction: column; gap: 1.5rem; }

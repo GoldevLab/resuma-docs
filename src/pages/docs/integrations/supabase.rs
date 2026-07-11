@@ -7,7 +7,7 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"Supabase"</h1>
             <p class="lead">"Hosted PostgreSQL + auth — use Supabase as your Postgres backend with SQLx in Resuma Flow."</p>
 
-            {crate::site::demos::integrations_generic("Supabase", "resuma add supabase")}
+            {crate::site::demos::integrations_supabase()}
 
             <h2>"Setup"</h2>
             {code_block(r#"# .env

@@ -7,7 +7,7 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"i18n"</h1>
             <p class="lead">"Internationalization in Resuma Flow — load locale strings server-side in " <code>"#[load]"</code>"."</p>
 
-            {crate::site::demos::integrations_generic("i18n", "resuma add i18n")}
+            {crate::site::demos::integrations_i18n()}
 
             <h2>"Recommended crates"</h2>
             <ul>

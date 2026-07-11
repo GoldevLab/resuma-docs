@@ -13,15 +13,7 @@ pub fn page(_req: FlowRequest) -> View {
                 <code>"resuma new --template production"</code> " (Fly " <code>"fly.toml"</code> " included)."
             </p>
 
-            {crate::site::live_info(
-                "Environment quick reference",
-                view! {
-                    <>
-                        <p><code>"RESUMA_ENV=production"</code> " · " <code>"RESUMA_TRUST_PROXY=1"</code> " · " <code>"RESUMA_EXEC_API_KEY=…"</code></p>
-                        <p class="demo-muted">"Run " <code>"resuma doctor"</code> " to verify your setup."</p>
-                    </>
-                },
-            )}
+            {crate::site::demos::security_environment()}
 
             <h2>"What you need, by app type"</h2>
             <table class="docs-table">

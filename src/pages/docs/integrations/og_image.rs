@@ -7,7 +7,7 @@ pub fn page(_req: FlowRequest) -> View {
             <h1>"OG Image"</h1>
             <p class="lead">"Dynamic social preview images for link sharing."</p>
 
-            {crate::site::demos::integrations_generic("OG Image", "resuma add og-image")}
+            {crate::site::demos::integrations_og_image()}
 
             <h2>"Static default"</h2>
             <p>"Set " <code>"FlowApp::with_og_image(\"/og.svg\")"</code> " (this docs site). Good for most pages."</p>

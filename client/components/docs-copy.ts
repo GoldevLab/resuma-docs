@@ -5,11 +5,16 @@
 /** Mount Flow widgets (ops dashboard, etc.) inside docs content. */
 export async function initDocsFlow() {
   const scope = document.querySelector<HTMLElement>('.docs-main');
-  if (!scope?.querySelector('[data-r-flow-dashboard], [data-r-flow-graph]')) return;
+  if (!scope) return;
+  const hasDashboard = scope.querySelector('[data-r-flow-dashboard]');
+  const hasStaticGraph = Array.from(scope.querySelectorAll<HTMLElement>("[data-r-flow-graph]")).some(
+    (el) => !el.closest("[data-docs-exec-panel]"),
+  );
+  if (!hasDashboard && !hasStaticGraph) return;
   try {
     if (window.__resumaCoreReady) await window.__resumaCoreReady;
     const mod = await import('/_resuma/flow.js');
-    mod.initFlowWidgets(scope);
+    mod.initFlowWidgets(scope, { flush: false });
   } catch (e) {
     console.warn('[docs-flow]', e);
   }

@@ -125,6 +125,7 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
 
     flow.disconnectFlowWidgets(slot);
     slot.innerHTML = "";
+    slot.dataset.docsExecPanel = "1";
     slot.innerHTML = panelHtml;
     slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
     slot.hidden = false;
