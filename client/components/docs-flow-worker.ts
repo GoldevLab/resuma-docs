@@ -92,8 +92,9 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
       return;
     }
 
-    if (prev) flow.disconnectFlowWidgets(prev);
+    if (prev) flow.disconnectFlowWidgets(slot);
     slot.innerHTML = "";
+    slot.hidden = true;
     slot.innerHTML = panelHtml;
     slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
     slot.hidden = false;

@@ -41,6 +41,16 @@ pub async fn docs_showcase(
     };
 
     ctx.log(format!("docs_showcase: topic=\"{topic}\""));
+    ctx.log("Panel mounting — you have ~25s to try Pause or Cancel while steps run.");
+    ctx.progress(2);
+
+    run_cancellable(&ctx.cancel_token(), async {
+        // Let the browser mount the execution panel before the long steps.
+        tokio::time::sleep(Duration::from_secs(5)).await;
+        Ok::<(), ResumaError>(())
+    })
+    .await?;
+    ctx.check_cancelled()?;
     ctx.progress(5);
 
     let steps = [
@@ -55,7 +65,7 @@ pub async fn docs_showcase(
         ctx.check_cancelled()?;
         run_cancellable(&ctx.cancel_token(), async {
             // Long enough for Pause / Cancel in the live demo UI.
-            tokio::time::sleep(Duration::from_millis(3_000)).await;
+            tokio::time::sleep(Duration::from_millis(4_000)).await;
             Ok::<(), ResumaError>(())
         })
         .await?;

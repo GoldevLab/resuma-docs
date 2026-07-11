@@ -85,6 +85,13 @@ fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
                         "Run worker"
                     </button>
                     <p id="exec-err" class="exec-demo-err" role="alert" hidden></p>
+                    <p class="exec-demo-hint demo-muted">
+                        "After Run worker, click "
+                        <strong>"Pause"</strong>
+                        " or "
+                        <strong>"Cancel"</strong>
+                        " while status is Running (~25s window). Controls are disabled once the graph finishes."
+                    </p>
                     <p class="exec-demo-hint">
                         <a href="/docs/exec">"Resuma OS docs →"</a>
                     </p>
