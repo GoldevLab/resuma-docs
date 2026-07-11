@@ -50,8 +50,11 @@ pub fn exec_showcase_demo() -> View {
                             const blurb = document.getElementById("exec-blurb").value;
                             const errEl = document.getElementById("exec-err");
                             const slot = document.getElementById("exec-flow-slot");
+                            const btn = document.getElementById("exec-start-btn");
                             errEl.hidden = true;
+                            btn.disabled = true;
                             const res = await __resuma.safeAction("start_docs_showcase", [topic, blurb]);
+                            btn.disabled = false;
                             if (!res.ok) {
                                 errEl.textContent = res.error;
                                 errEl.hidden = false;
@@ -59,6 +62,13 @@ pub fn exec_showcase_demo() -> View {
                             }
                             const graphId = res.value.graph_id;
                             const token = res.value.access_token || "";
+                            if (!graphId) {
+                                errEl.textContent = "Worker started but no graph id was returned.";
+                                errEl.hidden = false;
+                                return;
+                            }
+                            const prev = slot.querySelector("[data-r-flow-execution]");
+                            if (prev) prev.dispatchEvent(new Event("resuma:disconnect"));
                             slot.innerHTML = "";
                             const panel = document.createElement("div");
                             panel.className = "r-flow-exec";
@@ -85,11 +95,12 @@ pub fn exec_showcase_demo() -> View {
                             slot.appendChild(panel);
                             slot.hidden = false;
                             if (window.__resumaCoreReady) await window.__resumaCoreReady;
-                            const core = await import("/_resuma/core.js");
-                            if (typeof core.mountFlowWidgets === "function") {
-                                core.mountFlowWidgets(slot);
-                            } else if (typeof core.mountPage === "function") {
-                                core.mountPage();
+                            try {
+                                const flow = await import("/_resuma/flow.js");
+                                flow.initFlowWidgets(slot, { flush: false });
+                            } catch (e) {
+                                errEl.textContent = "Could not load Flow widgets: " + String(e);
+                                errEl.hidden = false;
                             }
                         })}
                     >
