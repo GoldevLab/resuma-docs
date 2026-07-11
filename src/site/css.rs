@@ -1373,7 +1373,21 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
 .todo-demo-list { list-style: none; padding: 0; margin: 0.75rem 0 0; }
 .todo-demo-item { display: flex; align-items: center; gap: 0.5rem; margin: 0.35rem 0; }
 .todo-demo-done span { text-decoration: line-through; opacity: 0.7; }
-.scheduler-demo-out, .queue-demo-out { white-space: pre-wrap; min-height: 2.5rem; }
+.scheduler-demo-out, .queue-demo-out, .tools-demo-out { white-space: pre-wrap; min-height: 2.5rem; }
+
+.flow-ui-demo { display: flex; flex-direction: column; gap: 1.5rem; }
+.flow-ui-demo-section { display: flex; flex-direction: column; gap: 0.65rem; }
+.flow-ui-demo-heading {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.flow-ui-demo-hint { margin: 0; font-size: 0.84rem; }
+.flow-ui-demo-dash .r-flow-dash { margin: 0; }
+.flow-ui-demo-controls { max-width: 28rem; }
+.tools-demo { display: flex; flex-direction: column; gap: 0.75rem; max-width: 32rem; }
 .docs-main h2 {
   font-size: 1.25rem;
   margin: 2rem 0 0.65rem;

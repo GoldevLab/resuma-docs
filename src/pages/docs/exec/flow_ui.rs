@@ -38,7 +38,7 @@ fn OpsPage(initial: ExecStatus) -> View {
 // access_token from StartWorkerResponse — scopes SSE + pause/resume/cancel
 view! {
     {flow_styles()}
-    {flow_execution_auth(&graph_id, Some(&access_token), true)}
+    {flow_execution_auth(&graph_id, true, Some(access_token))}
 }"#)}
 
             <h2>"Components"</h2>

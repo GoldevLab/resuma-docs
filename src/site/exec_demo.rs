@@ -1,8 +1,7 @@
 //! Live Resuma OS worker demo — variants per docs page.
 
 use resuma::prelude::*;
-use resuma::ssr::render_view;
-use resuma_flow::{flow_dashboard_poll, flow_execution_auth, flow_styles};
+use resuma_flow::{flow_dashboard_poll, flow_styles};
 use serde_json::{json, Value};
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -11,12 +10,10 @@ pub enum ExecDemoMode {
     Overview,
     /// `/docs/exec/workers` — focus on `#[worker]` lifecycle (no ops dashboard).
     Workers,
-    /// `/docs/exec/flow_ui` — server-rendered `flow_execution_auth` panel.
-    FlowUi,
 }
 
 #[server]
-async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> {
+pub async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> {
     let started =
         resuma::exec::FlowEngine::start("docs_showcase", json!({ "topic": topic, "blurb": blurb }))
             .await?;
@@ -24,16 +21,6 @@ async fn start_docs_showcase(topic: String, blurb: String) -> Result<Value> {
         "graph_id": started.graph_id.0,
         "access_token": started.access_token.unwrap_or_default(),
     }))
-}
-
-#[server]
-async fn flow_execution_panel_html(graph_id: String, access_token: String) -> Result<String> {
-    let token = if access_token.is_empty() {
-        None
-    } else {
-        Some(access_token)
-    };
-    Ok(render_view(&flow_execution_auth(graph_id, true, token)))
 }
 
 /// Interactive worker + live execution graph (Resuma OS).
@@ -64,16 +51,6 @@ fn exec_showcase_demo_view(mode: ExecDemoMode) -> View {
                     "Starts a real "
                     <code>"#[worker]"</code>
                     " graph on this server — watch logs, progress, pause/resume/cancel, and the final result payload."
-                </p>
-            },
-        ),
-        ExecDemoMode::FlowUi => (
-            "flow_execution_auth panel",
-            view! {
-                <p class="exec-demo-lead">
-                    "After Run worker, the panel below is SSR HTML from "
-                    <code>"resuma_flow::flow_execution_auth"</code>
-                    " (graph, controls, event stream) — same widgets documented on this page."
                 </p>
             },
         ),
@@ -179,9 +156,4 @@ pub fn exec_showcase_demo() -> View {
 /// Workers page — worker lifecycle without ops dashboard.
 pub fn exec_workers_demo() -> View {
     exec_showcase_demo_mode(ExecDemoMode::Workers)
-}
-
-/// Flow UI page — highlights server-rendered resuma-flow widgets.
-pub fn exec_flow_ui_demo() -> View {
-    exec_showcase_demo_mode(ExecDemoMode::FlowUi)
 }

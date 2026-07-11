@@ -5,7 +5,8 @@ mod widgets;
 use crate::site::demo_actions::use_docs_delayed_load;
 use crate::site::demo_actions::{DocsCachedData, DocsSearchData};
 use crate::site::demo_shell::{live_demo, live_info};
-use crate::site::exec_demo::{exec_flow_ui_demo, exec_showcase_demo, exec_workers_demo};
+use crate::site::exec_demo::{exec_showcase_demo, exec_workers_demo};
+use resuma_flow::{flow_dashboard_poll, flow_styles};
 use crate::site::server_demo::server_function_demo;
 use resuma::prelude::*;
 use widgets::*;
@@ -57,25 +58,42 @@ pub fn exec_webhooks() -> View {
 }
 
 pub fn exec_tools() -> View {
-    live_info(
-        "Tools registry",
-        view! {
-            <p>"Register callable tools for AI agents via " <code>"resuma::exec::tools"</code> " — same binary, no sidecar."</p>
-        },
+    live_demo(
+        "echo tool",
+        crate::site::tools_demo::ToolsDemoWidget::render(
+            crate::site::tools_demo::ToolsDemoWidgetProps::default(),
+        ),
     )
 }
 
 pub fn exec_flow_ui() -> View {
-    live_demo("flow_execution_auth", exec_flow_ui_demo())
+    live_demo(
+        "resuma-flow widgets",
+        crate::site::flow_ui_demo::FlowUiDemoWidget::render(
+            crate::site::flow_ui_demo::FlowUiDemoWidgetProps::default(),
+        ),
+    )
 }
 
 pub fn exec_ops() -> View {
-    live_info(
-        "Ops endpoints",
+    let status = resuma::exec::exec_status();
+    live_demo(
+        "flow_dashboard_poll",
         view! {
             <>
-                <p><code>"GET /_resuma/status"</code> " · " <code>"GET /_resuma/metrics"</code></p>
-                <p class="demo-muted">"Prometheus text + JSON snapshot. Use RESUMA_OPS_API_KEY in production."</p>
+                <p class="demo-muted">
+                    "Live ops cards from "
+                    <code>"flow_dashboard_poll"</code>
+                    " — polls "
+                    <code>"exec_status"</code>
+                    " every 5s. HTTP mirror: "
+                    <code>"GET /_resuma/status"</code>
+                    " · "
+                    <code>"GET /_resuma/metrics"</code>
+                    " (Prometheus)."
+                </p>
+                {flow_styles()}
+                {flow_dashboard_poll(5000, Some(status))}
             </>
         },
     )
