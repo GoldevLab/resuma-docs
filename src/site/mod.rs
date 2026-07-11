@@ -11,11 +11,11 @@ pub mod live_demos;
 mod pwa;
 mod queue_demo;
 mod scheduler_demo;
-mod tools_demo;
 mod seo;
 mod server_demo;
 mod sidebar;
 mod todo_demo;
+mod tools_demo;
 mod webhook_demo;
 mod workers;
 
