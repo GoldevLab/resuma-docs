@@ -50,7 +50,9 @@ async fn docs_scheduler_remove(id: String) -> Result<String> {
 /// Interactive scheduler panel for `/docs/exec/scheduler`.
 #[component]
 pub fn SchedulerDemoWidget() -> View {
-    let output = signal("Click a button to list schedules, create a demo job, or run a tick.".into());
+    let output = signal(String::from(
+        "Click a button to list schedules, create a demo job, or run a tick.",
+    ));
     view! {
         <div class="scheduler-demo">
             <p class="demo-muted">
