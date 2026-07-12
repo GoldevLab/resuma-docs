@@ -135,6 +135,7 @@ pub fn TodoDemoWidget() -> View {
     let is_admin = signal(false);
     let status = signal(String::new());
     let error = signal(String::new());
+    let has_error = computed!([error], move || !error.get().is_empty());
 
     visible_task!(
         r#"
@@ -274,7 +275,9 @@ pub fn TodoDemoWidget() -> View {
                     </li>
                 </For>
             </ul>
-            <p id="todo-demo-error" class="demo-alert demo-alert--error" role="alert">{error}</p>
+            <Show when={has_error}>
+                <p id="todo-demo-error" class="demo-alert demo-alert--error" role="alert">{error}</p>
+            </Show>
             <p class="demo-status">{status}</p>
             <p class="demo-hint">
                 "Production (" <code>"RESUMA_ENV=production"</code> "): validation returns "

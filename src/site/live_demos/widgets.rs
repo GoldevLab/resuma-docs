@@ -97,6 +97,7 @@ pub fn island_demo() -> View {
 pub fn ServerActionWidget() -> View {
     let result = signal(String::new());
     let error = signal(String::new());
+    let has_error = computed!([error], move || !error.get().is_empty());
     view! {
         <>
             <p class="demo-muted">
@@ -131,7 +132,9 @@ pub fn ServerActionWidget() -> View {
                 })}>"docs_add(2,40)"</button>
             </div>
             <p class="demo-output">{result}</p>
-            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            <Show when={has_error}>
+                <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            </Show>
         </>
     }
 }
@@ -140,6 +143,7 @@ pub fn ServerActionWidget() -> View {
 pub fn SecurityServerActionWidget() -> View {
     let result = signal(String::new());
     let error = signal(String::new());
+    let has_error = computed!([error], move || !error.get().is_empty());
     view! {
         <>
             <p class="demo-muted">
@@ -180,7 +184,9 @@ pub fn SecurityServerActionWidget() -> View {
                 })}>"Fail validation"</button>
             </div>
             <p class="demo-output">{result}</p>
-            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            <Show when={has_error}>
+                <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            </Show>
         </>
     }
 }
@@ -191,6 +197,7 @@ pub fn WhoAmIWidget() -> View {
     let roles = signal(String::new());
     let authenticated = signal(false);
     let error = signal(String::new());
+    let has_error = computed!([error], move || !error.get().is_empty());
 
     visible_task!(
         r#"
@@ -277,7 +284,9 @@ pub fn WhoAmIWidget() -> View {
                     </dd>
                 </div>
             </dl>
-            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            <Show when={has_error}>
+                <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            </Show>
         </>
     }
 }
@@ -290,6 +299,7 @@ pub fn SecurityEnvWidget() -> View {
     let csrf = signal("—".to_string());
     let origin_check = signal("—".to_string());
     let error = signal(String::new());
+    let has_error = computed!([error], move || !error.get().is_empty());
 
     visible_task!(
         r#"
@@ -352,7 +362,9 @@ pub fn SecurityEnvWidget() -> View {
                     <dd><code>{origin_check}</code></dd>
                 </div>
             </dl>
-            <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            <Show when={has_error}>
+                <p class="demo-alert demo-alert--error" role="alert">{error}</p>
+            </Show>
         </>
     }
 }

@@ -50,6 +50,7 @@ async fn docs_scheduler_remove(id: String) -> Result<String> {
 /// Interactive scheduler panel for `/docs/exec/scheduler`.
 #[component]
 pub fn SchedulerDemoWidget() -> View {
+    let output = signal(String::new());
     view! {
         <div class="scheduler-demo">
             <p class="demo-muted">
@@ -60,34 +61,34 @@ pub fn SchedulerDemoWidget() -> View {
                 "."
             </p>
             <div class="demo-row">
-                <button type="button" class="btn btn-sm" id="sched-list-btn" onClick={js!(async () => {
-                    const out = document.getElementById("sched-out");
-                    out.textContent = "Loading schedules…";
+                <button type="button" class="btn btn-sm" onClick={js!(async () => {
+                    state.output.set("Loading schedules…");
                     const res = await __resuma.safeAction("docs_scheduler_list", []);
-                    if (!res.ok) { out.textContent = res.error; return; }
-                    const jobs = res.value.jobs ?? [];
-                    if (!jobs.length) {
-                        out.textContent = "No schedules yet — create one below.";
+                    if (!res.ok) {
+                        state.output.set(res.error);
                         return;
                     }
-                    out.textContent = jobs.map(j =>
+                    const jobs = res.value.jobs ?? [];
+                    if (!jobs.length) {
+                        state.output.set("No schedules yet — create one below.");
+                        return;
+                    }
+                    state.output.set(jobs.map(j =>
                         j.name + " (" + j.id + ") - cron " + j.cron + " - worker " + j.worker + " - queue " + j.queue
-                    ).join("\n");
+                    ).join("\n"));
                 })}>"List jobs"</button>
-                <button type="button" class="btn btn-sm btn-primary" id="sched-create-btn" onClick={js!(async () => {
-                    const out = document.getElementById("sched-out");
-                    out.textContent = "Creating schedule…";
+                <button type="button" class="btn btn-sm btn-primary" onClick={js!(async () => {
+                    state.output.set("Creating schedule…");
                     const res = await __resuma.safeAction("docs_scheduler_create", []);
-                    out.textContent = res.ok ? res.value : res.error;
+                    state.output.set(res.ok ? res.value : res.error);
                 })}>"Create demo job"</button>
-                <button type="button" class="btn btn-sm btn-ghost" id="sched-tick-btn" onClick={js!(async () => {
-                    const out = document.getElementById("sched-out");
-                    out.textContent = "Running tick…";
+                <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {
+                    state.output.set("Running tick…");
                     const res = await __resuma.safeAction("docs_scheduler_tick", []);
-                    out.textContent = res.ok ? res.value : res.error;
+                    state.output.set(res.ok ? res.value : res.error);
                 })}>"Run tick"</button>
             </div>
-            <pre id="sched-out" class="demo-output scheduler-demo-out" aria-live="polite"></pre>
+            <pre class="demo-output scheduler-demo-out" aria-live="polite">{output}</pre>
         </div>
     }
 }
