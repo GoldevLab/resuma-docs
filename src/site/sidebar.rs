@@ -23,7 +23,7 @@ macro_rules! nav {
 
 pub fn doc_sidebar(_active_path: &str) -> View {
     view! {
-        <aside class="docs-sidebar">
+        <aside class="docs-sidebar" data-r-nav-exclusive="true">
             <form method="get" action="/docs/search" class="docs-search-form">
                 <input type="search" name="q" placeholder="Search docs..." aria-label="Search docs" />
             </form>

@@ -129,18 +129,21 @@ export function updateDocsSidebarNav(path = location.pathname + location.search)
   sidebar.querySelectorAll<HTMLAnchorElement>("a[data-r-nav]").forEach((a) => {
     const href = a.getAttribute("href");
     if (!href) return;
-    const activeClass = a.getAttribute("data-r-active-class") ?? "docs-nav-link--active";
     const exact = a.hasAttribute("data-r-nav-exact");
-    const active = sidebarHrefMatches(href, path, exact);
-    a.className = active ? `docs-nav-link ${activeClass}` : "docs-nav-link";
-    a.removeAttribute("aria-current");
-    if (active && href.length > bestLen) {
+    if (!sidebarHrefMatches(href, path, exact)) return;
+    if (href.length > bestLen) {
       best = a;
       bestLen = href.length;
     }
   });
 
-  best?.setAttribute("aria-current", "page");
+  sidebar.querySelectorAll<HTMLAnchorElement>("a[data-r-nav]").forEach((a) => {
+    const activeClass = a.getAttribute("data-r-active-class") ?? "docs-nav-link--active";
+    const isBest = a === best;
+    a.className = isBest ? `docs-nav-link ${activeClass}` : "docs-nav-link";
+    if (isBest) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
 }
 
 function scrollActiveSidebarLink() {
