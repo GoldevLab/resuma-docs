@@ -107,7 +107,7 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
       syncFlowControls: (root: HTMLElement) => void;
     };
     try {
-      flow = await import("/_resuma/flow.js?v=1.2.14");
+      flow = await import("/_resuma/flow.js?v=1.2.15");
     } catch (e) {
       errEl.textContent = "Could not load Flow widgets: " + String(e);
       errEl.hidden = false;
