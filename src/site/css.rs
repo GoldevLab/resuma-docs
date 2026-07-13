@@ -2053,9 +2053,12 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
 }
 .exec-flow-slot .r-worker-panel__actions .r-flow-control:disabled,
 .exec-flow-slot .r-worker-panel__actions .btn:disabled {
-  opacity: 0.42;
+  opacity: 0.38;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
+  filter: grayscale(0.35);
+  pointer-events: none;
 }
 .exec-flow-slot .r-worker-panel__actions .r-flow-control--danger {
   color: #fff;
@@ -2068,6 +2071,15 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
     0 2px 8px rgba(15, 23, 42, 0.1),
     inset 0 1px 1px rgba(255, 255, 255, 0.55),
     inset 0 -12px 24px rgba(0, 0, 0, 0.12);
+}
+.exec-flow-slot .r-worker-panel__actions .r-flow-control--danger:disabled {
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(15, 23, 42, 0.22);
+  border-color: rgba(15, 23, 42, 0.12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  opacity: 0.45;
 }
 .exec-flow-slot .r-worker-panel__actions .r-flow-control--danger:hover:not(:disabled) {
   color: #fff;

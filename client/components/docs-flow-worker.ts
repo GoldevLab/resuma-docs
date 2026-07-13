@@ -107,7 +107,7 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
       syncFlowControls: (root: HTMLElement) => void;
     };
     try {
-      flow = await import("/_resuma/flow.js");
+      flow = await import("/_resuma/flow.js?v=1.2.14");
     } catch (e) {
       errEl.textContent = "Could not load Flow widgets: " + String(e);
       errEl.hidden = false;
@@ -132,8 +132,9 @@ export async function runDocsFlowWorker(key: DemoKey): Promise<void> {
     slot.querySelectorAll("style[data-r-flow-styles]").forEach((n) => n.remove());
     slot.hidden = false;
     flow.initFlowWidgets(slot, { flush: false });
-    flow.syncFlowControls(slot);
-    window.setTimeout(() => flow.syncFlowControls(slot), 600);
+    flow.syncFlowControls?.(slot);
+    window.setTimeout(() => flow.syncFlowControls?.(slot), 400);
+    window.setTimeout(() => flow.syncFlowControls?.(slot), 1500);
     setGuideStep(
       ids.guide,
       3,

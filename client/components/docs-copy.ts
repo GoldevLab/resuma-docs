@@ -15,7 +15,7 @@ export async function initDocsFlow() {
   if (!hasDashboard && !hasStaticGraph) return;
   try {
     if (window.__resumaCoreReady) await window.__resumaCoreReady;
-    const mod = await import("/_resuma/flow.js");
+    const mod = await import("/_resuma/flow.js?v=1.2.14");
     mod.initFlowWidgets(scope, {
       flush: false,
       exclude: "[data-docs-exec-panel]",
