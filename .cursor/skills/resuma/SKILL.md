@@ -214,9 +214,8 @@ view! {
 - Cookie + `localStorage`; HTTPS sets `Secure`. Ids: `[A-Za-z0-9_-]`, max 48. `HtmlTheme::new(["light","dark"])` infers dark `color-scheme` (`dark` / `night` / `midnight` / official dark ids / names containing `dark`). Quote boot-script keys so ids like `2tone` stay valid JS.
 - Copy official palettes: Theme menu **Copy this CSS** / **Copy all palettes** / **Download CSS** (`[data-theme-copy]` in the chrome boot — not a layout `onClick`), `resuma theme [--id] [--out public/themes.css]`, docs `/themes.css`, or `GET /_resuma/themes.css`. Add more `html[data-theme="…"]` blocks as you invent themes.
 - `prefers-color-scheme` listener when nothing is stored.
-- `set_page_theme("slate")` forces the palette for that response: SSR emits `data-theme-forced`, the boot keeps it over the visitor's stored pick, and SPA nav restores the pick on leaving. `provide_theme` / `theme_css_vars` are **one-shot inline snapshots** — they do not follow `html[data-theme]`.
-- SPA NavLink **must not copy** `data-theme` from prefetch HTML (the prefetch can be older than a palette pick) — the only exception is a `data-theme-forced` page. `dir` **is** copied so RTL survives.
-- `<details open>` / `<dialog open>` are boolean attrs, not events; lowercase `on*` only becomes a handler for real DOM event names (`onclick`, `ontoggle`). Custom events: `on:my-event`.
+- `set_page_theme("slate")` overrides SSR for that response. `provide_theme` / `theme_css_vars` are **one-shot inline snapshots** — they do not follow `html[data-theme]`.
+- SPA NavLink **must not copy** `data-theme` from prefetch HTML (the prefetch can be older than a palette pick). `dir` **is** copied so RTL survives.
 - Skip View Transitions while `:popover-open` / `dialog[open]`, and on soft `invalidate` / `loader_poll` (`!pushState && !scroll`).
 
 ### Desktop helpers (`__resuma.*`)
@@ -517,6 +516,9 @@ Build runtime assets: `cd runtime && npm run build` then copy `loader.js`, `core
 Canonicals, Open Graph, JSON-LD, sitemap `<loc>`, and `llms.txt` links all follow **`SITE_URL`** (no trailing slash). Ship on `*.fly.dev` today; tomorrow set `SITE_URL=https://docs.example.com` and redeploy. Do not hardcode the host in page bodies — use relative `/docs/…` links.
 
 Guide: https://resuma-docs.fly.dev/docs/integrations/seo_geo
+
+Microsaas dogfood (forgeyt / under200kb): JSON-LD is never CSP-nonced; use `deferred_module_loader` / `deferred_external_script` for ads/GA; `CspConfig::allow_google_adsense()` instead of `RESUMA_CSP=0`; `FlowApp::with_security_txt`; production `fly.toml` uses `pristine` + `min_machines_running = 1`. Details: `docs/DEPLOY.md` § Microsaas dogfood. Custom domain without mail: SPF `-all`, DMARC `reject`, null MX `0 .`.
+
 
 ```rust
 // Per page (layout or page fn). View is built before the document head, including streaming SSR.

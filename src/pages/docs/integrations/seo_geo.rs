@@ -98,6 +98,32 @@ SITE_URL = "https://docs.example.com""#)}
                 "This docs site is already wired that way. Do not add the 301 until the custom host serves HTTPS."
             </p>
 
+            <h2>"JSON-LD stays nonce-free"</h2>
+            <p>
+                "Resuma still nonces executable inline " <code>"&lt;script&gt;"</code>
+                " / " <code>"&lt;style&gt;"</code>
+                " for CSP. Structured data (" <code>"application/ld+json"</code>
+                ") is "
+                <strong>"never"</strong>
+                " nonced — scanners such as monitor.works often miss "
+                <code>"type=\"application/ld+json\" nonce=…"</code>
+                ". Prefer " <code>"set_page_json_ld"</code>
+                " / SeoKit graphs; they emit clean script tags."
+            </p>
+
+            <h2>"Ads and analytics without tanking TBT"</h2>
+            <p>
+                "Eager AdSense/gtag wrecks mobile Total Blocking Time in lab tools. Use "
+                <code>"deferred_module_loader"</code>
+                " / " <code>"deferred_external_script"</code>
+                " (engagement or idle) and "
+                <code>"CspConfig::allow_google_adsense()"</code>
+                " instead of " <code>"RESUMA_CSP=0"</code>
+                ". Serve " <code>"/.well-known/security.txt"</code>
+                " with " <code>"FlowApp::with_security_txt"</code>
+                ". Full checklist: Deploy docs → Microsaas dogfood."
+            </p>
+
             <h2>"Per-page title and description"</h2>
             <p>
                 "Call these during render (layout or page). Streaming SSR still sees them: the view is built before the document head is sent."
