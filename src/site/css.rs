@@ -1968,6 +1968,55 @@ a.card { text-decoration: none; color: inherit; }
 }
 
 .docs-main { min-width: 0; max-width: 48rem; position: relative; }
+.docs-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 1rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.docs-crumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+.docs-crumbs a:hover { color: var(--accent); }
+.docs-crumbs [aria-current="page"] { color: var(--text); }
+.docs-crumb-sep { opacity: 0.55; }
+.docs-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.docs-pager a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-width: min(46%, 16rem);
+  text-decoration: none;
+  color: var(--text);
+  line-height: 1.35;
+}
+.docs-pager small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.docs-pager-next {
+  margin-left: auto;
+  text-align: right;
+  align-items: flex-end;
+}
+.docs-pager a:focus-visible,
+.docs-crumbs a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 .docs-copy-nav {
   flex-shrink: 0;
   margin: 0 0 0.65rem;

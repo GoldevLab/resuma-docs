@@ -90,12 +90,15 @@ SITE_URL = "https://docs.example.com""#)}
             <ol>
                 <li>"Add the hostname in Fly (" <code>"fly certs add"</code> ") and wait for HTTPS."</li>
                 <li>"Set " <code>"SITE_URL"</code> " to the new origin and deploy."</li>
-                <li>"301 the old " <code>".fly.dev"</code> " host to the new origin (Fly rewrite or a tiny redirect app)."</li>
+                <li>"The app 301s " <code>"resuma-docs.fly.dev"</code> " to " <code>"SITE_URL"</code> " when those hosts differ. Health checks use " <code>"/health"</code> " so the redirect does not fail the machine."</li>
                 <li>"New Search Console / Bing property on the custom domain; submit " <code>"/sitemap.xml"</code> "."</li>
                 <li>"Keep internal links relative (" <code>"/docs/…"</code> ") so HTML does not bake the old host."</li>
             </ol>
             <p>
-                "This docs site is already wired that way. Do not add the 301 until the custom host serves HTTPS."
+                "The redirect stays off while " <code>"SITE_URL"</code>
+                " is still " <code>"https://resuma-docs.fly.dev"</code>
+                ". Point " <code>"SITE_URL"</code>
+                " at the new origin only after the certificate is serving HTTPS."
             </p>
 
             <h2>"JSON-LD stays nonce-free"</h2>

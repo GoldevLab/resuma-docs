@@ -21,6 +21,7 @@ mod seo;
 mod server_demo;
 mod sidebar;
 mod theme;
+mod toc;
 mod todo_demo;
 mod todo_security;
 pub use todo_security::install as install_security_middleware;
@@ -48,10 +49,11 @@ pub use hero_bg::hero_particles_mount;
 pub use live_demos as demos;
 pub use pwa::config as pwa_config;
 pub use seo::{
-    apply_page_seo, json_ld, json_ld_faq, seo_kit, site_description, site_title, site_url,
-    view_transition_name,
+    apply_page_seo, json_ld, json_ld_faq, redirect_legacy_fly_host, seo_kit, site_description,
+    site_title, site_url, view_transition_name,
 };
 pub use sidebar::doc_sidebar;
+pub use toc::{doc_crumbs, doc_pager};
 
 use resuma::prelude::*;
 

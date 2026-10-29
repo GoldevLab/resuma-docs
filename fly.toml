@@ -17,8 +17,10 @@ primary_region = 'iad'
   RESUMA_DATA_DIR = '/app/.resuma'
   CARGO_MANIFEST_DIR = '/app'
   SITE_URL = 'https://resuma-docs.fly.dev'
-  # After a custom domain (fly certs add + DNS): change SITE_URL to that origin and redeploy.
-  # Canonicals, OG, sitemap, and llms.txt all follow SITE_URL. Then 301 the old .fly.dev host.
+  # Domain cutover: fly certs add + DNS, then set SITE_URL to that https origin and deploy.
+  # Canonicals, OG, sitemap, llms.txt, and security.txt follow SITE_URL.
+  # Requests whose Host is resuma-docs.fly.dev 301 to SITE_URL once the hosts differ.
+  # Leave SITE_URL on this fly.dev origin until the certificate is serving HTTPS.
   RESUMA_ENV = 'production'
   RESUMA_TRUST_PROXY = '1'
   # Fly edge proxies use the fdaa::/16 private network — required by resuma 1.2+.
@@ -40,7 +42,7 @@ primary_region = 'iad'
     interval = '15s'
     method = 'get'
     timeout = '5s'
-    path = '/'
+    path = '/health'
 
 [[vm]]
   size = 'shared-cpu-1x'

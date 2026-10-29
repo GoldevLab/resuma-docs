@@ -151,6 +151,18 @@ pub fn seo_kit(site_url: &str) -> SeoKit {
             "Architecture",
             format!("{base}/docs/architecture — SSR HTML, serialized signals, 1006 B loader."),
         )
+        .with_llms_section(
+            "Section map",
+            format!(
+                "Introduction {base}/docs. Tutorial {base}/docs/getting_started. \
+                 CLI {base}/docs/cli. Benchmark {base}/docs/benchmark. \
+                 Examples {base}/docs/examples. \
+                 Resuma OS {base}/docs/exec. Security {base}/docs/security. \
+                 Components {base}/docs/components. Flow {base}/docs/flow. \
+                 Integrations {base}/docs/integrations. Cookbook {base}/docs/cookbook. \
+                 Package {base}/docs/package. API {base}/docs/api."
+            ),
+        )
 }
 
 /// FAQPage JSON-LD that must match visible Q&A on `/docs/faq`.
@@ -178,7 +190,8 @@ pub fn json_ld_faq(site_url: &str, items: &[(&str, &str)]) -> String {
                 "name": "Resuma FAQ",
                 "isPartOf": { "@id": format!("{base}/#website") },
                 "mainEntity": main_entity
-            }
+            },
+            breadcrumb_node(base, "/docs/faq")
         ]
     })
     .to_string()
@@ -484,7 +497,10 @@ fn page_description_for(path: &str) -> String {
     }
 }
 
-/// Set title, description, robots, and homepage JSON-LD for the current request.
+/// Set title, description, canonical, and JSON-LD for the current request.
+///
+/// `/docs/faq` keeps the FAQ graph the page already set (the page runs before
+/// this layout). Every other guide in the sidebar gets one TechArticle graph.
 pub fn apply_page_seo() {
     let path = current_request()
         .map(|r| r.path)
@@ -494,13 +510,23 @@ pub fn apply_page_seo() {
     if path == "/" {
         set_page_title(home_title());
         set_page_description(site_description());
+        set_page_canonical(canonical_for(path));
         set_page_json_ld(json_ld_home(&site_url()));
         return;
     }
 
-    if path == "/docs/search" {
-        set_page_title("Search docs | Resuma Docs");
-        set_page_description(page_description_for(path));
+    if path == "/docs/search" || !super::toc::in_toc(path) {
+        let title = if path == "/docs/search" {
+            "Search docs | Resuma Docs"
+        } else {
+            "Not found | Resuma Docs"
+        };
+        set_page_title(title);
+        set_page_description(if path == "/docs/search" {
+            page_description_for(path)
+        } else {
+            "That page is not in the Resuma documentation.".into()
+        });
         set_page_robots("noindex, follow");
         return;
     }
@@ -508,4 +534,156 @@ pub fn apply_page_seo() {
     let title = format!("{} | Resuma Docs", nav_title(path));
     set_page_title(title);
     set_page_description(page_description_for(path));
+    set_page_canonical(canonical_for(path));
+    if path != "/docs/faq" {
+        set_page_json_ld(json_ld_doc(&site_url(), path));
+    }
+}
+
+fn canonical_for(path: &str) -> String {
+    let base = site_url();
+    let base = base.trim().trim_end_matches('/');
+    if path.is_empty() || path == "/" {
+        format!("{base}/")
+    } else {
+        format!("{base}{path}")
+    }
+}
+
+fn json_ld_doc(site_url: &str, path: &str) -> String {
+    let base = site_url.trim_end_matches('/');
+    let title = nav_title(path);
+    let description = page_description_for(path);
+    let url = format!("{base}{path}");
+    serde_json::json!({
+        "@context": "https://schema.org",
+        "@graph": [
+            organization_node(base),
+            website_node(base),
+            {
+                "@type": "TechArticle",
+                "@id": format!("{url}#article"),
+                "headline": title,
+                "name": title,
+                "description": description,
+                "url": url,
+                "inLanguage": "en",
+                "isPartOf": { "@id": format!("{base}/#website") },
+                "author": { "@id": format!("{base}/#organization") },
+                "publisher": { "@id": format!("{base}/#organization") },
+                "mainEntityOfPage": { "@type": "WebPage", "@id": url }
+            },
+            breadcrumb_node(base, path)
+        ]
+    })
+    .to_string()
+}
+
+fn breadcrumb_node(base: &str, path: &str) -> serde_json::Value {
+    let items: Vec<serde_json::Value> = super::toc::crumb_trail(path)
+        .into_iter()
+        .enumerate()
+        .map(|(index, (name, href))| {
+            let item = if href == "/" {
+                format!("{base}/")
+            } else {
+                format!("{base}{href}")
+            };
+            serde_json::json!({
+                "@type": "ListItem",
+                "position": index + 1,
+                "name": name,
+                "item": item
+            })
+        })
+        .collect();
+    serde_json::json!({
+        "@type": "BreadcrumbList",
+        "@id": format!("{base}{path}#breadcrumb"),
+        "itemListElement": items
+    })
+}
+
+/// 301 `resuma-docs.fly.dev` to [`site_url`] once those hosts differ.
+///
+/// Idle while `SITE_URL` is still the fly.dev origin. Skips probes that are not
+/// public page traffic. A redirect the page already staged (the docker alias)
+/// is rewritten onto the canonical origin instead of dropped.
+pub fn redirect_legacy_fly_host() {
+    let Some(req) = current_request() else {
+        return;
+    };
+    let origin = site_url();
+    let origin = origin.trim().trim_end_matches('/').to_string();
+    let Some(canonical_host) = origin_host(&origin) else {
+        return;
+    };
+    let legacy = request_host(&req).eq_ignore_ascii_case(LEGACY_FLY_HOST)
+        && !canonical_host.eq_ignore_ascii_case(LEGACY_FLY_HOST);
+    if !legacy || req.path == "/health" || req.path == "/ready" {
+        return;
+    }
+    let ua = req.header("user-agent").unwrap_or("");
+    if ua.to_ascii_lowercase().contains("health") {
+        return;
+    }
+
+    let staged = resuma::server::page_cache::take_response_redirect();
+    let target = match staged.as_deref() {
+        Some(loc) if loc.starts_with("https://") || loc.starts_with("http://") => loc.to_string(),
+        Some(loc) if loc.starts_with('/') => format!("{origin}{loc}"),
+        Some(loc) => format!("{origin}/{loc}"),
+        None => {
+            let mut loc = format!("{origin}{}", req.path);
+            if !req.query.is_empty() {
+                let query = req
+                    .query
+                    .iter()
+                    .map(|(key, value)| {
+                        format!(
+                            "{}={}",
+                            encode_query_component(key),
+                            encode_query_component(value)
+                        )
+                    })
+                    .collect::<Vec<_>>()
+                    .join("&");
+                loc.push('?');
+                loc.push_str(&query);
+            }
+            loc
+        }
+    };
+    stage_response_status(301);
+    stage_response_redirect(target);
+}
+
+const LEGACY_FLY_HOST: &str = "resuma-docs.fly.dev";
+
+fn origin_host(origin: &str) -> Option<&str> {
+    let rest = origin.split("://").nth(1)?;
+    let host = rest.split('/').next()?;
+    Some(host.split(':').next().unwrap_or(host))
+}
+
+fn request_host(req: &FlowRequest) -> String {
+    let raw = req
+        .header("x-forwarded-host")
+        .or_else(|| req.header("host"))
+        .unwrap_or("");
+    let raw = raw.split(',').next().unwrap_or(raw).trim();
+    raw.split(':').next().unwrap_or(raw).to_string()
+}
+
+fn encode_query_component(value: &str) -> String {
+    let mut out = String::new();
+    for byte in value.bytes() {
+        match byte {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+                out.push(char::from(byte));
+            }
+            _ => out.push_str(&format!("%{byte:02X}")),
+        }
+    }
+    out
 }

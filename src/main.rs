@@ -11,6 +11,7 @@ use site::DocsCopyPageToolbar;
 
 #[layout("/")]
 fn SiteLayout() -> View {
+    site::redirect_legacy_fly_host();
     site::apply_page_seo();
     site::provide_docs_theme();
     let vt = site::view_transition_name(
@@ -98,11 +99,22 @@ fn DocsLayout() -> View {
             {site::doc_sidebar(&path)}
             <main id="main-content" class="docs-main">
                 <DocsCopyPageToolbar />
-                {with_view_transition(vt, vec![Child::View(view! { <Slot /> })])}
+                {with_view_transition(vt, vec![Child::View(view! {
+                    <>
+                        {site::doc_crumbs(&path)}
+                        <Slot />
+                        {site::doc_pager(&path)}
+                    </>
+                })])}
             </main>
             <div id="modals"></div>
         </div>
     }
+}
+
+fn docs_not_found() -> View {
+    set_page_robots("noindex, follow");
+    resuma::not_found_page()
 }
 
 #[tokio::main]
@@ -151,7 +163,7 @@ async fn main() -> std::io::Result<()> {
         )
         .route("/_resuma/demo/webhook-inbox", post(site::inbox_handler))
         .streaming(true)
-        .not_found(not_found_page)
+        .not_found(docs_not_found)
         .auto_pages(pages_root, PagesRegistry)
         .serve(serve)
         .await
