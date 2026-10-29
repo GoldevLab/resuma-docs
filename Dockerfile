@@ -12,6 +12,7 @@ WORKDIR /app
 
 COPY Cargo.toml rust-toolchain.toml ./
 COPY src ./src
+COPY public ./public
 COPY --from=client /app/static/client ./static/client
 
 RUN cargo build --release
