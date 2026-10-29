@@ -727,7 +727,7 @@ pub fn CacheControlWidget() -> View {
             </dl>
             <div class="demo-row">
                 <button type="button" class="btn btn-sm" onClick={js!(async () => {
-                    const mod = await import("/static/client/docs-copy.js?v=1.3.1");
+                    const mod = await import("/static/client/docs-copy.js?v=2.0.1");
                     await mod.refreshCacheDemo?.();
                 })}>"Refresh headers"</button>
                 <button type="button" class="btn btn-sm btn-ghost" onClick={js!(async () => {

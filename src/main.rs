@@ -43,6 +43,7 @@ fn SiteLayout() -> View {
                     <a href="https://github.com/GoldevLab/resuma" class="btn btn-primary">"GitHub"</a>
                 </div>
             </div>
+            <span class="nav-progress" aria-hidden="true"></span>
         </header>
         {with_view_transition(vt, vec![Child::View(view! { <Slot /> })])}
         <footer class="site-footer">
@@ -72,7 +73,7 @@ fn DocsLayout() -> View {
         async (_state, __resuma) => {
             const load = async () => {
                 try {
-                    const mod = await import('/static/client/docs-copy.js?v=1.3.1');
+                    const mod = await import('/static/client/docs-copy.js?v=2.0.1');
                     mod.initDocsCopy?.();
                     mod.initDocsSidebar?.();
                     mod.initCacheDemo?.();
@@ -116,10 +117,16 @@ async fn main() -> std::io::Result<()> {
     let json_ld = site::json_ld(&site_url);
     let public_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("public");
 
+    let mut serve = FlowServeOptions::default();
+    // Client modules are same-origin imports. strict-dynamic would ignore 'self'
+    // and the docs islands would not load.
+    serve.security.csp.strict_dynamic = false;
+
     FlowApp::new()
         .with_title(site::site_title())
         .with_description(site::site_description())
         .with_site_url(site_url.clone())
+        .with_security_txt(&site_url, None)
         .with_og_image("/og.png")
         .with_json_ld(json_ld)
         .with_seo_kit(site::seo_kit(&site_url))
@@ -146,6 +153,6 @@ async fn main() -> std::io::Result<()> {
         .streaming(true)
         .not_found(not_found_page)
         .auto_pages(pages_root, PagesRegistry)
-        .serve(FlowServeOptions::default())
+        .serve(serve)
         .await
 }

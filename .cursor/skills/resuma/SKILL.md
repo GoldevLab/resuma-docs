@@ -596,5 +596,5 @@ Register with `FlowApp::client_asset("hero-particles", include_bytes!("../static
 - https://resuma-docs.fly.dev/docs/integrations/seo_geo
 - https://resuma-docs.fly.dev/docs/integrations/ai_assistant
 - https://resuma-docs.fly.dev/docs/cookbook/deploy
-- https://docs.rs/resuma/1.3.1
+- https://docs.rs/resuma/2.0.1
 - In-repo: `docs/SECURITY.md`, `ROADMAP.md`, `CHANGELOG.md`, `docs/FLOW_COOKBOOK.md`

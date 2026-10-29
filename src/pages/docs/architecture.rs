@@ -41,7 +41,7 @@ serialize signals              first click → core.js ({} gzip)\n\
 <script type="module" src="/_resuma/loader.js"></script>"#)}
 
             <h2>"Component boundaries"</h2>
-            <p>"Each " <code>"#[component]"</code> " emits " <code>"<resuma-boundary data-r-chunk=\"Counter\">"</code> " for viewport prefetch. Handler JS loads from " <code>"/_resuma/handler/Counter.js"</code> " — not inlined in the payload."</p>
+            <p>"Each " <code>"#[component]"</code> " emits " <code>"<resuma-boundary data-r-chunk=\"Counter\">"</code> " for viewport prefetch. Since 2.0 the handler source is a same-origin ESM chunk at " <code>"/_resuma/handler/Counter.js"</code> ". It is not embedded in the HTML, and the runtime does not use " <code>"eval"</code> "."</p>
 
             <h2>"Crates"</h2>
             <table class="docs-table">

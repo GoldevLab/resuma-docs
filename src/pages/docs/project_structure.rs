@@ -27,7 +27,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-resuma = "1.3.1"
+resuma = "2.0.1"
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }"#)}
 

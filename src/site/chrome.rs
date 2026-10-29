@@ -43,7 +43,7 @@ pub fn explore_nav() -> View {
                         </NavLink>
                         <NavLink href="/docs/benchmark" class="explore-tile" activeClass="explore-tile--active" exact=true>
                             <strong>"Benchmark"</strong>
-                            <span>"1021 B vs hydration"</span>
+                            <span>"1006 B vs hydration"</span>
                         </NavLink>
                         <NavLink href="/docs/components/popup" class="explore-tile" activeClass="explore-tile--active" exact=true>
                             <strong>"Popup"</strong>

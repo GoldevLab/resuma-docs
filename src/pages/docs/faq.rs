@@ -12,7 +12,7 @@ const FAQ_LD: &[(&str, &str)] = &[
     ),
     (
         "How big is the client bundle?",
-        "Pages with no signals or handlers ship zero Resuma runtime. Interactive pages parse HTML immediately with a ~1021 B gzip loader, then fetch core.js plus the handler chunk on the first click. See /docs/benchmark.",
+        "Pages with no signals or handlers ship zero Resuma runtime. Interactive pages parse HTML immediately with a ~1006 B gzip loader, then fetch core.js plus the handler chunk on the first click. See /docs/benchmark.",
     ),
     (
         "Do I need Node.js?",

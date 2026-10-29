@@ -167,6 +167,10 @@ body::after {
   body::after,
   .liquid-blob,
   .hero-panel { animation: none !important; }
+  html.is-navigating .nav-progress { animation: none; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none; }
 }
 
 /* Floating liquid glass orbs (decorative) */
@@ -357,6 +361,9 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   position: sticky;
   top: 0;
   z-index: 50;
+  container-type: scroll-state;
+  container-name: site-header;
+  view-transition-name: site-header;
   background: color-mix(in srgb, var(--glass-fill) 82%, var(--header-bg));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(var(--glass-bright));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(var(--glass-bright));
@@ -414,6 +421,44 @@ pre.code code { background: none; border: 0; padding: 0; backdrop-filter: none; 
   color: var(--text);
   background: var(--nav-hover);
   text-decoration: none;
+}
+.site-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.nav-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0.2);
+  transform-origin: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+html.is-navigating .nav-progress {
+  opacity: 1;
+  animation: docs-progress 0.9s ease-in-out infinite;
+}
+@keyframes docs-progress {
+  0% { transform: scaleX(0.18); opacity: 0.35; }
+  50% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(0.18); opacity: 0.35; }
+}
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+@container site-header scroll-state(stuck: top) {
+  .site-header::after { opacity: 1; }
 }
 .header-actions { display: flex; gap: 0.45rem; flex-wrap: nowrap; align-items: center; margin-left: auto; }
 
@@ -1726,6 +1771,7 @@ a.card { text-decoration: none; color: inherit; }
 /* ── Footer ─────────────────────────────────────────────────────────── */
 
 .site-footer {
+  view-transition-name: site-footer;
   border-top: 1px solid var(--header-border);
   padding: 2.25rem 1.25rem;
   text-align: center;
@@ -2810,6 +2856,9 @@ a.card { text-decoration: none; color: inherit; }
   display: block;
   min-height: 0;
 }
+
+::view-transition-group(site-header),
+::view-transition-group(site-footer) { animation: none; }
 
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root) {

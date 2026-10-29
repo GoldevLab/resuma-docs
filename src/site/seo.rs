@@ -14,7 +14,7 @@ pub fn home_title() -> &'static str {
 
 pub fn site_description() -> &'static str {
     "Official docs for Resuma, the Rust SSR web framework (GitHub: GoldevLab/resuma). \
-     Resumability without hydration — 1021 B loader, Axum, server actions, Flow, workers. \
+     Resumability without hydration — 1006 B loader, Axum, server actions, Flow, workers. \
      Pages and APIs in one binary. Not a CV/résumé app."
 }
 
@@ -75,7 +75,7 @@ pub fn json_ld_home(site_url: &str) -> String {
                 "applicationSubCategory": "Web Framework",
                 "operatingSystem": "Cross-platform",
                 "programmingLanguage": "Rust",
-                "softwareVersion": "1.3.1",
+                "softwareVersion": "2.0.1",
                 "description": site_description(),
                 "url": format!("{base}/"),
                 "downloadUrl": "https://crates.io/crates/resuma",
@@ -149,7 +149,7 @@ pub fn seo_kit(site_url: &str) -> SeoKit {
         )
         .with_llms_section(
             "Architecture",
-            format!("{base}/docs/architecture — SSR HTML, serialized signals, 1021 B loader."),
+            format!("{base}/docs/architecture — SSR HTML, serialized signals, 1006 B loader."),
         )
 }
 
@@ -223,7 +223,7 @@ fn page_description_for(path: &str) -> String {
             "Resuma CLI: new, dev, build, routes, doctor, and resuma install skill (--force after upgrades).".into()
         }
         "/docs/benchmark" => {
-            "Resuma bundle sizes versus other SSR stacks: 1021 B loader, first-click JS, and zero JS on static pages.".into()
+            "Resuma bundle sizes versus other SSR stacks: 1006 B loader, first-click JS, and zero JS on static pages.".into()
         }
         "/docs/examples" => {
             "Runnable Resuma examples: counters, todos, Flow demos, and fullstack samples from the repo.".into()
@@ -235,7 +235,7 @@ fn page_description_for(path: &str) -> String {
             "FAQ: resumability vs hydration, HtmlTheme/Popup, resuma install skill, deploy, copy-for-AI. Not a résumé builder.".into()
         }
         "/docs/architecture" => {
-            "Resuma architecture: SSR HTML, serialized signals, lazy handler chunks, and the 1021 B loader.".into()
+            "Resuma architecture: SSR HTML, serialized signals, lazy handler chunks, and the 1006 B loader.".into()
         }
         "/docs/reactivity" => {
             "How Resuma signals, batching, resuma-dyn, and resuma-show update the DOM without a hydration pass.".into()

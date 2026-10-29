@@ -19,7 +19,7 @@ RUN cargo build --release
 FROM debian:bookworm-slim
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates \
+    && apt-get install -y --no-install-recommends ca-certificates util-linux \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --system --uid 10001 --create-home resuma
 
@@ -27,16 +27,18 @@ WORKDIR /app
 COPY --from=builder /app/target/release/website /app/website
 COPY --from=builder /app/src/pages /app/pages
 COPY public ./public
-RUN chown -R resuma:resuma /app
-
-USER resuma
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh \
+    && mkdir -p /app/.resuma \
+    && chown -R resuma:resuma /app
 
 ENV HOST=0.0.0.0
 ENV PORT=3000
 ENV RESUMA_PAGES_ROOT=/app/pages
+ENV RESUMA_DATA_DIR=/app/.resuma
 ENV CARGO_MANIFEST_DIR=/app
 ENV RESUMA_ENV=production
 ENV RESUMA_TRUST_PROXY=1
 
 EXPOSE 3000
-CMD ["/app/website"]
+ENTRYPOINT ["/entrypoint.sh"]

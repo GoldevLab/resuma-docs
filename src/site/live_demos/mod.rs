@@ -714,7 +714,7 @@ pub fn reference_package() -> View {
     live_info(
         "Install",
         view! {
-            <p><code>"cargo add resuma@1.3.1"</code> " · " <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a></p>
+            <p><code>"cargo add resuma@2.0.1"</code> " · " <a href="https://crates.io/crates/resuma" target="_blank">"crates.io"</a></p>
         },
     )
 }

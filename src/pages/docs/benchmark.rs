@@ -117,7 +117,7 @@ pub fn page(_req: FlowRequest) -> View {
     let validation_body = "Independent published measurements agree with our numbers (same ranking, same order of magnitude). Qwik preloader ~2 KiB, HTMX ~16 KiB, Astro React client ~59 KiB, React 19 Vite ~59 KiB, SvelteKit ~32 KiB in the SendOT portfolio series - all line up with our counter benchmark.";
     let validation_link = "Full reference table with links in the repo README. Next.js 142 KiB reflects the default create-next-app scaffold; optimized App Router apps often land near 67-78 KiB first-load JS.";
 
-    let t1 = "Resuma: 1021 B gzip initial, 9.90 KiB gzip to full interactivity (loader + core + counter handler) - no WASM, lazy core on first click.";
+    let t1 = "Resuma: 1006 B gzip initial, 10.30 KiB gzip to full interactivity (loader + core + counter handler) - no WASM, lazy core on first click.";
     let t2 = "Qwik: smallest resumable JS preloader (~2 KiB gzip), core chunk adds ~20 KiB gzip on first click.";
     let t3 = "templ + HTMX: ~16 KiB gzip for HTMX alone; interactivity is a server round-trip, not client hydration.";
     let t4 = "SolidStart / SvelteKit: mid-tier hydration bundles (~17-28 KiB gzip) for a minimal counter.";

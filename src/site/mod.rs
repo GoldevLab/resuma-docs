@@ -38,7 +38,10 @@ pub use theme::{
 };
 
 pub fn site_head() -> String {
-    format!("{THEME_BOOT}{}{SITE_CSS}", theme_sheet())
+    format!(
+        "{THEME_BOOT}{}{SITE_CSS}<script type=\"module\" src=\"/js/docs-nav.js?v=2\"></script>",
+        theme_sheet()
+    )
 }
 pub use docs_search::search;
 pub use hero_bg::hero_particles_mount;

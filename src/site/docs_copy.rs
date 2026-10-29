@@ -14,7 +14,7 @@ pub fn DocsCopyNavBtn() {
                 onClick={js!(async (event) => {
                     const btn = event.currentTarget;
                     if (!(btn instanceof HTMLButtonElement)) return;
-                    const mod = await import("/static/client/docs-copy.js?v=1.3.1");
+                    const mod = await import("/static/client/docs-copy.js?v=2.0.1");
                     await mod.copyDocsNav(btn);
                 })}
             >
@@ -37,7 +37,7 @@ pub fn DocsCopyPageToolbar() {
                 onClick={js!(async (event) => {
                     const btn = event.currentTarget;
                     if (!(btn instanceof HTMLButtonElement)) return;
-                    const mod = await import("/static/client/docs-copy.js?v=1.3.1");
+                    const mod = await import("/static/client/docs-copy.js?v=2.0.1");
                     await mod.copyDocsPage(btn);
                 })}
             >
